@@ -80,6 +80,22 @@ i.e:
 `$exists`:	Matches documents that have the specified field.
 `$type`:	Selects documents if a field is of the specified type.
 
+#### Querying arrays
+`$size`: will look for a given size array. `db.collectionName.find({arrayName: {$size: valueToCheck}})`  
+`$all`: will look for values in an array no matter the order. `db.collectionName.find({arrayName: {$all: [value1, value2, ...]}})`  
+`$elemMatch`: will look for all given values in the same array.  
+
+#### Cursors
+`next()`: will output the next document if any exists  
+`hasNext()`: will output a boolean if there is a next document  
+`sort()`: will sort the documents in a ascending or descending order  
+`skip()`: will skip the number of requested documents    
+`limit()`: will only output the number of requested documents  
+
+#### Projection
+Will return the required fields of each documents:  
+`db.collectionName.find({}, {key: 1, _id: 0})`, 1 will tell mongodb to return the key, 0 will ignore it. By default everything is ignored but the _id, we have to explicitly tell mongodb that we don't need it.  
+`$slice`: can be used with projection on an array
 
 ### Update  
 `db.collectionName.updateOne({filter: value}, {$set: {key: value}})`: will update the first document that matches the filter. The value passed will be updated or created if it doesn't exist  
@@ -87,14 +103,20 @@ i.e:
 `db.collectionName.updateMany({}, {$set: {key: value}})`: will update all the documents. The value passed will be updated or created if it doesn't exist      
 `db.collectionName.replaceOne({filter: value}, {key: value})` will replace the desired document  
 
+#### Rename
+`db.collectionName.update({filter:value}, {$rename: {fieldName: updatedFieldName}})`: will update all the documents. The value passed will be updated or created if it doesn't exist      
+
+#### Upsert
+`db.collectionName.updateOne({filter: value}, {$set: {key: value}}, {upsert: true})` will update the value and create it if it doesn't exist    
+
+#### Update Arrays
+`db.collectionName.updateOne({filter: value, arrayToModify: value}, {$set: {"arrayName.$": newValue}})` will update the value of an array  
+`db.collectionName.updateOne({filter: value}, {$set: {"arrayName.$[]": value}})` will update the value of all the matching arrays        
+
 ### Delete  
 `db.collectionName.deleteOne({filter: value})`: will delete the first document that matches the filter  
 `db.collectionName.deleteMany({filter: value})`: will delete all the documents that matches the filter  
 `db.collectionName.deleteMany({})`: will delete all documents    
-
-### Projection  
-Will return the required fields of each documents:  
-`db.collectionName.find({}, {key: 1, _id: 0})`, 1 will tell mongodb to return the key, 0 will ignore it. By default everything is ignored but the _id, we have to explicitly tell mongodb that we don't need it.  
 
 ### Embbeded documents   
 `db.collectionName.updateMany({}, {$set:{key: {embeddedKey1: value,embeddedKey2: value }})`  
