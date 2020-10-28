@@ -5,6 +5,7 @@
 - Data type
 - Relations
 - Schema Validation
+- Indexes
   
 ---
 ## Local use
@@ -26,6 +27,7 @@ Working with database, collections and documents:
 `db`: will output the used database  
 `use [databaseName]`: will make the specified database available and will create it once we insert data  
 `show collections`: will output the available collections  
+`db.collectionName.stats()`: will output the stats of the collection    
 
 ---
 ## CRUD operations
@@ -59,6 +61,7 @@ MongoDB will write to the database and to a *journal*:
 `-c`: will specify the collection name  
 `--jsonArray`: will specify that the data imported is an array of type json  
 `--drop`: will drop the database/collection if it already exists, otherwise it will append to the existing collection    
+`db.collectionName.explain()`  
 
 ### Read
 `db.collectionName.find()`: will return every documents in the collection  
@@ -77,8 +80,25 @@ i.e:
 `db.collectionName.findOne({key: {$gt: value}})`: will return the first document that is **greater than** the value provided  
 
 #### Elements
-`$exists`:	Matches documents that have the specified field  
-`$type`:	Selects documents if a field is of the specified type
+`$exists`:	Matches documents that have the specified field.  
+`$type`:	Selects documents if a field is of the specified type.  
+
+#### Querying arrays
+`$size`: will look for a given size array. `db.collectionName.find({arrayName: {$size: valueToCheck}})`  
+`$all`: will look for values in an array no matter the order. `db.collectionName.find({arrayName: {$all: [value1, value2, ...]}})`  
+`$elemMatch`: will look for all given values in the same array.  
+
+#### Cursors
+`next()`: will output the next document if any exists  
+`hasNext()`: will output a boolean if there is a next document  
+`sort()`: will sort the documents in a ascending or descending order  
+`skip()`: will skip the number of requested documents    
+`limit()`: will only output the number of requested documents  
+
+#### Projection
+Will return the required fields of each documents:  
+`db.collectionName.find({}, {key: 1, _id: 0})`, 1 will tell mongodb to return the key, 0 will ignore it. By default everything is ignored but the _id, we have to explicitly tell mongodb that we don't need it.  
+`$slice`: can be used with projection on an array
 
 ### Update  
 `db.collectionName.updateOne({filter: value}, {$set: {key: value}})`: will update the first document that matches the filter. The value passed will be updated or created if it doesn't exist  
@@ -86,14 +106,20 @@ i.e:
 `db.collectionName.updateMany({}, {$set: {key: value}})`: will update all the documents. The value passed will be updated or created if it doesn't exist      
 `db.collectionName.replaceOne({filter: value}, {key: value})` will replace the desired document  
 
+#### Rename
+`db.collectionName.update({filter:value}, {$rename: {fieldName: updatedFieldName}})`: will update all the documents. The value passed will be updated or created if it doesn't exist      
+
+#### Upsert
+`db.collectionName.updateOne({filter: value}, {$set: {key: value}}, {upsert: true})` will update the value and create it if it doesn't exist    
+
+#### Update Arrays
+`db.collectionName.updateOne({filter: value, arrayToModify: value}, {$set: {"arrayName.$": newValue}})` will update the value of an array  
+`db.collectionName.updateOne({filter: value}, {$set: {"arrayName.$[]": value}})` will update the value of all the matching arrays        
+
 ### Delete  
 `db.collectionName.deleteOne({filter: value})`: will delete the first document that matches the filter  
 `db.collectionName.deleteMany({filter: value})`: will delete all the documents that matches the filter  
 `db.collectionName.deleteMany({})`: will delete all documents    
-
-### Projection  
-Will return the required fields of each documents:  
-`db.collectionName.find({}, {key: 1, _id: 0})`, 1 will tell mongodb to return the key, 0 will ignore it. By default everything is ignored but the _id, we have to explicitly tell mongodb that we don't need it.  
 
 ### Embbeded documents   
 `db.collectionName.updateMany({}, {$set:{key: {embeddedKey1: value,embeddedKey2: value }})`  
@@ -235,3 +261,110 @@ db.runCommand({
 });
 
 ```
+
+---
+## Indexes
+---
+
+Can help speed up the queries. It's useful for returning a small part of the collection, not to use if we need to return the whole collection or most of it.  
+
+`db.collectionName.createIndex({key: 1})`: will create an index    
+`db.collectionName.dropIndex({key: 1})`: will drop an index    
+
+
+---
+## Geospatial data
+---
+Longitude first
+Latitude second
+Create an Index
+near 
+geowithin 
+geo
+type : Point, Polygon....  
+/ coordinates
+
+---
+## Aggregation framework
+---
+
+Allows the transforming of data through stages.  
+aggregate()
+$match
+$project : will take one document and return that document but transformed
+$group : will 'group' several documents into one document
+$sort
+$avg
+$convert
+$bucket
+$bucketAuto
+$toDate
+$limit
+$skip
+$limit
+$lookup
+
+
+$geoNear
+
+### Array 
+$unwind
+
+---
+## Numbers
+---
+
+int(32): NumberInt(), will save up space. Perfect for simple intergers like age  
+int(64): NumberLong()  
+doubles(64):  **Default type**  
+high precision doubles(128): NumberDecimal(), will take more space but is necessary when doing calculations
+
+---
+## Security
+---
+
+`db.createUser()` will create a user that has an admin role:  
+```javascript
+mongod --auth // will require an authentication to use the database
+use admin // Log in to the admin database first to create a user
+db.createUser({'user': '[userName]', 'pwd': '[password]', roles:['userAdminAnyDatabase']}); // provide a username and a password
+db.auth('userName','password'); // also needs to be run in the admin database
+
+// or before running the mongo command
+mongo -u 'userName' -p 'password' --authenticationDatabase admin // will connect to the database and authenticate at the same time
+
+``` 
+
+### Roles 
+- userAdminAnyDatabase:
+- dbAdminAnyDatabase:  
+- read: 
+- readWrite: 
+- ...
+
+### SSL
+
+Allow ssl data encryption  
+
+---
+## Performance
+---
+
+**Capped**: will add a size and a max number of documents to a collection: `db.createCollection('collectionName', {capped: true, size: maxSizeOfTheCollection, max: maxNumberOfDocuments})`.  
+Once the max number of documents is reached, it will be possible to add other documents, but the first documents will be removed.  
+
+### Replica sets
+
+Will create duplicates of the data so that if the Primary Node is down, data will be accessed through the other Nodes:   
+**Client** >> **MongoDB Server** >> **Primary Node** >> **Secondary Node**
+
+### Sharding
+
+Will **split** the data into several **shards** to ease the load on the server.  
+Use **Shard Key** to make the queries faster.  
+
+---
+## MONGODB Certificate
+---
+
+mongodb+srv://<username>:<password>@<hostname>/<database>
