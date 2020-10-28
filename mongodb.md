@@ -77,9 +77,8 @@ i.e:
 `db.collectionName.findOne({key: {$gt: value}})`: will return the first document that is **greater than** the value provided  
 
 #### Elements
-`$exists`:	Matches documents that have the specified field.
-`$type`:	Selects documents if a field is of the specified type.
-
+`$exists`:	Matches documents that have the specified field  
+`$type`:	Selects documents if a field is of the specified type
 
 ### Update  
 `db.collectionName.updateOne({filter: value}, {$set: {key: value}})`: will update the first document that matches the filter. The value passed will be updated or created if it doesn't exist  
