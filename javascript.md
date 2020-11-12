@@ -1591,7 +1591,7 @@ Promise.allResolved([promise1(), promise2()]).then((dataOfAllThePromises) => {
 
 ---
 
-Transforms the promise. It protects us from the **callback hell** where toon many promises are nested into each other.
+Transforms the promise. It protects us from the **callback hell** where too many promises are nested into each other.
 It also makes the code more readable and makes it look like synchronous code as the lines after an await labeled function won't be ran until the promise as returned a value.
 
 Call **async** on the function that returns the promise, then **await** on the promise itself.
