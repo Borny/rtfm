@@ -250,6 +250,7 @@ server.listen(portNumber);
 
 - send
 - redirect
+- status
 - sendFile
 - status codes
 
@@ -288,9 +289,10 @@ res.get('/', (req, res) => {
 
 ### Status code
 
-200: ressource fetched successfully
-201: ressource created successfully
-404: ressource not found
+- 200: ressource fetched successfully
+- 201: ressource created successfully
+- 401: unauthorized
+- 404: ressource not found
 
 ---
 
