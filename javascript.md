@@ -1316,7 +1316,7 @@ Will set the properties of a property in an object
 - click
 - mouseenter
 - mouseleave
-- dbclick
+- dblclick
 - scroll
 - submit // on forms only
 
@@ -1685,6 +1685,41 @@ Http methods:
 `xhr.send('POST','url','dataToSend')`
 
 ### fetch()
+The **fetch API** is a built in API in the browser as opposed to AXIO which can be used through a CDN.  
+
+#### GET
+
+```javascript
+fetch('URL')
+  .then(response => {
+    return response.json(); // will map the response to a json object that will return another promise
+  })
+  .then(modifiedResponse => {
+    console.log(modifiedResponse),
+  })
+  .catch(err => {
+    console.log('fetch error:', err)
+  })
+  
+```
+
+#### POST
+
+Sending JSON data:  
+```javascript
+fetch('postURL', {
+  method: 'POST',
+  headers:{
+    'Content-Type':'application/json', // type of data we're sending
+    'Accept':'application/json' // type of data we expect to get back
+  },
+  body:JSON.stringify({
+    data: 'DATA TO SEND'
+  })
+})
+.then(postResponse => console.log(postResponse))
+.catch(postError => console.log(postError))
+```
 
 ---
 

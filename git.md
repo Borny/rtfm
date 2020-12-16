@@ -2,7 +2,11 @@
 
 - Create branch
 - Delete branch
+- Log
+- Rollback to previous commit
+- Stash
 - Hooks
+- Github Pages
 
 ---
 
@@ -33,6 +37,27 @@ git push origin --delete <remoteBranchName>
 ```
 
 ---
+## Log
+---
+Log the commits starting with the latest   
+`git log` 
+
+---
+## Rollback to previous commit
+---
+
+### soft 
+`git checkout --soft <commitId>`
+
+### hard
+`git checkout --hard <commitId>`
+
+---
+## Stash
+---
+Git stash saves the uncommited work.
+
+---
 
 ## Hooks
 
@@ -42,7 +67,7 @@ git push origin --delete <remoteBranchName>
 
 Connect to the production server using SSH.  
 `ssh [name]@[url] -p [portNumber]`  
-i.e: `ssh icsfrai@ssh.cluster028.hosting.ovh.net -p 22`  
+i.e: `ssh icsfrdjg@ssh.cluster056.hosting.ovh.net -p 22`  
 Create a git folder. i.e: [appName.git]  
 cd into the folder and initialize git: `cd [appName.git] && git init --bare`  
 Create a **post-receive** bash file in the hooks/ folder: `touch [appName.git]/hooks/post-receive`  
@@ -111,3 +136,21 @@ do
  fi
 done
 ```
+
+---
+## Github Pages
+---
+- Ionic - Angular
+  
+GitHub Pages allows the deployment of static websites and apps.
+
+### Ionic / Angular
+
+Add the module to the project:  
+`ng add angular-cli-ghpages`  
+
+Build the app:  
+`ionic build --prod -- --base-href https://<username>.github.io/<repository>/`  
+
+Run the command to deploy the required code (i.e: in the www folder after a build) and create a new gb-pages branches that will only have the code necessary to run the app in production mode:  
+`npx angular-cli-ghpages --dir=www`  
