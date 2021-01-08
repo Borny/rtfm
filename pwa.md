@@ -7,6 +7,7 @@ Progressive Web App is a term. It uses Service Workers and has an Application Ma
 - Caching
 - IndexedDB
 - Background Sync
+- Push Notifications
 
 ---
 ## Application Manifest
@@ -358,6 +359,8 @@ Choose which ressource we want to load and how.
 
 Used to **cache Dynamic Content**, usually **json data** coming from a fetch request.  
 
+Database => Store => Data  
+
 Import the **idb.js** file, it improves the indexedDB API. Place it in the js folder.  
 Import it in the **sw.js** file at the top:  
 `importScripts('/src/js/idb.js')` // change the path according to the app architecture  
@@ -413,6 +416,7 @@ function clearAllData(st) {
 }
 ```
 
+Removing one item
 ```javascript
 function deleteItemFromData(st, id) {
   dbPromise
@@ -434,4 +438,205 @@ function deleteItemFromData(st, id) {
 
 Will store data and send it straight away if the network is up or when it comes back on.  
 
+In the **sw.js** file:  
 
+```javascript
+self.addEventListener('sync', function(event) {
+  console.log('[Service Worker] Background syncing', event);
+  if (event.tag === 'sync-new-posts') {
+    console.log('[Service Worker] Syncing new Posts');
+    event.waitUntil(
+      readAllData('sync-posts')
+        .then(function(data) {
+          for (var dt of data) {
+            fetch('https://us-central1-pwagram-99adf.cloudfunctions.net/storePostData', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              },
+              body: JSON.stringify({
+                id: dt.id,
+                title: dt.title,
+                location: dt.location,
+                image: 'https://firebasestorage.googleapis.com/v0/b/pwagram-99adf.appspot.com/o/sf-boat.jpg?alt=media&token=19f4770c-fc8c-4882-92f1-62000ff06f16'
+              })
+            })
+              .then(function(res) {
+                console.log('Sent data', res);
+                if (res.ok) {
+                  res.json()
+                    .then(function(resData) {
+                      deleteItemFromData('sync-posts', resData.id);
+                    });
+                }
+              })
+              .catch(function(err) {
+                console.log('Error while sending data', err);
+              });
+          }
+
+        })
+    );
+  }
+});
+
+```
+
+
+In the case of a form submit:  
+```javascript
+form.addEventListener('submit', function (event) {
+
+  // Preventing the page to reload
+  event.preventDefault();
+
+  // Making sure the inputs values are valid
+  if (titleInput.value.trim() === '' || locationInput.value.trim() === '') {
+    alert('Please enter valid data!');
+    return;
+  }
+
+  // Checking if the service worker and sync are supported by the browser
+  if ('serviceWorker' in navigator && 'SyncManager' in window) {
+    navigator.serviceWorker.ready
+      .then(function (sw) {
+        var post = {
+          id: new Date().toISOString(),
+          title: titleInput.value,
+          location: locationInput.value
+        };
+        writeData('sync-posts', post)
+          .then(function () {
+            return sw.sync.register('sync-new-posts');
+          })
+          .then(function () {
+            var snackbarContainer = document.querySelector('#confirmation-toast');
+            var data = { message: 'Your Post was saved for syncing!' };
+            snackbarContainer.MaterialSnackbar.showSnackbar(data);
+          })
+          .catch(function (err) {
+            console.log(err);
+          });
+      });
+  } else {
+    sendData();
+  }
+});
+```
+
+---
+## Push Notifications
+---
+
+Displaying a pop up on the user's screen.
+
+- Enable notifications
+
+### Enable notification
+First we ask the user to enable notification, otherwise nothing will work afterwards
+
+In any JS file:  
+```javascript
+function displayConfirmNotification(){
+  if('serviceWorker'in navigator){
+
+    // Note that not ALL options will be available depending on the device
+    const options = {
+      body:'You successfully subscribed to our Notification Service',
+      icon:'/src/images/icons/app-icon-96x96.png',
+      image:'/src/images/...',
+      dir: 'ltr',
+      lang:'en-US', 
+      vibrate: [100, 50, 200], // vibration / pause / vibration / pause / .....
+      badge: '/src/images/icons/app-icon-96x96.png',
+      tag: 'confirm-notification', // if set will stack the notifications, they won't show
+      renotify: boolean,
+      actions: [
+        {action: 'confirm', title: 'Okay', icon: '/src/images/icons/app-icon-96x96.png'},
+        {action: 'cancel', title: 'Cancel', icon: '/src/images/icons/app-icon-96x96.png'}
+      ]
+    };
+
+    navigator.serviceWorker.ready
+    .then(swreg => {
+      swreg.showNotification('Successfully subscribed from sw!', options);
+    })
+  }
+}
+
+function configurePushSub(){
+  if(!('serviceWorker' in navigator)){
+    return;
+  }
+
+  let reg;
+  navigator.serviceWorker.ready
+  .then(swreg => {
+    return swreg.pushManager.getSubscription()
+  })
+  .then(sub => {
+    if(sub === null){
+      reg.pushManager.subscribe({
+        userVisibleOnly: true,
+      })
+    }else{
+
+    }
+  })
+}
+
+function askForNotificationPermission() {
+  Notification.requestPermission((result) =>{
+    console.log('User Choice', result);
+    if (result !== 'granted') {
+      // Here the user either didnt accept or didnt respond,
+      // if he didn't respond then it will be asked again
+      // if he didnt accept there's nothing more we can do...
+      console.log('No notification permission granted!');
+    } else {
+      // The user agreed. We can hide the enable notification button
+      configurePushSub()
+      // displayConfirmNotification();
+    }
+  });
+}
+
+// Checking if the browser supports notifications 
+if ('Notification' in window) {
+  // Do something then like showing a 'enable notification' button
+    enableNotificationsButton.style.display = 'inline-block';
+    enableNotificationsButton.addEventListener('click', askForNotificationPermission);
+  }
+}
+```
+
+In the **sw.js** file
+```javascript
+self.addEventListener('notificationclick', (event) => {
+  const notification = event.notification;
+  const action = notification.action;
+
+  console.log(notification);
+
+  if(action === 'confirm'){
+    console.log('Confirm was chosen');
+  }else{
+    console.log(action);
+  }
+})
+
+self.addEventListener('notificationclose', (event) => {
+  console.log('notification was closed');
+})
+```
+
+### VAPID keys
+
+In the **backend** files:  
+`npm i --save web-push`
+
+Add a new script in the **package.json** file:  
+`"web-push": "web-push"`  
+
+Then run `npm run web-push generate-vapi-keys` to generate a public and a private *vapi key*

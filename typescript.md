@@ -6,12 +6,15 @@
 
 ## Types
 
-- propertyName : string => string
-- propertyName : boolean => boolean
-- propertyName : InterfaceName => interface
-- propertyName : InterfaceName[] => array of interface
+- string
+- number
+- boolean
+- Array<Type> **or** type[]
+- any
+- tuple: different types in an array => [string, number, ...] 
 - void
 - never
+- unknown
 
 ## Class
 
@@ -31,5 +34,6 @@ Will type an object:
 export interface InterfaceName {
   protertyName: type;
   protertyName: type;
+  methodName(parameter: type): returnedType;
 }
 ```

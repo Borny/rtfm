@@ -572,11 +572,11 @@ Avoid using the **if** statement by using the question mark operator to check fo
 
 ### double bang !!
 
-Teh double exclamation marks/!! will coerce a value into a real boolean.  
+The double exclamation marks/!! will coerce a value into a real boolean.  
 `const name = 'table'` => name is truthy.  
 `!!name` => name is true.
 
-### Settign a default value to a variable using ||
+### Setting a default value to a variable using ||
 
 `const name = someInput || defaultValue` => if someInput is undefined then the defaultValue will be assigned.
 

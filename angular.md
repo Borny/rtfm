@@ -2,7 +2,7 @@
 
 - NGXS / NGRX
 - Angular CLI
-- Type
+- Types
 - Binding
 - HostBinding
 - HostListener
@@ -13,6 +13,7 @@
 - Pipes
 - HTTP request
 - Authentication
+- Test
 
 ## NGXS / NGRX
 
@@ -45,13 +46,13 @@ _ViewEncapsulation_ : définie la façon dont un component sera créé.
 **Emulated**: par défaut, le style du component ne pourra pas être écrasé par le reste du projet  
 **ShadowDom**: Angular va créé un Web Component
 
-## Type
+## Types
 Types are needed in Angular as it uses Typescript. They make developping easier by highlighting errors.
 Types:
 - string
 - number
 - boolean
-- array = []
+- array[]
 - Observable
 - Promise
 - etc...
@@ -215,7 +216,7 @@ export class AppRouting{}
 
 ---
 
-## Lazy Loading
+### Lazy Loading
 
 ---
 
@@ -650,3 +651,6 @@ Add this property to the ngsw-config.json file:
   }
 ]
 ```
+
+## Test
+
