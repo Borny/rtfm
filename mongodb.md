@@ -17,10 +17,11 @@ Install:
 `https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/`
 
 Commands  
-`mongod` : will start the server / database  
+`mongod` : will start the server / database (migth need **sudo**)   
 `mongod --dbpath /data/db` : **/data/db** is the default target. Use a different path if the database folder has been created somewhere else.  
 `mongod --port 27017` : **27017** is the default port. Use a different port if needed.  
-`cls`: clears the window by scrolling to the top
+`cls`: clears the window by scrolling to the top  
+`mongo`: in a new terminal, connects to the local database   
 
 Working with database, collections and documents:  
 `show dbs`: will output all the available databases  
@@ -271,7 +272,6 @@ Can help speed up the queries. It's useful for returning a small part of the col
 `db.collectionName.createIndex({key: 1})`: will create an index    
 `db.collectionName.dropIndex({key: 1})`: will drop an index    
 
-
 ---
 ## Geospatial data
 ---
@@ -303,7 +303,6 @@ $limit
 $skip
 $limit
 $lookup
-
 
 $geoNear
 

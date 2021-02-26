@@ -11,6 +11,7 @@
 - abbr
 - wbr
 - base
+- small
 
 ### acronym
 
@@ -40,6 +41,16 @@ Will define the base URL/target for all relative URLs in a document. There can b
 <head>
   <base href="https://www.w3schools.com/images/" target="_blank" />
 </head>
+```
+
+### small 
+
+Will display some phrasing content one font-size smaller than its parent.  
+
+```html
+<p>
+  <small>Some text</small>
+</p>
 ```
 
 ---

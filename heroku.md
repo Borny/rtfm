@@ -7,7 +7,11 @@
 
 ## Login
 
+By opening a link in the browser  
 `heroku login`
+
+In the CLI only  
+`heroku login -i`
 
 ## Logout
 

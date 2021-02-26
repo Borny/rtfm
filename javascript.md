@@ -639,11 +639,11 @@ Avoid using the **if** statement by using the question mark operator to check fo
 
 ### double bang !!
 
-Teh double exclamation marks/!! will coerce a value into a real boolean.  
+The double exclamation marks/!! will coerce a value into a real boolean.  
 `const name = 'table'` => name is truthy.  
 `!!name` => name is true.
 
-### Settign a default value to a variable using ||
+### Setting a default value to a variable using ||
 
 `const name = someInput || defaultValue` => if someInput is undefined then the defaultValue will be assigned.
 
@@ -1383,7 +1383,7 @@ Will set the properties of a property in an object
 - click
 - mouseenter
 - mouseleave
-- dbclick
+- dblclick
 - scroll
 - submit // on forms only
 
@@ -1658,7 +1658,7 @@ Promise.allResolved([promise1(), promise2()]).then((dataOfAllThePromises) => {
 
 ---
 
-Transforms the promise. It protects us from the **callback hell** where toon many promises are nested into each other.
+Transforms the promise. It protects us from the **callback hell** where too many promises are nested into each other.
 It also makes the code more readable and makes it look like synchronous code as the lines after an await labeled function won't be ran until the promise as returned a value.
 
 Call **async** on the function that returns the promise, then **await** on the promise itself.
@@ -1752,6 +1752,41 @@ Http methods:
 `xhr.send('POST','url','dataToSend')`
 
 ### fetch()
+The **fetch API** is a built in API in the browser as opposed to AXIO which can be used through a CDN.  
+
+#### GET
+
+```javascript
+fetch('URL')
+  .then(response => {
+    return response.json(); // will map the response to a json object that will return another promise
+  })
+  .then(modifiedResponse => {
+    console.log(modifiedResponse),
+  })
+  .catch(err => {
+    console.log('fetch error:', err)
+  })
+  
+```
+
+#### POST
+
+Sending JSON data:  
+```javascript
+fetch('postURL', {
+  method: 'POST',
+  headers:{
+    'Content-Type':'application/json', // type of data we're sending
+    'Accept':'application/json' // type of data we expect to get back
+  },
+  body:JSON.stringify({
+    data: 'DATA TO SEND'
+  })
+})
+.then(postResponse => console.log(postResponse))
+.catch(postError => console.log(postError))
+```
 
 ---
 
