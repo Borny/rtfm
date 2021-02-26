@@ -14,14 +14,16 @@
 
 ### Ionic install
 
-`npm install -g @ionic/cli`
-`ionic start`
--> Select the required options
+```bash
+npm install -g @ionic/cli
+ionic start
+```
+=> Select the required options
 
 ### Run the app
 
-`ionic serve`
-Open the browser, usually at \*\*localhost:8100\*\*
+`ionic serve`  
+Opens the browser, usually at **localhost:8100**
 
 ### Generate pages, components, services with Angular
 
@@ -31,7 +33,7 @@ Open the browser, usually at \*\*localhost:8100\*\*
 
 `<ion-app><ion-app/>` should wrap the entire html page or the SPA if using Angular for example.
 
-```javascript
+```html
 <ion-header>
 <ion-toolbar color="primary">
 <ion-buttons slot="start">
@@ -86,8 +88,8 @@ Routes/pages/links are not destroyed when navigating to a new page like with Ang
 
 ### Tabs
 
-```javascript
-**<ion-tabs>
+```html
+<ion-tabs>
   <ion-tab-bar slot="bottom">
     <ion-tab-button tab="[pathName]">
       <ion-label>[Tab Name]</ion-label>
@@ -98,7 +100,7 @@ Routes/pages/links are not destroyed when navigating to a new page like with Ang
       <ion-icon name="card"></ion-icon>
     </ion-tab-button>
   </ion-tab-bar>
-</ion-tabs>**
+</ion-tabs>
 ```
 
 ### NavController
@@ -117,7 +119,7 @@ import { NavController } from '@ionic/angular';
 
 ### Side drawer
 In the app-component.html:
-```javascript
+```html
 <ion-app>
   <ion-menu menuId="primaryMenu" contentId="main">
     <ion-header>
@@ -149,7 +151,7 @@ In the app-component.html:
 ```
 
 On the page that should display the menu:
-```javascript
+```html
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -181,7 +183,7 @@ Specific to Web component. Will reserve a space for content to be displayed in t
 
 ### Sliding
 
-```javascript
+```html
 <ion-item-sliding *ngFor="let offer of offers" #slidingItem>
   <ion-item
     [routerLink]="['/', 'places', 'tabs', 'offers', offer.id]"

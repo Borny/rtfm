@@ -157,12 +157,79 @@ try {
 
 ---
 
-- console log
-- console table
+Consoles are used to print variables values, messages, function results... in the browser console or the terminal  
 
+`console.[method]`
+
+- log
+- table
+- error
+- warn
+- clear
+- time, timeEnd
+- count
+- group, groupEnd
+- styling the logs
+
+### log
+
+Will simply log the desired value:  
 `console.log('anything')` => will log _anything_ in the console  
+
+### table
+
+Will display the values of an array as a table:   
 `const array = [1,2,3,4]`  
 `console.table(array)` => will log the _array_ variable in a table in the console
+
+### error
+
+Will display an error by being highlighted in red: 
+`console.error('error message')` => will log _error message_ in red in the console
+
+### warn
+
+Will display a warning by being highlighted in yellow:
+`console.warn('warning message')` => will log _warining message_ in yellow in the console
+
+### clear
+
+Will clear the console:
+`console.clear()` => will display *console was cleared*
+
+### time, timeEnd
+
+Will display the amount of time the code took to run, they should use the same label:
+```javascript
+console.time('timer')
+const functionName = () => functionBody...
+functionName()
+console.timeEnd('timer')
+```
+ => will display the time it took for the code to execute in seconds
+
+### group, groupEnd
+
+Will display the content in a separate block and which will be indented, they should use the same label:
+```javascript
+console.group('group1'); 
+  console.warn('warning'); 
+  console.error('error'); 
+  console.log('I belong to a group'); 
+console.groupEnd('group1'); 
+console.log('I dont belong to any group');
+```
+ => will display the time it took for the code to execute in seconds
+
+### styling the logs
+
+Use CSS and the **%c** parameter to style the logs:  
+```javascript
+const spacing = '10px'; 
+const styles =  `padding: ${spacing}; background-color: white; color: red; font-style: italic; border: 1px solid black; font-size: 2em;`; 
+console.log('%cI am a styled log', styles);
+```
+=> will display the message with some styling
 
 ---
 
@@ -245,8 +312,8 @@ Every other values
 
 Will make a copy of an array(like the slice() method) or an object.  
 `const array = [1,2,3]`  
-`copiedArray = [...array]` => new array
-`const person = {name: 'Max', age: 45}`  
+`copiedArray = [...array]` => new array  
+`const person = {name: 'Max', age: 45}`   
 `copiedPerson = {...copiedPerson}` => new object
 
 ---
