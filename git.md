@@ -37,24 +37,34 @@ git push origin --delete <remoteBranchName>
 ```
 
 ---
+
 ## Log
----
-Log the commits starting with the latest   
-`git log` 
 
 ---
+
+Log the commits starting with the latest  
+`git log`
+
+---
+
 ## Rollback to previous commit
+
 ---
 
-### soft 
+### soft
+
 `git checkout --soft <commitId>`
 
 ### hard
+
 `git checkout --hard <commitId>`
 
 ---
+
 ## Stash
+
 ---
+
 Git stash saves the uncommited work.
 
 ---
@@ -138,19 +148,29 @@ done
 ```
 
 ---
+
 ## Github Pages
+
 ---
-- Ionic - Angular
-  
+
 GitHub Pages allows the deployment of static websites and apps.
+
+- VanillaJS
+- Ionic - Angular
+
+### VanillaJS
+
+`git subtree push --prefix <nameOfTheSubfolderToDeploy> origin gh-pages`
+**or**
+`git push origin `git subtree split --prefix <nameOfTheSubfolderToDeploy> master`:gh-pages --force`
 
 ### Ionic / Angular
 
 Add the module to the project:  
-`ng add angular-cli-ghpages`  
+`ng add angular-cli-ghpages`
 
 Build the app:  
-`ionic build --prod -- --base-href https://<username>.github.io/<repository>/`  
+`ionic build --prod -- --base-href https://<username>.github.io/<repository>/`
 
 Run the command to deploy the required code (i.e: in the www folder after a build) and create a new gb-pages branches that will only have the code necessary to run the app in production mode:  
-`npx angular-cli-ghpages --dir=www`  
+`npx angular-cli-ghpages --dir=www`
