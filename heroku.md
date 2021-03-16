@@ -17,6 +17,10 @@ In the CLI only
 
 `heroku logout`
 
+## Clone the heroku repo
+
+`heroku git:remote -a <appName>`
+
 ## git push
 
 `git push heroku master`
