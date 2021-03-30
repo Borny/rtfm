@@ -160,7 +160,8 @@ GitHub Pages allows the deployment of static websites and apps.
 
 ### VanillaJS
 
-`git subtree push --prefix <nameOfTheSubfolderToDeploy> origin gh-pages`
+`git subtree push --prefix <nameOfTheSubfolderToDeploy> origin gh-pages`  
+i.e: `git subtree push --prefix build origin gh-pages`
 **or**
 `git push origin `git subtree split --prefix <nameOfTheSubfolderToDeploy> master`:gh-pages --force`
 
