@@ -176,11 +176,10 @@ installBtn.addEventListener('click', () => {
 
 ```javascript
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistrations()
-    .then((registrations) => {
-      for (let i = 0; i < registrations.length; i++) {
-        registrations[i].unregister();
-      }
+  navigator.serviceWorker.getRegistrations().then((registrations) => {
+    for (let i = 0; i < registrations.length; i++) {
+      registrations[i].unregister();
+    }
   });
 }
 ```
@@ -195,7 +194,7 @@ Different caches are availables:
 
 - Server (won't work offline)
 - Browser (can't be managed by the developer)
-- cache API () => the one used here
+- cache API (the one used here)
 
 Allows the storing of files/assets on the browser through the Service Worker.  
 It should only be used to store HTML, CSS, JS and image files (no JSON files, use the IndexedDB for that)  
@@ -425,6 +424,53 @@ self.addEventListener('fetch', (event) => {
 
 Choose which ressource we want to load and how.
 
+```javascript
+self.addEventListener('fetch', (event) => {
+  const URL = 'https://www.api.com/get';
+
+  if (event.request.url.indexOf(URL) > -1) {
+    event.respondWith(
+      caches.open(DYNAMIC_CACHE).then((cache) => {
+        return fetch(event.request).then((res) => {
+          cache.put(event.request, res.clone());
+          return res;
+        });
+      })
+    );
+  } else if (STATIC_FILES.some((file) => file === event.request.url)) {
+    console.log('else if');
+    event.respondWith(caches.match(event.request));
+  } else {
+    event.respondWith(
+      caches.match(event.request).then((response) => {
+        if (response) {
+          return response;
+        } else {
+          return fetch(event.request)
+            .then((res) => {
+              return caches.open(DYNAMIC_CACHE).then((cache) => {
+                cache.put(event.request.url, res.clone());
+                return res;
+              });
+            })
+            .catch((err) => {
+              return caches.open(STATIC_CACHE).then((cache) => {
+                console.log(event.request.headers);
+                if (
+                  event.request.headers.get('accept') &&
+                  event.request.headers.get('accept').includes('text/html')
+                ) {
+                  return cache.match('/pages/offline.html');
+                }
+              });
+            });
+        }
+      })
+    );
+  }
+});
+```
+
 ---
 
 ## IndexedDB
@@ -568,7 +614,7 @@ form.addEventListener('submit', function (event) {
   // Preventing the page to reload
   event.preventDefault();
 
-  // Making sure the inputs values are valid
+  // Making sure the input values are valid
   if (titleInput.value.trim() === '' || locationInput.value.trim() === '') {
     alert('Please enter valid data!');
     return;
@@ -618,106 +664,258 @@ First we ask the user to enable notification, otherwise nothing will work afterw
 In any JS file:
 
 ```javascript
-function displayConfirmNotification(){
-  if('serviceWorker'in navigator){
+// NOTIFICATIONS
+function displayNotificationEnabled() {
+    if ('serviceWorker' in navigator) {
+        const options = {
+            body: 'You successfully subscribed to our Notification Service',
+            icon: '/android-icon-192x192.95830eb1.png',
+            image: '/kalalau-beach.2009ff86.jpg',
+            dir: 'ltr',
+            lang: 'en-US',
+            vibrate: [100, 50, 200], // vibration / pause / vibration / pause / .....
+            badge: '/android-icon-192x192.95830eb1.png',
+            tag: 'confirm-notification', // if set will stack the notifications, they won't show
+            renotify: true,
+            data: {
+                dateOfArrival: Date.now(),
+                primaryKey: 1
+            },
+            actions: [
+                { action: 'confirm', title: 'Okay', icon: '/android-icon-192x192.95830eb1.png' },
+                { action: 'cancel', title: 'Cancel', icon: '/android-icon-192x192.95830eb1.png' }
+            ]
+        }
+        navigator.serviceWorker.ready
+            .then(swreg => {
+                swreg.showNotification('Successfully subscribed!',
+                    options)
+            })
+    }
+}
 
-    // Note that not ALL options will be available depending on the device
-    const options = {
-      body:'You successfully subscribed to our Notification Service',
-      icon:'/src/images/icons/app-icon-96x96.png',
-      image:'/src/images/...',
-      dir: 'ltr',
-      lang:'en-US',
-      vibrate: [100, 50, 200], // vibration / pause / vibration / pause / .....
-      badge: '/src/images/icons/app-icon-96x96.png',
-      tag: 'confirm-notification', // if set will stack the notifications, they won't show
-      renotify: boolean,
-      actions: [
-        {action: 'confirm', title: 'Okay', icon: '/src/images/icons/app-icon-96x96.png'},
-        {action: 'cancel', title: 'Cancel', icon: '/src/images/icons/app-icon-96x96.png'}
-      ]
-    };
+function configurePushSubcription() {
+    if (!('serviceWorker' in navigator)) {
+        console.log('no sw')
+        return
+    }
 
+    let registration
     navigator.serviceWorker.ready
-    .then(swreg => {
-      swreg.showNotification('Successfully subscribed from sw!', options);
+        .then(swreg => {
+            registration = swreg
+            return swreg.pushManager.getSubscription()
+        })
+        .then(sub => {
+            console.log('sub', sub)
+            if (sub === null) {
+                // set new subscription
+                const vapidPublicKey = 'BKQAn_jLHEFQxqLXFttR5diwKyYhZqJ_PjhQhEMlD13jVipfj-pUdnw3rSGioSaDLt4RyP23ShJ6NwoUZy_Ovl0'
+                const convertedVapidPublicKey = urlBase64ToUint8Array(vapidPublicKey)
+
+                console.log('vapid key')
+                return registration.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: convertedVapidPublicKey
+                })
+            } else {
+                console.log('else')
+                // get subscription
+            }
+        })
+        .then(newSub => {
+            console.log(newSub)
+            return fetch(URL_SUBSCRIPTIONS, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(newSub),
+            }
+            )
+        })
+        .then(response => {
+            if (response.ok) {
+                displayNotificationEnabled()
+            }
+        })
+}
+
+function askNotificationPermission() {
+    console.log('ask notif permission')
+    Notification.requestPermission(response => {
+        if (response === 'granted') {
+            console.log(response)
+            configurePushSubcription()
+        }
     })
-  }
 }
 
-function configurePushSub(){
-  if(!('serviceWorker' in navigator)){
-    return;
-  }
-
-  let reg;
-  navigator.serviceWorker.ready
-  .then(swreg => {
-    return swreg.pushManager.getSubscription()
-  })
-  .then(sub => {
-    if(sub === null){
-      reg.pushManager.subscribe({
-        userVisibleOnly: true,
-      })
-    }else{
-
-    }
-  })
-}
-
-function askForNotificationPermission() {
-  Notification.requestPermission((result) =>{
-    console.log('User Choice', result);
-    if (result !== 'granted') {
-      // Here the user either didnt accept or didnt respond,
-      // if he didn't respond then it will be asked again
-      // if he didnt accept there's nothing more we can do...
-      console.log('No notification permission granted!');
-    } else {
-      // The user agreed. We can hide the enable notification button
-      configurePushSub()
-      // displayConfirmNotification();
-    }
-  });
-}
-
-// Checking if the browser supports notifications
 if ('Notification' in window) {
-  // Do something then like showing a 'enable notification' button
-    enableNotificationsButton.style.display = 'inline-block';
-    enableNotificationsButton.addEventListener('click', askForNotificationPermission);
-  }
+    console.log('notif')
+    askNotificationBtn.classList.add('show')
+    askNotificationBtn.addEventListener('click', askNotificationPermission)
 }
 ```
 
 In the **sw.js** file
 
 ```javascript
-self.addEventListener('notificationclick', (event) => {
-  const notification = event.notification;
-  const action = notification.action;
+self.addEventListener('sync', function (event) {
+    // console.log('[Service Worker] Background syncing', event)
+    if (event.tag === 'sync-new-posts') {
+        console.log('[Service Worker] Syncing new Posts')
+        event.waitUntil(
+            readAllData('sync-posts')
+                .then(function (data) {
+                    for (var dt of data) {
+                        sendData(dt)
+                            .then(function (res) {
+                                return res.json()
+                            })
+                            .then(response => {
+                                console.log('Sent data', response)
+                                deleteItem('sync-posts', dt.title) // Isn't working correctly!
+                            })
+                            .catch(function (err) {
+                                console.log('Error while sending data', err)
+                            })
+                    }
 
-  console.log(notification);
+                })
+        )
+    }
+})
 
-  if (action === 'confirm') {
-    console.log('Confirm was chosen');
-  } else {
-    console.log(action);
-  }
-});
+function sendData(data) {
+    return fetch(
+        "http://localhost:9000/api/feed",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(data),
+        }
+    )
+}
 
-self.addEventListener('notificationclose', (event) => {
-  console.log('notification was closed');
-});
+self.addEventListener('notificationclick', event => {
+    const notification = event.notification
+    const action = event.action
+
+    console.log(notification)
+
+    if (action === 'confirm') {
+        console.log('notif confirm ')
+        notification.close()
+    } else {
+        console.log('notif confirm ')
+        event.waitUntil(
+            clients.matchAll()
+                .then(clnts => {
+                    const client = clnts.find(c => {
+                        return c.visibilityState === 'visible'
+                    })
+                    if (client !== undefined) {
+                        client.navigate(notification.data.openUrl)
+                        client.focus()
+                    } else {
+                        clients.openWindow(notification.data.openUrl)
+                    }
+
+                    notification.close()
+                })
+        )
+    }
+})
+
+self.addEventListener('notificationclose', event => {
+    console.log('notification was closed', event)
+})
+
+self.addEventListener('push', event => {
+    let data = { title: 'from sw', content: 'worked but no data sent', openUrl: '/' }
+    if (event.data) {
+        data = JSON.parse(event.data.text())
+    }
+
+    const options = {
+        body: data.content,
+        icon: 'favicon.26242483.ico',
+        badge: 'favicon.26242483.ico',
+        data: {
+            url: data.openUrl
+        }
+    }
+
+    event.waitUntil(
+        self.registration.showNotification(data.title, options)
+    )
+})
 ```
 
-### VAPID keys
+### On the backend side
 
-In the **backend** files:  
+#### Generating a VAPID key 
+
 `npm i --save web-push`
 
 Add a new script in the **package.json** file:  
 `"web-push": "web-push"`
 
 Then run `npm run web-push generate-vapi-keys` to generate a public and a private _vapi key_
+Copy the public key to the front end and the private to the backend
+
+```javascript
+// Storing the subscriptions
+exports.postSubscription = async (req, res, next) => {
+    console.log('subscription post controller:', req.body)
+
+    const { endpoint, expirationTime, keys } = req.body
+    const SubscriptionData = new Subscription({
+        endpoint, expirationTime, keys
+    })
+
+    try {
+        const subscriptionData = await SubscriptionData.save()
+        res.status(201).json({
+            message: 'Create subscription success'
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({
+            message: 'Could not post subscription'
+        })
+    }
+}
+
+// Generating a push notification when posting some data
+const webpush = require('web-push')
+...
+try {
+        const feedData = await FeedData.save()
+        webpush.setVapidDetails('mailto:tristandeloris@gmail.com', 'BKQAn_jLHEFQxqLXFttR5diwKyYhZqJ_PjhQhEMlD13jVipfj-pUdnw3rSGioSaDLt4RyP23ShJ6NwoUZy_Ovl0', 'y1mBM9eAAWEzkZQ5hj0gNTCUD87Qf04mSEpG-goCTJU')
+        const subscriptions = await Subscription.find()
+        console.log('subscription on post', subscriptions)
+        subscriptions.forEach(sub => {
+            const pushConfig = {
+                endpoint: sub.endpoint,
+                keys: {
+                    auth: sub.keys.auth,
+                    p256dh: sub.keys.p256dh
+                }
+            }
+            console.log('pushconfig:', pushConfig)
+            webpush.sendNotification(pushConfig, JSON.stringify({ title: 'New Post', content: `New post added: ${title}`, openUrl: '/index.html' }))
+                .catch(error => console.log('webpush send notif error:', error))
+        })
+
+
+        res.status(201).json({
+            message: 'Create post success'
+        })
+    }
+```

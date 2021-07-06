@@ -157,7 +157,7 @@ try {
 
 ---
 
-Consoles are used to print variables values, messages, function results... in the browser console or the terminal  
+Consoles are used to print variables values, messages, function results... in the browser console or the terminal
 
 `console.[method]`
 
@@ -174,17 +174,17 @@ Consoles are used to print variables values, messages, function results... in th
 ### log
 
 Will simply log the desired value:  
-`console.log('anything')` => will log _anything_ in the console  
+`console.log('anything')` => will log _anything_ in the console
 
 ### table
 
-Will display the values of an array as a table:   
+Will display the values of an array as a table:  
 `const array = [1,2,3,4]`  
 `console.table(array)` => will log the _array_ variable in a table in the console
 
 ### error
 
-Will display an error by being highlighted in red: 
+Will display an error by being highlighted in red:
 `console.error('error message')` => will log _error message_ in red in the console
 
 ### warn
@@ -195,40 +195,45 @@ Will display a warning by being highlighted in yellow:
 ### clear
 
 Will clear the console:
-`console.clear()` => will display *console was cleared*
+`console.clear()` => will display _console was cleared_
 
 ### time, timeEnd
 
 Will display the amount of time the code took to run, they should use the same label:
+
 ```javascript
 console.time('timer')
 const functionName = () => functionBody...
 functionName()
 console.timeEnd('timer')
 ```
- => will display the time it took for the code to execute in seconds
+
+=> will display the time it took for the code to execute in seconds
 
 ### group, groupEnd
 
 Will display the content in a separate block and which will be indented, they should use the same label:
+
 ```javascript
-console.group('group1'); 
-  console.warn('warning'); 
-  console.error('error'); 
-  console.log('I belong to a group'); 
-console.groupEnd('group1'); 
+console.group('group1');
+console.warn('warning');
+console.error('error');
+console.log('I belong to a group');
+console.groupEnd('group1');
 console.log('I dont belong to any group');
 ```
- => will display the time it took for the code to execute in seconds
 
 ### styling the logs
 
-Use CSS and the **%c** parameter to style the logs:  
+Use CSS and the **%c** parameter to style the logs:
+
 ```javascript
-const spacing = '10px'; 
-const styles =  `padding: ${spacing}; background-color: white; color: red; font-style: italic; border: 1px solid black; font-size: 2em;`; 
-console.log('%cI am a styled log', styles);
+const spacing = '10px';
+const styles = `padding: ${spacing}; background-color: white; color: red; font-style: italic; border: 1px solid black; font-size: 2em;`;
+const styledLog = 'I am a styled log';
+console.log(`%c${styledLog}`, styles);
 ```
+
 => will display the message with some styling
 
 ---
@@ -313,7 +318,7 @@ Every other values
 Will make a copy of an array(like the slice() method) or an object.  
 `const array = [1,2,3]`  
 `copiedArray = [...array]` => new array  
-`const person = {name: 'Max', age: 45}`   
+`const person = {name: 'Max', age: 45}`  
 `copiedPerson = {...copiedPerson}` => new object
 
 ---
@@ -994,7 +999,7 @@ will return **-1** if it doesn't find anything.
 Will return an element if it exists in an array
 Can take as parameters every items in the array, the index of each element and the entire array.
 `const returnElement = arr.find(item => item === elementToFind)`
-`array.find((items, index, entireArray) => {})`
+`array.find((item, index, entireArray) => {})`
 
 ### findIndex()
 
@@ -1148,7 +1153,7 @@ Brackets notation:`objectName['propertyToAdd'] = value` // allows variables to b
 
 On existing property:
 Dot notation :`objectName.existingPropertyToUpdate = value`
-Brackets notation:`objectName['existingPropertyToUpdate'] = value`
+Brackets notation:`objectName['existin gPropertyToUpdate'] = value`
 
 ### Delete
 
@@ -1752,7 +1757,8 @@ Http methods:
 `xhr.send('POST','url','dataToSend')`
 
 ### fetch()
-The **fetch API** is a built in API in the browser as opposed to AXIO which can be used through a CDN.  
+
+The **fetch API** is a built in API in the browser as opposed to AXIO which can be used through a CDN.
 
 #### GET
 
@@ -1767,25 +1773,26 @@ fetch('URL')
   .catch(err => {
     console.log('fetch error:', err)
   })
-  
+
 ```
 
 #### POST
 
-Sending JSON data:  
+Sending JSON data:
+
 ```javascript
 fetch('postURL', {
   method: 'POST',
-  headers:{
-    'Content-Type':'application/json', // type of data we're sending
-    'Accept':'application/json' // type of data we expect to get back
+  headers: {
+    'Content-Type': 'application/json', // type of data we're sending
+    Accept: 'application/json', // type of data we expect to get back
   },
-  body:JSON.stringify({
-    data: 'DATA TO SEND'
-  })
+  body: JSON.stringify({
+    data: 'DATA TO SEND',
+  }),
 })
-.then(postResponse => console.log(postResponse))
-.catch(postError => console.log(postError))
+  .then((postResponse) => console.log(postResponse))
+  .catch((postError) => console.log(postError));
 ```
 
 ---
