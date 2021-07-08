@@ -1523,8 +1523,15 @@ Gives access to the history of the browser:
 
 ---
 
+The Date object will return the current date.
+
 `new Date()` // outputs the current date  
-`new Date().getTime()`  
+`new Date().getSeconds()` // will return the current seconds
+`new Date().getMinutes()` // will return the current minutes
+`new Date().getHours()` // will return the current hours
+`new Date().getMonth()` // will return the current month in number
+`new Date().getDate()` // will return the day of the week in number
+`new Date().getTime()` // will return the current time in milliseconds (i.e: 1625736763145)
 `new Date().getFullYear()` // will return the current year
 
 ---
