@@ -39,7 +39,9 @@ git push origin --delete <remoteBranchName>
 ```
 
 ---
+
 ## Rename branch
+
 ---
 
 If on another branch  
@@ -114,16 +116,24 @@ Will update the last commit and allow for the update of the commit's message
 
 Git stash saves the uncommited work
 
-- save
+- push
 - clear
 - list
 - pop
 - apply
 
-### save
+### push
+
+Will stash the modifications
 
 ```bash
-git stash save '[nameOfTheStash]'
+git stash push '[nameOfTheStash]'
+```
+
+Will stash the **unstaged** modifications
+
+```bash
+git stash push --keep-index '[nameOfTheStash]'
 ```
 
 ### apply
@@ -142,7 +152,7 @@ git stash apply stash@{[stashNumber]}
 
 Connect to the production server using SSH.
 `ssh [name]@[url] -p [portNumber]`
-i.e: `ssh icsfrdjg@ssh.cluster056.hosting.ovh.net -p 22`
+i.e: `ssh ssh://icsfrai@ssh.cluster028.hosting.ovh.net:22`
 Create a git folder. i.e: [appName.git]
 cd into the folder and initialize git: `cd [appName.git] && git init --bare`
 Create a **post-receive** bash file in the hooks/ folder: `touch [appName.git]/hooks/post-receive`
