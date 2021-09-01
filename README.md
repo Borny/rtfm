@@ -1,17 +1,25 @@
 # Read The Fucking Manual
 
 - Angular
+- Clean Code
+- Firebase
+- Git
 - Heroku
 - HTML
 - Ionic
 - Javascript
 - MongoDB
 - NodeJS
-- React-Native
+- Postgre-SQL
 - PWA
+- Python
+- Raspberry
+- React-Native
+- Redux
 - RXJS
 - SSH
 - Stripe
 - TypeScript
 - Vim
+- Vue
 - Webpack
