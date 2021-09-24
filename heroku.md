@@ -19,6 +19,8 @@ In the CLI only
 
 ## Clone the heroku repo
 
+When switching projects, clone the corresponding remote:
+
 `heroku git:remote -a <appName>`
 
 ## git push

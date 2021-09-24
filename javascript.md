@@ -83,7 +83,7 @@ Line break : **\n**
 
 Changing a type to another. i.e: number to string.  
 `[value].toString()` // turns a number to a string  
-`+string` // turns a string to a number
+`+string` // turns a string to a number. This is equal to : `parseFloat(string)`
 
 ### typeof
 
@@ -143,6 +143,19 @@ throw { message: 'message to print' };
 
 ```javascript
 try {
+  // code to test (e.g: http request)
+} catch (error) {
+  // fallback if the previous code doesnt work
+} finally {
+  // code that should run no matter what (rarely used)
+}
+
+
+const name = 'Spike'
+try {
+  if(name === 'Jet'){
+    
+  }
   // code to test (e.g: http request)
 } catch (error) {
   // fallback if the previous code doesnt work

@@ -132,15 +132,11 @@ git stash push '[nameOfTheStash]'
 
 Will stash the **unstaged** modifications
 
-```bash
-git stash push --keep-index '[nameOfTheStash]'
-```
+`git stash push --keep-index '[nameOfTheStash]'`
 
 ### apply
 
-````bash
-git stash apply stash@{[stashNumber]}
-```
+`git stash apply stash@{[stashNumber]}`
 
 ---
 
@@ -248,6 +244,6 @@ Add the module to the project:
 Build the app:
 `ionic build --prod -- --base-href https://<username>.github.io/<repository>/`
 
-Run the command to deploy the required code (i.e: in the www folder after a build) and create a new gb-pages branches that will only have the code necessary to run the app in production mode:
+Run the command to deploy the required code (i.e: in the www folder after a build) and create a new gb-pages branches that will only have the code necessary to run the app in production mode:  
 `npx angular-cli-ghpages --dir=www`
-````
+

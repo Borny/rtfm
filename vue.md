@@ -1043,7 +1043,7 @@ Parent component:
 <template>
   <customp-form-control v-model="nameOfEvent"></customp-form-control>
   // same as :
-  <customp-form-control  :model-value="" @update:modelValue=""></customp-form-control>
+  <customp-form-control :model-value="" @update:modelValue=""></customp-form-control>
 </template>
 ```
 
