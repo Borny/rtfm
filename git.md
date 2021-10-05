@@ -4,6 +4,7 @@
 - Delete branch
 - Rename branch
 - Log
+- Changes
 - Add
 - Commit
 - Stash
@@ -68,6 +69,11 @@ Logs the commits starting with the latest
 
 Logs everything that happened (commit, merge, pull, ...)
 `git reflog`
+
+## Changes
+
+See changes in the log history:  
+`git log -p -[numberOfCommit]`
 
 ---
 
@@ -246,4 +252,3 @@ Build the app:
 
 Run the command to deploy the required code (i.e: in the www folder after a build) and create a new gb-pages branches that will only have the code necessary to run the app in production mode:  
 `npx angular-cli-ghpages --dir=www`
-

@@ -103,9 +103,9 @@ They listen and react to all events.
 
 ### Lifecycle events
 
-Install: will install the service worker  
-Activate: will activate the service worker everytime the page is reloaded
-Fetch: will be triggered for every fetch event
+- Install =>  will install the service worker  
+- Activate => will activate the service worker everytime the page is reloaded
+- Fetch => will be triggered for every fetch event
 
 ### Register and activate
 
