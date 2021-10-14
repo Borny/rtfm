@@ -1,9 +1,12 @@
 # Heroku
 
+- install
 - login
 - logout
 - git push
 - logs
+
+## Install
 
 ## Login
 
