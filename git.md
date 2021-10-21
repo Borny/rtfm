@@ -10,6 +10,7 @@
 - Stash
 - Hooks
 - Github Pages
+- Git clone SSH
 
 ---
 
@@ -252,3 +253,13 @@ Build the app:
 
 Run the command to deploy the required code (i.e: in the www folder after a build) and create a new gb-pages branches that will only have the code necessary to run the app in production mode:  
 `npx angular-cli-ghpages --dir=www`
+
+## Git clone SSH
+
+Git clone using SSH requires the client's key to be stored in Github.
+
+- Go to settings/SSH and GPG keys
+- Click the **New SSH key** button
+- Enter a name for the key
+- Copy the key from the .ssh/id_rsa.pub file on the client's machine
+- git clone [URL to clone]
