@@ -27,6 +27,10 @@
 - Function Overload
 - Optional Chaining
 - Nullish Coalescing
+- Generic => ???? **TO COMPLETE**
+- Decorator => ???? **TO COMPLETE**
+- Namespaces
+- ES Modules
 
 ## About
 
@@ -512,7 +516,7 @@ const employeeOne: ElevatedEmployee = {
 
 ## Type Guards
 
-Checking for a property type using the **in** keyword, before doing something with it:  
+Checking for a property type using the **in** keyword, before doing something with it:
 
 ```typescript
 interface Admin {
@@ -656,4 +660,89 @@ console.log(result); // will print out an empty string as fetchedData is neither
 const fetchedData = null;
 const result = fetchedData ?? 'Default value';
 console.log(result); // will print out Default value as fetchedData is null
+```
+
+## Generic
+
+## Decorator
+
+## Namespaces
+
+Will allow the App to splitted into multiple files.
+
+Creating a file to import:
+
+(user-interface.ts)
+
+```typescript
+namespace App {
+  export interface User {
+    id: string;
+    name: string;
+    age: number;
+  }
+}
+```
+
+Main file:
+
+```typescript
+// Importing the interface
+/// <reference path="user-interface.ts"/>
+
+namespace App {
+  // The namespace must be the same
+  // The interface can then be used
+  const user: User = { id: '0.79865', name: 'Spike', age: 34 };
+}
+```
+
+By default **typescript** will compile all the file separately. They can all be merged into the same file by updating the **tsconfig.json**:
+
+```json
+"module": "amd",
+"outFile": "./folderName/fileName.js" => i.e: ./dist/bundle.js
+```
+
+Then in the **index.html**, update the src attribute for the js file to : <script src="dist/bundle.js">
+
+## ES Modules
+
+Like **namespaces**, it allows the App to be splitted into multiple files but using a different syntax:
+
+File to import:
+
+(project.ts)
+
+```typescript
+export class Project {
+  constructor(
+    public id: string,
+    public title: string,
+    public description: string,
+    public people: number,
+    public status: ProjectStatus
+  ) {}
+}
+```
+
+Main file:
+
+```typescript
+import { Project } from 'pathToFile.js'; // => !!IMPORTANT!!: .js should be added as the compiled code will need it in the end
+
+const newProject = new Project(
+  Math.random().toString(),
+  'whatever',
+  'like I said',
+  1000,
+  'active'
+);
+```
+
+Updating the **tsconfig.json**:
+
+```json
+"module": "es2015",
+// "outFile": "./folderName/fileName.js" => should be commented out
 ```

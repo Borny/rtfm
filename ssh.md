@@ -2,6 +2,7 @@
 
 - About
 - SSH Daemon
+- IP - Internet Protocol
 - SSH-agent
 - SSH Client
 - SSH Server
@@ -10,12 +11,35 @@
 
 ## About
 
-SSH - Secure Socket Shell - Secure Shell: is a **cryptographyc network protocol**
+SSH - Secure Socket Shell - Secure Shell: is a **cryptographyc network protocol** just like **http** is another type of protocol.
 
 ## SSH daemon
 
 **sshd** is a program that runs as a background process. The letter _d_ in sshd stands for **daemon**.  
 It constantly listens to TCP/IP port for client connection requests.
+
+## IP - Internet Protocol
+
+There are two kind of IP addresses: **Private** / **Public**
+
+### Private
+
+They are used in LAN(Local Area Network - IPv4)
+
+They are provided by the WIFI.  
+They start with:
+
+- 10.x.x.x
+- 172.16.x.x
+- 172.31.x.x
+- 192.168.x.x
+
+The value **x** goes from 0 to 255.
+
+### Public
+
+They are used to connect to external networks.  
+They range from 0.0.0.0 to 255.255.255.255
 
 ## SSH-agent
 
@@ -37,7 +61,8 @@ Adding a key:
 
 ## SSH Client
 
-The SSH client needs to be installed on the device you want to connect **from**. It is installed by default on Linux.
+The SSH client needs to be installed on the device you want to connect **from**. It is installed by default on Linux.  
+Think of the SSH Client as a _Web Browser_, it will make the requests.
 
 To install the open source ssh client:  
 `sudo apt-get install openssh-client`
@@ -50,7 +75,8 @@ To install the open source ssh client:
 
 ### About
 
-The SSH Server will allow the device to be connected **to** like a server. It is not installed by default on Linux.
+The SSH Server will allow the device to be connected **to** like a server. It is not installed by default on Linux.  
+It can be thought of as a _Web Server_. It will handle the oncoming connection requests.
 
 ### Install
 

@@ -1,9 +1,5 @@
 # JS
 
-```javascript
-
-```
-
 - Expression vs Statement
 - Quotes
 - Data Types
@@ -41,6 +37,7 @@
 - Http request
 - Modules
 - File Reader
+- Hoisting
 
 ---
 
@@ -150,11 +147,9 @@ try {
   // code that should run no matter what (rarely used)
 }
 
-
-const name = 'Spike'
+const name = 'Spike';
 try {
-  if(name === 'Jet'){
-    
+  if (name === 'Jet') {
   }
   // code to test (e.g: http request)
 } catch (error) {
@@ -892,6 +887,25 @@ Script tags can be added like any other tag.
 `script.defer = true;`  
 `document.head.append('script')`  
 This will insert a script inside the head tag
+
+---
+
+## Strings
+
+---
+
+- trim
+<!-- - toUppercase
+- toLowercase -->
+
+### trim()
+
+Will delete white spaces before and after the string:
+
+```javascript
+const text = ' some text here     ';
+text.trim() = 'some text here'
+```
 
 ---
 
@@ -1894,3 +1908,7 @@ reader.readAsDataURL([fileToRead]);
 ```
 
 **onload** and **loadend** are basically the same but loadend holds more informations
+
+## Hoisting
+
+When parsing the file, the browser (or the Javascript task runner) will place all the functions at the top of the file. This is called **hoisting** and makes it possible to call a function **before** declaring it.
