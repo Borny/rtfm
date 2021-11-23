@@ -664,6 +664,8 @@ console.log(result); // will print out Default value as fetchedData is null
 
 ## Generic
 
+Type of another Type
+
 ## Decorator
 
 ## Namespaces

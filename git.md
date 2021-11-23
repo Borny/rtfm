@@ -74,7 +74,7 @@ Logs everything that happened (commit, merge, pull, ...)
 ## Changes
 
 See changes in the log history:  
-`git log -p -[numberOfCommit]`
+`git log -p -[commitNumber]`
 
 ---
 
@@ -88,9 +88,9 @@ Will **staged** the modified files
 - add -p
 - reset --mixed
 
-`git add .` // will add all files: new and updated ones  
-`git add -p` // will list all the changes in the updated files and allow the selection of which changes will be staged for commit. It will not take into account the new files
-`git reset --mixed` // will unstaged the files
+`git add .` => will add all files: new and updated ones  
+`git add -p` => will list all the changes in the updated files and allow the selection of which changes will be staged for commit. It will not take into account the new files  
+`git reset --mixed` => will unstaged the files
 
 ---
 
@@ -113,7 +113,7 @@ Will undo the last commit
 ### Amend
 
 Will update the last commit and allow for the update of the commit's message
-`git --amend`
+`git commit --amend`
 
 ---
 
@@ -153,13 +153,13 @@ Will stash the **unstaged** modifications
 
 ### Deploy on production server
 
-Connect to the production server using SSH.
-`ssh [name]@[url] -p [portNumber]`
-i.e: `ssh ssh://icsfrai@ssh.cluster028.hosting.ovh.net:22`
-Create a git folder. i.e: [appName.git]
-cd into the folder and initialize git: `cd [appName.git] && git init --bare`
-Create a **post-receive** bash file in the hooks/ folder: `touch [appName.git]/hooks/post-receive`
-Make the script executable: `chmod +x post-receive`
+Connect to the production server using SSH.  
+`ssh [name]@[url] -p [portNumber]`  
+e.g: `ssh ssh://icsfrai@ssh.cluster028.hosting.ovh.net:22`  
+Create a git folder. i.e: [appName.git]  
+`cd` into the folder and initialize git: `cd [appName.git] && git init --bare`  
+Create a **post-receive** bash file in the hooks/ folder: `touch [appName.git]/hooks/post-receive`  
+Make the script executable: `chmod +x post-receive`  
 Populate it with the required code. i.e:
 
 ```bash
@@ -185,13 +185,18 @@ rm -rf $TARGET
 mv $TEMP $TARGET
 ```
 
-On the local repo, add a remote pointing to the server: `git remote add [remoteName]`
+On the local repo, add a remote pointing to the server: `git remote add [remoteName]`  
 Push to the production repo: `git push [remoteName] [localBranchToPush]`
 
-_ADD SSH KEY TO SERVER_
-The first thing you’ll need to do is make sure you’ve run the keygen command to generate the keys:
-`ssh-keygen -t rsa`
-Then use this command to push the key to the remote server, modifying it to match your server name.
+Example:  
+_Deploying on an OVH server_  
+`git remote add ovh icsfrai@ssh.cluster028.hosting.ovh.net:icsfrance.git`  
+`git push ovh master`
+
+_ADD SSH KEY TO SERVER_  
+The first thing you’ll need to do is make sure you’ve run the keygen command to generate the keys:  
+`ssh-keygen -t rsa`  
+Then use this command to push the key to the remote server, modifying it to match your server name.  
 `cat ~/.ssh/id_rsa.pub | ssh user@hostname 'cat >> .ssh/authorized_keys'`
 
 ### Angular deploy
@@ -261,5 +266,5 @@ Git clone using SSH requires the client's key to be stored in Github.
 - Go to settings/SSH and GPG keys
 - Click the **New SSH key** button
 - Enter a name for the key
-- Copy the key from the .ssh/id_rsa.pub file on the client's machine
+- Copy the key from the `.ssh/id_rsa.pub` (on WSL2 `~/.ssh/id_rsa.pub`) file on the client's machine
 - git clone [URL to clone]

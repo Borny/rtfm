@@ -1,6 +1,5 @@
 # Angular Cheat Sheet
 
-- NGXS / NGRX
 - Angular CLI
 - Types
 - Binding
@@ -13,14 +12,8 @@
 - Pipes
 - HTTP request
 - Authentication
+- NGXS / NGRX
 - Test
-
-## NGXS / NGRX
-
-State management
-
-### NGRX: 
-https://medium.com/angular-in-depth/adding-ngrx-to-your-existing-applications-3175d2227672
 
 ---
 
@@ -31,7 +24,8 @@ https://medium.com/angular-in-depth/adding-ngrx-to-your-existing-applications-31
 ### Creating a new project
 
 `ng new --minimal=true|false --routing=true|false --style=css|sass|scss|less [projectName}`  
-Flags available for creating a new project/component/service/etc :  
+Flags available for creating a new project/component/service/etc :
+
 - --minimal=true|false : testing frameworks
 - --routing=true|false : routing
 - --style=css|sass|scss|less : styles files
@@ -47,8 +41,10 @@ _ViewEncapsulation_ : définie la façon dont un component sera créé.
 **ShadowDom**: Angular va créé un Web Component
 
 ## Types
+
 Types are needed in Angular as it uses Typescript. They make developping easier by highlighting errors.
 Types:
+
 - string
 - number
 - boolean
@@ -58,6 +54,7 @@ Types:
 - etc...
 
 ### Generic type
+
 A generic type is a type of which we know the returned value of:
 `<{valueName: valueType}>`
 
@@ -136,7 +133,7 @@ i.e :`this.renderer.setStyle(this.elRef.nativeElemnt)`
 
 Removes/replace element from the DOM : *ngIf, *ngFor
 
-### *ngFor
+### \*ngFor
 
 Renders a list from an array.
 
@@ -188,30 +185,27 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: '/[routeName]',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: '[routeName]',
-    component: [componentName]
+    component: [componentName],
   },
   {
     path: '[:param]',
-    component: [componentDetailName]
+    component: [componentDetailName],
   },
   {
     path: '**',
-    component: [componentName]
+    component: [componentName],
   },
-]
+];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(appRoutes),
-  ],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(appRoutes)],
+  exports: [RouterModule],
 })
-
-export class AppRouting{}
+export class AppRouting {}
 ```
 
 ---
@@ -289,34 +283,46 @@ import { Router } from '@angular/router'
 `this.route.navigate('/routeName')`
 
 ### Get params from the URL
+
 Use the ActivatedRoute module
 
 #### Route param
-In the route module: 
-``` typescript
-path: ':[paramName]'
+
+In the route module:
+
+```typescript
+path: ':[paramName]';
 ```
 
-``` typescript
-const param = this.route.snapshot.params('[paramName]')
+```typescript
+const param = this.route.snapshot.params('[paramName]');
 ```
+
 **or**
-``` typescript
+
+```typescript
 const param = this.route.params.subscribe((param: Params) => {this.[customProperty] = param})
 ```
 
 #### Other params
+
 => Setting the param
-``` typescript
-this.route.navigate([`./[pathName]`], { queryParams: { [paramKeyName]: `[paramValueName]` } });
+
+```typescript
+this.route.navigate([`./[pathName]`], {
+  queryParams: { [paramKeyName]: `[paramValueName]` },
+});
 ```
 
 => Getting the param
-``` typescript
-this.route.snapshot.queryParamMap.get('[paramKeyName]')
+
+```typescript
+this.route.snapshot.queryParamMap.get('[paramKeyName]');
 ```
+
 **or**
-``` typescript
+
+```typescript
 const param = this.route.queryParamMap.subscribe((param: Params) => {this.[customProperty] = param})
 ```
 
@@ -462,10 +468,12 @@ In the ts file:
 ```
 
 #### setValue()
+
 Will set the values of **all** the controls
 `this.[formName].setValue()`
 
 #### patchValue()
+
 Will set the values of the designated control **only**
 `this.[formName].patchValue()`
 `this.[formName].get('formControlName').up`
@@ -498,7 +506,8 @@ Transforms output in the Template.
 `{{ output | [pipe]: ['parameter']}}`
 
 ### Custom Pipe
-``` typescript
+
+```typescript
 import { Pipe, PipeTransform} from '@angular/core';
 @Pipe({
   name: '[customPipeName]'
@@ -509,23 +518,32 @@ export class [CustomPipeClassName] implement PipeTransform{
   }
 }
 ```
+
 ---
+
 ## HTTP request
+
 ---
+
 ### Anatomy of a request
+
 - Http Verb : post, get, put, delete, patch
 - URL (API Endpoint) : http://www.../posts/1
 - Headers (Metadata) : {"Content-Type": "application/json"}
 - Body (post, put, patch and delete methods only): Object that will be send with the request
 
 ---
+
 ## Interceptors
+
 ---
 
 Functions that will run with any outgoing request.
 
 ---
+
 ## Authentication
+
 ---
 
 ### Sign Up
@@ -546,19 +564,28 @@ this.http.post<**ResponseType**>(
 
 ```javascript
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import {
+  CanActivate,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  UrlTree,
+} from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
   canLoad(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    state: RouterStateSnapshot
+  ):
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree>
+    | boolean
+    | UrlTree {
     return true;
   }
-  
 }
 ```
 
@@ -571,31 +598,42 @@ It will prevent the user from reaching the page but will **still load** the modu
 Will prevent the user from reaching the page but will **not load** the module. _Better in case of lazy loading_
 
 ---
+
 ## Animations
+
 ---
-``` javascript
-  animations: [
-    trigger('[CustomAnimationName]', [
-      transition('* => *', [ // each time the binding value changes
-        query(':leave', [ // :leave is equal to *=> void
-          stagger(100, [
-            animate('0.5s', style({ opacity: 0 }))
-          ])
-        ], { optional: true }),
-        query(':enter', [ // :enter is equal to void => *
+
+```javascript
+animations: [
+  trigger('[CustomAnimationName]', [
+    transition('* => *', [
+      // each time the binding value changes
+      query(
+        ':leave',
+        [
+          // :leave is equal to *=> void
+          stagger(100, [animate('0.5s', style({ opacity: 0 }))]),
+        ],
+        { optional: true }
+      ),
+      query(
+        ':enter',
+        [
+          // :enter is equal to void => *
           style({ opacity: 0 }),
-          stagger(100, [
-            animate('0.5s', style({ opacity: 1 }))
-          ])
-        ], { optional: true })
-      ])
-    ])
-  ]
+          stagger(100, [animate('0.5s', style({ opacity: 1 }))]),
+        ],
+        { optional: true }
+      ),
+    ]),
+  ]),
+];
 ```
 
-``` html
-<div [@CustomAnimationName]> </div>
+```html
+<div [@CustomAnimationName]></div>
 ```
+
 ---
 
 ## Local Storage
@@ -652,5 +690,122 @@ Add this property to the ngsw-config.json file:
 ]
 ```
 
+## NGXS / NGRX
+
+State management
+
+### NGRX:
+
+https://medium.com/angular-in-depth/adding-ngrx-to-your-existing-applications-3175d2227672
+
 ## Test
 
+- Integration test
+- Unit test
+- Suites
+- Specifications
+- Structure of a test
+- Filter testing
+- Fixture => wraps the component
+- DebugElement => wraps the native DOM element (the HTML template: app-component-name)
+
+### Integration test
+
+An **Integration test** includes ('integrates') the dependencies.
+
+### Suites
+
+An **Unit test** replaces the dependencies with fakes in order to isolate the code under test.  
+Replacing a dependency is called **stubbing** or **mocking**.
+
+### Suites
+
+A Test consists of one or more **suites**. A **suite** is declared with a **describe** block:  
+**describe** takes two parameters:
+
+- a string to describe the test
+- a function containing the suite definition
+
+```typescript
+describe('suite description', () => {});
+```
+
+**describe** methods can be nested:
+
+```typescript
+describe('suite description', () => {
+  describe('suite description', () => {});
+});
+```
+
+### Specifications
+
+Each **suit** consists of one or more **specifications** or **specs**.  
+A **spec** is declared with an **it** block:
+
+```typescript
+describe('suite description', () => {
+  it('Spec description', () => {});
+});
+```
+
+### Structure of a test
+
+A test consists generally of three phases:
+
+- Arrange
+- Act
+- Assert
+
+#### Arrange
+
+Preparation and set up of the test.  
+A set up that is shared in multiple specs can be defined once in a function:
+
+- beforeAll()
+- afterAll()
+- beforeEach()
+- afterEach()
+
+```typescript
+describe('suite description', () => {
+  beforeAll(() => {
+    // this function will be called before each specification
+    console.log('something interesting...');
+  });
+  it('Spec 1 description', () => {});
+  it('Spec 2 description', () => {});
+});
+```
+
+#### Act
+
+Interaction with the code happens: method called, button clicked...
+
+#### Assert
+
+The code behavior is checked and verified: actual output compared to the expected output
+
+### Filter testing
+
+- the 'f' prefix
+- with ng test
+
+#### the 'f' prefix
+
+Adding the **f** prefix will only run this test.  
+It can be added to the _describe_ or _it_ methods:
+
+```typescript
+describe('suite description', () => {
+  fit('Spec 1 description', () => {
+    // only this specification will run
+  });
+  it('Spec 2 description', () => {});
+});
+```
+
+#### with ng test
+
+Add the **--include** flag and the path of the files to test to the `ng test` command to only include certain spec files:  
+`ng test --include **/some-component.component.spec.ts` => only one test file will run

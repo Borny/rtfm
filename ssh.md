@@ -130,7 +130,7 @@ The authorized keys will be stored in: /home/userName/.ssh/authorized_keys
 ### Connecting Remotely
 
 `ssh userName@remoteIpAddress` : will connect to a remote server like an internet box.
-`ssh pi@[public ip of the bbox]`
+e.g: `ssh pi@[public IP of the bbox]`
 
 ## Debugging and logging
 
