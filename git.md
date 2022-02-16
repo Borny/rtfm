@@ -8,6 +8,7 @@
 - Add
 - Commit
 - Stash
+- Rebase
 - Hooks
 - Github Pages
 - Git clone SSH
@@ -145,6 +146,31 @@ Will stash the **unstaged** modifications
 
 `git stash apply stash@{[stashNumber]}`
 
+## Rebase
+
+- base
+- interactive
+
+### Base
+
+Merge the code from an origin branch into the local branch.
+
+`git rebase master` => will merge all the code from the master branch onto the local branch
+
+e.g:  
+`git checkout master` => will checkout on the local master branch
+`git pull` => will update the local master branch
+`git checkout` => will checkout on the previous branch
+`git rebase master` => will merge the code from the local master branch onto the local branch
+
+### Interactive
+
+Can be used to merge commits into each other.
+
+`git rebase -i [commitNumber]`
+Use 's' to squash a commit into the previous one.  
+Then use the desired commit message
+
 ---
 
 ## Hooks
@@ -163,26 +189,27 @@ Make the script executable: `chmod +x post-receive`
 Populate it with the required code. i.e:
 
 ```bash
-# The production folder
-TARGET="/srv/www/"
+#!/bin/bash
+TARGET="/home/clients/3ad4849b308c07bc6da4e58f445b589b/web"
+GIT_DIR="/home/clients/3ad4849b308c07bc6da4e58f445b589b/lcdq.git"
+BRANCH="master"
 
-# A temporary directory for deployment
-TEMP="/srv/tmp/"
-
-# The Git repo
-REPO="/srv/[appName].git"
-
-# Deploy the content to the temporary directory
-mkdir -p $TEMP
-git --work-tree=$TEMP --git-dir=$REPO checkout -f
-
-# cd $TEMP
-# do stuff like npm install...
-
-# Replace the production directory with the temporary directory
-# cd /
-rm -rf $TARGET
-mv $TEMP $TARGET
+while read oldrev newrev ref
+do
+ # only checking out the master (or whatever branch you would like to deploy)
+ if [ "$ref" = "refs/heads/$BRANCH" ];
+ then
+  echo "Ref $ref received. Deploying ${BRANCH} branch to production..."
+  rm -r $TARGET/*
+  git --work-tree=$TARGET --git-dir=$GIT_DIR checkout -f $BRANCH -- www/
+  cd $TARGET
+  cp -r www/* .
+  rm -rf www/
+ else
+  # perform more tasks like migrate and run test, the output of these commands will be shown on the push screen
+  echo "Ref $ref received. Doing nothing: only the ${BRANCH} branch may be deployed on this server."
+ fi
+done
 ```
 
 On the local repo, add a remote pointing to the server: `git remote add [remoteName]`  
@@ -243,7 +270,7 @@ GitHub Pages allows the deployment of static websites and apps.
 
 ### VanillaJS
 
-`git subtree push --prefix <nameOfTheSubfolderToDeploy> origin gh-pages`
+`git subtree push --prefix <nameOfTheSubfolderToDeploy> origin gh-pages`  
 i.e: `git subtree push --prefix build origin gh-pages`
 **or**
 `git push origin `git subtree split --prefix <nameOfTheSubfolderToDeploy> master`:gh-pages --force`

@@ -8,6 +8,7 @@
 - SSH Server
 - Connect via SSH
 - Debugging and logging
+- Copy
 
 ## About
 
@@ -119,9 +120,13 @@ The **public key** will be stored in /home/userName/ssh/id_rsa.pub
 
 The server needs to have the client's public key to identify it.  
 Copy the key from the client to server:  
-`ssh-copy-id userName@remoteIP` i.e: `ssh-copy-bob@192.168.x.x`
+`ssh-copy-id userName@remoteIP`  
+e.g: `ssh-copy-id -i ~/.ssh/id_rsa.pub 0j645_belacome@0h321.ftp.infomaniak.com`
 
 The authorized keys will be stored in: /home/userName/.ssh/authorized_keys
+
+Testing the newly added key:  
+`ssh 0j645_belacome@0h321.ftp.infomaniak.com` => should login the remote server via **ssh** without asking for the password.
 
 ### Connecting Locally
 
@@ -139,3 +144,16 @@ There are three levels of verbosity to display info. Add the following to the ss
 - -v (level 1)
 - -vv (level 2)
 - -vvv (level 3)
+
+## Copy
+
+Copy files or folders to and from the server.  
+`scp <source> <destination>`
+
+To copy a file from B to A while logged into B:  
+`scp /path/to/file username@a:/path/to/destination`
+
+To copy a file from B to A while logged into A:  
+`scp username@b:/path/to/file /path/to/destination`
+
+e.g: `scp someCoolFileName.md userName@remoteIpAddress:folderName`

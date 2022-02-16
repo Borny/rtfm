@@ -1076,7 +1076,8 @@ Will return a new array with the values corresponding to the filtering method
 
 ### reduce()
 
-Will return a new array. Will iterate on the array and do actions with all the elements combined. **It takes 2 parameters**: a **function** like all the other array methods and an **initial value**.
+Will iterate on the array and do actions with all the elements combined.  
+**It takes 2 parameters**: a **function** like all the other array methods and an **initial value**.  
 `numbers.reduce((prevValue, currentValue, idx, entireArray) => { // e.g: prevValue + currentValue}, initialValue)`
 
 ### split()

@@ -17,8 +17,11 @@ In the 'package.json' file, add a script to run webpack:
 Running a new script requires the **run** keyword: `npm run scriptToRun`
 
 ---
+
 ## Loaders
+
 ---
+
 Loarders are used to perform different tasks: JS, HTML, Sass, LiveReloading...
 
 - HTML
@@ -26,21 +29,27 @@ Loarders are used to perform different tasks: JS, HTML, Sass, LiveReloading...
 - Sass
 
 ### HTML
+
 `html-loader`
 
 ### Babel
-`babel-loader`
-`@babel/core`
+
+`babel-loader`  
+`@babel/core`  
 `@babel/preset-env`
 
 ### Sass
-`mini-css-extract-plugin`
-`node-sass`
-`sass-loader`
+
+`mini-css-extract-plugin`  
+`node-sass`  
+`sass-loader`  
 `style-loader`
 
 ---
+
 ## Server
+
 ---
+
 Install **webpack-dev-server** to enable live reload with every file change:  
 `npm i -D webpack-dev-server`
