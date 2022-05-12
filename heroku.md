@@ -20,7 +20,7 @@ In the CLI only
 
 `heroku logout`
 
-## Clone the heroku repo
+## Add remote
 
 When switching projects, clone the corresponding remote:
 

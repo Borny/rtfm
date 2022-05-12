@@ -2,6 +2,7 @@
 
 - Create branch
 - Delete branch
+- Remove remote
 - Rename branch
 - Log
 - Changes
@@ -42,6 +43,12 @@ git push origin --delete <remoteBranchName>
 ```
 
 ---
+
+## Remove remote
+
+```bash
+git remove remote <nameOfTheRemoteToRemove>
+```
 
 ## Rename branch
 
