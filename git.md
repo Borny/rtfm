@@ -153,7 +153,11 @@ Will stash the **unstaged** modifications
 
 `git stash apply stash@{[stashNumber]}`
 
+---
+
 ## Rebase
+
+---
 
 - base
 - interactive
