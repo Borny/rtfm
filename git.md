@@ -8,7 +8,7 @@
 - Changes
 - Add
 - Commit
-- Stash
+- [Stash](#stash)
 - Rebase
 - Hooks
 - Github Pages
@@ -111,7 +111,8 @@ Will **staged** the modified files
 
 ### Reset
 
-Will go back to the desired commit  
+Will go back to the desired commit
+`git reset HEAD~` => will undo the last commit  
 `git reset --soft <commitId>` // Will keep the changes  
 `git reset --hard <commitId>` // Will discard the changes
 
@@ -139,17 +140,32 @@ Git stash saves the uncommited work
 
 ### push
 
-Will stash the modifications
+Will stash the modifications:  
 
 ```bash
-git stash push '[nameOfTheStash]'
+git stash push '[nameOfTheStash]' // will stash all the staged modifications
+git stash push '<path/to/file>' // will stash only the given file
 ```
 
 Will stash the **unstaged** modifications
 
 `git stash push --keep-index '[nameOfTheStash]'`
 
+### clear
+
+Will **delete** all the stashes:  
+
+`git stash clear`
+
+### list
+
+Will display a list of all the stashes:  
+
+`git stash list`
+
 ### apply
+
+Will unstash the desired stash:  
 
 `git stash apply stash@{[stashNumber]}`
 
@@ -236,6 +252,10 @@ The first thing you’ll need to do is make sure you’ve run the keygen command
 `ssh-keygen -t rsa`  
 Then use this command to push the key to the remote server, modifying it to match your server name.  
 `cat ~/.ssh/id_rsa.pub | ssh user@hostname 'cat >> .ssh/authorized_keys'`
+
+_Deploying on infomaniaks with Angular Ionic_  
+`ionic build --prod` to build the production version in the **www** folder  
+`git push infomanik master` This will push the code directly on the remote branch **infomaniak**
 
 ### Angular deploy
 

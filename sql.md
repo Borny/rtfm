@@ -71,8 +71,7 @@ Go back to using the default mode by typing: `\js`.
 
 ### MySQL on Ubuntu
 
-https://doc.ubuntu-fr.org/mysql
-
+[MySQL Ubuntu](https://doc.ubuntu-fr.org/mysql)  
 
 Run the following commands to install the MySQL server on Ubuntu:
 
@@ -181,6 +180,7 @@ CREATE TABLE users (
 ### Default values
 
 Add **default values** to the tables when creating them:  
+
 ```sql
 CREATE TABLE <table-name> (
   <column_name> <TYPE> DEFAULT <value>
@@ -241,8 +241,7 @@ Update the table/column:
 
 ```sql
 ALTER TABLE <table-name>
-ALTER COLUMN <
-name> <TYPE>; -- PostgreSQL syntax 
+ALTER COLUMN <name> <TYPE>; -- PostgreSQL syntax 
 MODIFY COLUMN <column_name> <TYPE>; -- MySQL syntax
 ```
 
@@ -300,7 +299,7 @@ CREATE TABLE trips (
 
 A **surrogate key** is a column that is created specically for having a **PRIMARY KEY** like the **id** column.  
 Using a **composite** PRIMARY KEY consist of using one of the **Real** keys such as an _email address_ which should be unique.  
-It is also possible to use a **combination** of **multiple columns** as the PRIMARY KEY. 
+It is also possible to use a **combination** of **multiple columns** as the PRIMARY KEY.
 
 e.g:
 
@@ -450,7 +449,7 @@ WHERE id = 1
 
 ## Views
 
-Create a view based on a query:   
+Create a view based on a query:
 
 ```sql
 CREATE VIEW <view_name> AS SELECT * FROM <table_name> 
@@ -468,7 +467,7 @@ WHERE age BETWEEN 18 AND 34
 SELECT name FROM vip_user
 ```
 
---- 
+---
 
 ## JOIN
 

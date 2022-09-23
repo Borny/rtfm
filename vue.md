@@ -809,7 +809,7 @@ export default {
   setup() {
     const firstName = ref('');
     const lastName = ref('');
-      const concatName = computed(() => `${firstName.value} - ${lastName.value}`);
+    const concatName = computed(() => `${firstName.value} - ${lastName.value}`);
 
     function onUpdateFirstName(event) {
       console.log('event', event.target.value);
@@ -2036,6 +2036,7 @@ const mainStore = createStore({
             return context.commit('login')
         },
     }
+})
 ```
 
 ### Mapper Helpers

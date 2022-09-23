@@ -88,7 +88,7 @@ Add **--name** to add a name to a Container:
 Listing the processes docker created.
 
 Running processes:  
-`docker ps `
+`docker ps`
 
 All processes:  
 `docker ps -a`
@@ -170,8 +170,8 @@ Will print details of an Image:
 ### cp
 
 Copying files to and from a Container:  
-To: `docker cp path/to/copy [containerName]:target/path`
-From: `docker cp [containerName]:container/path target/path `
+To: `docker cp path/to/copy [containerName]:target/path`  
+From: `docker cp [containerName]:container/path target/path`
 
 ## Volumes
 
