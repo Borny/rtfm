@@ -235,7 +235,7 @@ To delete a Database and all its data:
 To delete a Table and all its data:  
 `DROP TABLE <table-name>`
 
-### Alter/Modify
+## Update/Alter
 
 Update the table/column:  
 
@@ -245,11 +245,20 @@ ALTER COLUMN <name> <TYPE>; -- PostgreSQL syntax
 MODIFY COLUMN <column_name> <TYPE>; -- MySQL syntax
 ```
 
-Example:
+**Examples:**
+
+**Updating the type** of a **column**  
 
 ```sql
 ALTER TABLE users
 MODIFY COLUMN first_name TEXT; -- MySQL syntax
+```
+
+**Droping** a column named _first\_name_  
+
+```sql
+ALTER TABLE users
+DROP COLUMN first_name; -- MySQL syntax
 ```
 
 ---

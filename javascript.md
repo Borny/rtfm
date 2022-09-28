@@ -130,13 +130,13 @@ This attribute will do the same as **defer** but will execute the script as soon
 
 ---
 
-### throw :
+### throw
 
 ```javascript
 throw { message: 'message to print' };
 ```
 
-### try - catch :
+### try - catch
 
 ```javascript
 try {
@@ -295,7 +295,7 @@ variable1 /= variable2;
 
 ### Operator precedence
 
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence
+<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence>
 
 In general, math operators have precedence on the logic operators. e.g : **+** has precedence over **&&**.
 
@@ -650,7 +650,7 @@ Avoid using the **if** statement by using the question mark operator to check fo
 
 ---
 
-### double bang !!
+### double bang
 
 The double exclamation marks/!! will coerce a value into a real boolean.  
 `const name = 'table'` => name is truthy.  
@@ -1297,7 +1297,7 @@ Classes can act as **blueprints** of objects. They make it easier to create simi
 Calling a class is called **Instantiating** a Class : `const variable = new ClassName()`.  
 They don't replace Objects, but Objects are built based on Classes
 
-### Creating the Class:
+### Creating the Class
 
 ```javascript
 class ClassName {
@@ -1665,7 +1665,7 @@ Promise.race([promise1(), promise2()]).then((dataOfTheFirstResolvedPromise) => {
 
 ### Promise.all()
 
-Will return either an array of all the promises resolved(the order of the result will match the order of the promises) or a result of one of the promises that failed.
+Will return either an array of all the promises resolved(the order of the result will match the order of the promises) or a result of one of the promises that failed.  
 If none rejected:
 
 ```javascript
