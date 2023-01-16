@@ -14,5 +14,4 @@
 - `select partition 1`
 - `format fs=[ntfs | fat] quick` => will format the drive to the desired format. **ntfs** is the most used format on Windows
 - `active`
-- [optional] => `assign letter=[letterToAssign]` => will assign a letter to the drive. i.e: Y,X,W.... 
- 
+- [optional] => `assign letter=[letterToAssign]` => will assign a letter to the drive. i.e: Y,X,W...  

@@ -1,10 +1,10 @@
 # Heroku
 
-- install
-- login
-- logout
-- git push
-- logs
+- [Install](#install)
+- [Login](#login)
+- [Logout](#logout)
+- [git push](#git-push)
+- [logs](#logs)
 
 ## Install
 

@@ -1,4 +1,4 @@
-# Vue
+# VueJS
 
 - Set up
 - Life Cycles
@@ -14,11 +14,11 @@
 - Vue files
 - Components
 - Asynchronous Components
-- Composition API
+- [Composition API](#composition-api)
 - Scoped styles
 - Forms
 - Routing
-- Animations
+- [Animations](#animations)
 - Vuex
 
 ## Set up
@@ -34,7 +34,7 @@
 
 #### Import Vue script
 
-Import the **vuejs** script in the index.html file **before** the js file.  
+Import the **vuejs** script in the index.html file **before** the js file.
 `<script src="https://unpkg.com/vue@next" defer></script>`
 
 #### JS
@@ -95,7 +95,7 @@ app.mount('#assignment');
 
 #### Vue CLI
 
-Install the Vue CLI:  
+Install the Vue CLI:
 `npm i -g @vue/cli`
 
 #### Create a Vue App
@@ -156,10 +156,10 @@ data() {
 
 ### v-bind
 
-`<img v-bind:src="imageSRC" />`  
-`<input v-bind:value="defaultInputValue" />`  
-or use the **shorthand** version:  
-`<img :src="imageSRC" />`  
+`<img v-bind:src="imageSRC" />`
+`<input v-bind:value="defaultInputValue" />`
+or use the **shorthand** version:
+`<img :src="imageSRC" />`
 `<input :value="defaultInputValue" />`
 
 ### v-link
@@ -168,7 +168,7 @@ or use the **shorthand** version:
 
 ### v-html
 
-`<p v-html="htmlProperty"></p>`  
+`<p v-html="htmlProperty"></p>`
 This should be used with caution as it can lead to security issues like XSS attacks
 
 ### ref
@@ -196,8 +196,8 @@ Methods are used with **event binding**. They shouldn't be used with data bindin
 
 ### v-on:click
 
-`<button v-on:click="methodToCall">Click me</button>`  
-**shorthand** version:  
+`<button v-on:click="methodToCall">Click me</button>`
+**shorthand** version:
 `<button @click="methodToCall">Click me</button>`
 
 ### v-on:input
@@ -278,7 +278,7 @@ Input modifiers:
 
 ## Computed Properties
 
-Methods should not be used in the DOM due to performance issues (just like in Angular) as Vue will run any methods present in the HTML code when the template is rerendered.  
+Methods should not be used in the DOM due to performance issues (just like in Angular) as Vue will run any methods present in the HTML code when the template is rerendered.
 Avoid placing logic in the template, instead use **Computed Properties**. They are used to handle data that depend on other data.
 
 ```html
@@ -310,7 +310,7 @@ const app = Vue.createApp({
 
 ## Watchers
 
-Watchers are used to watch property/data changes. They are usefull for _behind the scene_ actions.  
+Watchers are used to watch property/data changes. They are usefull for _behind the scene_ actions.
 They are not referenced in the template. They are only present in the JS file.
 
 ```javascript
@@ -351,7 +351,7 @@ const app = Vue.createApp({
 **:class** can be used to add CSS classes dynamically :
 
 `<div class="demo" :class="{someClass : conditionToEvaluate, randomClass: true}" @click="selectBox('A')"></div>`
-Array syntax:  
+Array syntax:
 `<div :class="['demo', {someClass : conditionToEvaluate, randomClass: true}]" @click="selectBox('A')"></div>`
 
 ## Conditional rendering
@@ -363,11 +363,11 @@ Array syntax:
 
 This will **remove** or **add** an element from the DOM depending on a condition.
 
-`<p v-if="true">This paragraph will be rendered in the DOM</p>`  
+`<p v-if="true">This paragraph will be rendered in the DOM</p>`
 `<p v-else>This paragraph will not be rendered in the DOM</p>`
 
-`<p v-if="array.length">This paragraph will be rendered in the DOM if the aray length is superior to 0</p>`  
-`<p v-else-if="!array.length">This paragraph will be rendered in the DOM if the array length is equal to 0</p>`  
+`<p v-if="array.length">This paragraph will be rendered in the DOM if the aray length is superior to 0</p>`
+`<p v-else-if="!array.length">This paragraph will be rendered in the DOM if the array length is equal to 0</p>`
 !Important => `v-else` should appear in the tag directly after the tag that has the `v-if` directive
 
 ### v-show
@@ -382,13 +382,13 @@ This will **remove** or **add** an element from the DOM depending on a condition
 
 ### v-for
 
-**v-for** can be used to render lists in the template. It accepts arrays, numbers and objects.  
+**v-for** can be used to render lists in the template. It accepts arrays, numbers and objects.
 It **will not rerendered** the entire list when an item is removed/added to the DOM, which could lead to performance issues.
 
 `goals = [ 'Complete the course', 'Master Vue', 'Build an awesome app with it !']`
 
-`<ul><li v-for="(goal, idx) in goals" :key="goal">{{ idx + 1 }} - {{ goal }}</li></ul>`  
-`<ul><li v-for="num in 10" :key="num">{{num}}</li></ul>`  
+`<ul><li v-for="(goal, idx) in goals" :key="goal">{{ idx + 1 }} - {{ goal }}</li></ul>`
+`<ul><li v-for="num in 10" :key="num">{{num}}</li></ul>`
 `<ul><li v-for="(value, key, idx) in {name: 'Peter',aka: 'Spiderman'}" :key="key">{{idx}} - {{key}} : {{value}}</li></ul>`
 
 !Important => the **key** attribute should always be used with _v-for_ as it will prevent unexpected behavior when adding/removing items from the list. It should be an unique identifier, usually the _id_ of the item.
@@ -402,7 +402,7 @@ A **Vue file** can only be used inside a Vue App, as Vue will compile the all th
 
 ### Vue file structure
 
-```Vue
+```html
 <template></template> // will hold the HTML code
 <script></script> // will hold the Javascript code
 <style></style> // will have the styling
@@ -412,7 +412,7 @@ A **Vue file** can only be used inside a Vue App, as Vue will compile the all th
 
 The Vue files need to be imported into the main JS file
 
-```Vue file - (i.e: App.vue)
+```html file - (i.e: App.vue)
 <template></template>
 <script>
 export default{
@@ -461,7 +461,7 @@ app.mount('#app')
 
 In the **App.vue**
 
-```Vue
+```html
 <template>
       <friend-contact></friend-contact> // will import the FriendContact component
 </template>
@@ -472,7 +472,7 @@ In the **App.vue**
 
 In the **App.vue**
 
-```Vue
+```html
 <template>
       <friend-contact></friend-contact> // will import the FriendContact component
       // or with a self-closing tag
@@ -493,7 +493,7 @@ export default{
 
 ### Props
 
-Passing data to a child component can be achieved using **props**.  
+Passing data to a child component can be achieved using **props**.
 !Important => a Prop value shouldn't be mutated(changed) inside the child component.
 
 - Using Props
@@ -503,7 +503,7 @@ Passing data to a child component can be achieved using **props**.
 
 Setting the data in the parent Vue file:
 
-```Vue
+```html
 <template>
   <friend-contact person-name="someNameProperty" person-details="someDetailsProperty"></friend-contact>
 </template>
@@ -521,7 +521,7 @@ export default{
 
 Retrieving the data in the child component:
 
-```Vue
+```html
 <template>
   <p>{{personName}} - {{personDetails}}</p>
 </template>
@@ -571,7 +571,7 @@ Events can be passed from the child component to the parent component.
 
 Parent component:
 
-```Vue
+```html
 <template>
   <friend-contact @event-from-child="methodToRun"></friend-contact>
 </template>
@@ -588,10 +588,10 @@ export default{
 
 Child component:
 
-The object **$emit** will be used to emit some values. It accpets as many arguments as we wish, but the first one will be the name of the event that will be used in the template of the parent component (@nameOfTheEvent="..."). The other arguments will be the data passed in the event.  
+The object **$emit** will be used to emit some values. It accpets as many arguments as we wish, but the first one will be the name of the event that will be used in the template of the parent component (@nameOfTheEvent="..."). The other arguments will be the data passed in the event.
 The propery **emit** will list all the events emitted by the child component. It is not required but will help in the development process as it can show warnings in the console just like the **props** property does.
 
-```Vue
+```html
 <template>
   <p>{{personName}} - {{personDetails}}</p>
 </template>
@@ -625,7 +625,7 @@ export default{
 
 Ancestor component:
 
-```Vue
+```html
 <template>
   <second-component>Nothing needs to be passed here</second-component>
 </template>
@@ -650,7 +650,7 @@ export default {
 
 Second component:
 
-```Vue
+```html
 <template>
   <final-component>Nothing needs to be passed here</final-component>
 </template>
@@ -662,7 +662,7 @@ export default {
 
 Final component. This component can retrive the data of the ancestor component using **Inject**:
 
-```Vue
+```html
 <template>
   <p>Final Component : {{this.dataProvided}}</p> // will display 'can be any value'
   <button @click="emitEvent(someValue)">Emit an event</button> // 'emitEvent' will emit 'someValue'
@@ -707,7 +707,7 @@ const router = createRouter({
 
 ## Composition API
 
-The standard way of using Vuejs is called the Options API.  
+The standard way of using Vuejs is called the Options API.
 The Composition API replaces the Options API and makes it easier to manage the data in a component.
 
 - setup
@@ -740,7 +740,7 @@ Use the **ref** method to make some properties reactive.
 
 ```javascript
 <script>
-import {  ref } from "vue"; // import the ref method
+import { ref } from "vue"; // import the ref method
 
 setup(){
   const someConst = ref('someValue')
@@ -758,7 +758,7 @@ setup(){
 
 Use the **computed** method to update properties in the template.
 
-```Vue
+```html
 <template>
   <input @input="onUpdateFirstName" />
   <input @input="onUpdateLastName" />
@@ -775,7 +775,7 @@ export default {
   setup() {
     const firstName = ref('');
     const lastName = ref('');
-      const concatName = computed(() => `${firstName.value} - ${lastName.value}`);
+    const concatName = computed(() => `${firstName.value} - ${lastName.value}`);
 
     function onUpdateFirstName(event) {
       console.log('event', event.target.value);
@@ -801,7 +801,7 @@ export default {
 
 Use the **watch** method to watch the properties changes.
 
-```Vue
+```html
 <script>
 import {ref, computed, watch } from 'vue';
 
@@ -848,7 +848,7 @@ Vue provides functions for the different life cycles:
 
 => There is an exeption for **createApp** and **beforeCreate** as these two are basically called inside the **setup()** method. So any code that would run inside them can be called in the **setup()** method.
 
-```Vue
+```html
 <script>
 import {onBeforeMount, onMounted, onBeforeUpdate, onUpdated, onBeforeUnmount, onUnmounted } from 'vue';
 
@@ -867,7 +867,7 @@ export default {
 
 Styles defined in the **style** tag of a component will affect the **entire** application by default:
 
-```Vue
+```html
 <style>
 header{
  background: blue;
@@ -879,7 +879,7 @@ header{
 
 By adding the **scoped** attribute the style will only affect the component it is attached to:
 
-```Vue
+```html
 <style scoped>
 header{
   background: blue;
@@ -906,7 +906,7 @@ header{
 
 In the **reusable** component:
 
-```Vue
+```html
 <template>
   <div>
     <slot></slot>
@@ -923,7 +923,7 @@ div {
 
 In some other component:
 
-```Vue
+```html
 <template>
 <component-name>
   <header>
@@ -938,7 +938,7 @@ In some other component:
 
 Multiple **slots** can be uesd by _naming_ them. Only one slot can be used as **default**, all others must be named:
 
-```Vue
+```html
 <template>
   <header>
     <slot name="header"></slot> // here the slot has a name attribute with the header parameter
@@ -951,7 +951,7 @@ Multiple **slots** can be uesd by _naming_ them. Only one slot can be used as **
 
 In some other component, use the **v-slot:NameOfTheslot** (or **#NameOfTheSlot**) attribute :
 
-```Vue
+```html
 <template>
 <component-name>
   <template v-slot:header> // here the template tag will display the header slot
@@ -969,7 +969,7 @@ In some other component, use the **v-slot:NameOfTheslot** (or **#NameOfTheSlot**
 
 Slots can have default content that will be displayed in all the components that use them:
 
-```Vue
+```html
 <template>
   <header>
     <slot name="header">
@@ -986,7 +986,7 @@ Slots can have default content that will be displayed in all the components that
 
 If a component doesn't use all the slots available, use v-if="$slots.NameOfTheSlot" to avoid loading an empty tag:
 
-```Vue
+```html
 <template>
   <header v-if="$slots.header"> // here Vue will filter the components using the slot named "header"
     <slot name="header">
@@ -1005,7 +1005,7 @@ Passing Props to a slot:
 
 Reusable component:
 
-```Vue
+```html
 <template>
   <section>
     <ul>
@@ -1029,7 +1029,7 @@ export default({
 
 Other component:
 
-```Vue
+```html
 <template>
   <reusable-component>
     <template #slotList="slotProps"> // will load the props
@@ -1049,7 +1049,7 @@ Other component:
 
 Components can be loaded using the **component** tag:
 
-```Vue
+```html
 <template>
   <button @click="setSelectedComponent('component-one')">Select One</button>
   <button @click="setSelectedComponent('component-two')">Select Two</button>
@@ -1076,7 +1076,7 @@ import ComponentTwo from './ComponentTwo.vue';
 
 The **keep-alive** tag will keep the component in the cache, so the component wil not be _destroyed_, it will not be removed from the DOM :
 
-```Vue
+```html
 <template>
   <button @click="setSelectedComponent('component-one')">Select One</button>
   <button @click="setSelectedComponent('component-two')">Select Two</button>
@@ -1095,7 +1095,7 @@ The **teleport** tag allows any content to be placed at the desired position in 
 - .some-css-classes
 - ...
 
-```Vue
+```html
 <template>
   <teleport to="body"> // now the dialog tag will be placed at the root of the HTML tree
     <dialog open>
@@ -1110,7 +1110,7 @@ The **teleport** tag allows any content to be placed at the desired position in 
 - Basic form-controls
 - Custom form-controls
 
-```Vue
+```html
 <template>
   <form @submit.prevent="submitForm"> // will submit the form without reloading the page
     <div class="form-control">
@@ -1191,7 +1191,7 @@ export default {
 
 Parent component:
 
-```Vue
+```html
 <template>
   <customp-form-control v-model="nameOfEvent"></customp-form-control>
   // same as :
@@ -1201,7 +1201,7 @@ Parent component:
 
 Child component:
 
-```Vue
+```html
 <template>
 
 </template>
@@ -1234,7 +1234,7 @@ export default({
 
 ### Install
 
-Install a routing package such as **vue-router**:  
+Install a routing package such as **vue-router**:
 `npm i --save vue-router@next`
 
 ### Creating the routes
@@ -1269,7 +1269,7 @@ app.mount('#app')
 
 Import the **router-view** tag in the desired component. It will act as a placeholder for the components to load:
 
-```Vue
+```html
 <template>
   <the-navigation></the-navigation>
   <main>
@@ -1282,7 +1282,7 @@ Import the **router-view** tag in the desired component. It will act as a placeh
 
 To navigate, use the **router-link** tags:
 
-```Vue
+```html
 <template>
   <header>
     <nav>
@@ -1303,7 +1303,7 @@ To navigate, use the **router-link** tags:
 
 Use the **this.$router** method:
 
-```Vue
+```html
 <template>
   <button @click="navigate">Navigate</button>
 </template>
@@ -1330,7 +1330,7 @@ The router adds two classes to the active link:
 - router-link-active
 - router-link-exact-active
 
-```Vue
+```html
 <style>
 a.router-link-active {
   /* Style goes here */
@@ -1357,7 +1357,7 @@ const router = createRouter({
 
 Retrieve the params in the component using the **$route** object:
 
-```Vue
+```html
 <script>
 export default {
   methods: {
@@ -1389,7 +1389,7 @@ const router = createRouter({
 
 Retrieve the params via the **Props** property:
 
-```Vue
+```html
 <script>
 export default {
   props: ['paramName']
@@ -1444,7 +1444,7 @@ const router = createRouter({
 
 In the parent component add another **router-link** tag:
 
-```Vue
+```html
 <template>
   <router-link></router-link> // the children will be loaded here
 </template>
@@ -1470,7 +1470,7 @@ const router = createRouter({
 
 Then in any component:
 
-```Vue
+```html
 <template>
   <router-link :to="someProperty">Navigate</router-link>
 </template>
@@ -1504,7 +1504,7 @@ const router = createRouter({
 
 Retrieving the query in the component:
 
-```Vue
+```html
 <script>
 export default {
   created() {
@@ -1541,7 +1541,7 @@ const router = createRouter({
 })
 ```
 
-```Vue
+```html
 <template>
   <main>
     <router-view></router-view> // will act as the "default" router, it doesn't need to be named
@@ -1570,7 +1570,7 @@ const router = createRouter({
 
 ### Navigation Guards
 
-Navigation guards are used to prevent the access of certain routes. Add a **meta** field to the routes item with some custom property to check when navigating.  
+Navigation guards are used to prevent the access of certain routes. Add a **meta** field to the routes item with some custom property to check when navigating.
 Then use the **beforeEach** method to check the meta property.
 
 ```javascript
@@ -1634,17 +1634,17 @@ export default router
 - Transition events
 - Disabling CSS Transitions
 - Animating lists
-- Animating Route changes
+- [Animating Route changes](#animating-route-changes)
 
 ### Transition component
 
 Vue has a **transition** component that can be added as a wrapper to any DOM element. It needs to be wrapped around one element only(with some exceptions, see #Transitioning between multiple elements) :
 
-```Vue
+```html
 <template>
   <div>
     <transition>
-      <div v-if="diplayDiv">Div to toggle...</div>
+      <div v-if="displayDiv">Div to toggle...</div>
     </transition>
     <button @click="displayDiv = !displayDiv">Toggle</button>
   </div>
@@ -1662,7 +1662,7 @@ It will add special classes to the tag:
 
 These classes can then be used in the **style** tag:
 
-```Vue
+```javascript
 <style>
 .v-enter-from{}
 .v-enter-to{}
@@ -1675,8 +1675,8 @@ These classes can then be used in the **style** tag:
 
 ### Custom CSS Transition class
 
-The special classes can be named by adding attributes to the transition tag.  
-Avaiable attributes :
+The special classes can be named by adding attributes to the transition tag.
+Available attributes :
 
 - name
 - enter-to-class
@@ -1686,7 +1686,7 @@ Avaiable attributes :
 - leave-from-class
 - leave-active-class
 
-```Vue
+```html
 <template>
   <div>
     <transition name="any-name"> // here the name attribute is added
@@ -1712,7 +1712,7 @@ Avaiable attributes :
 
 The transition component can be wrapped around multiple elements as long as we ensure that only **one** element will be visible at a time :
 
-```Vue
+```html
 <template>
   <div>
     <transition mode="out-in">
@@ -1741,7 +1741,7 @@ Vue has **transition events** that can be listened to :
 - @enter-cancelled
 - @leave-cancelled
 
-```Vue
+```html
 <template>
   <div>
     <transition
@@ -1767,7 +1767,7 @@ The CSS classes can be disabled if the animations are only controled with Javasc
 
 Add `:css="false"` to the transition tag.
 
-```Vue
+```html
 <template>
   <div>
     <transition
@@ -1785,7 +1785,7 @@ Add `:css="false"` to the transition tag.
 
 Use the **transition-group** tag to animate lists. It will replace the **ul** tag :
 
-```Vue
+```html
 <template>
   <div>
     <transition-group tag="ul" name="list">
@@ -1811,10 +1811,10 @@ Use the **transition-group** tag to animate lists. It will replace the **ul** ta
 
 ### Animating Route changes
 
-Route changes can be animated using the transition component inside the **router-view** tag.  
+Route changes can be animated using the transition component inside the **router-view** tag.
 _!IMPORTANT => the route components must have only **one** root element_.
 
-```Vue
+```html
 <template>
   <router-view v-slot="slotProps">
     <transition name="route" mode="out-in">
@@ -1859,7 +1859,7 @@ _!IMPORTANT => the route components must have only **one** root element_.
 
 ### Install
 
-Install via npm:  
+Install via npm:
 `npm i --save vuex@next`
 
 ### Create a store
@@ -1886,7 +1886,7 @@ const store = createStore({
 
 Accessing the data in a component via **$store**:
 
-```Vue
+```html
 <template>
   <p>{{ someName }}</p>
 </template>
@@ -1904,7 +1904,7 @@ export default {
 
 ### Mutations
 
-**Mutations** are like functions that will manage the state/data and will allow the components to make changes on those state/data but without directly changing their value.  
+**Mutations** are like functions that will manage the state/data and will allow the components to make changes on those state/data but without directly changing their value.
 They **shouldn't** have any asynchronous code inside them, for that use **actions** instead.
 
 ```javascript
@@ -1932,7 +1932,7 @@ const store = createStore({
 
 In any component, use the **$commit** method to call a method from the mutations object :
 
-```Vue
+```html
 <template>
     <p>{{ counter }}</p>
     <button @click="addOne">Add</button>
@@ -1972,7 +1972,7 @@ const store = createStore({
 })
 ```
 
-```Vue
+```html
 <script>
 export default {
   methods: {
@@ -1990,7 +1990,7 @@ export default {
 
 ### Getters
 
-The **state** shouldn"t be accessed directly, instead **Getters** should be used.  
+The **state** shouldn"t be accessed directly, instead **Getters** should be used.
 They are used to modify the state/data and then making them available to any components:
 
 ```javascript
@@ -2007,7 +2007,7 @@ const store = createStore({
 })
 ```
 
-```Vue
+```html
 <script>
 export default {
   computed: {
@@ -2046,7 +2046,7 @@ const mainStore = createStore({
 
 #### mapGetters
 
-```Vue
+```html
 <script>
 import {mapGetters} from 'vuex'
 
@@ -2062,7 +2062,7 @@ export default {
 
 #### mapActions
 
-```Vue
+```html
 <template>
 <button @click="nameOfTheAction({value: someValue})">Click</button>
 </template>

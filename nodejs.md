@@ -31,6 +31,7 @@
 - Web Socket
 - GraphQL
 - Deploying AWS
+- [Password Hashing](#password-hashing)
 
 ---
 
@@ -289,21 +290,24 @@ res.get('/', (req, res) => {
 
 ### Status code
 
-  #### Request success
-- 200 - OK	Everything worked as expected.
+#### Request success
+
+- 200 - OK Everything worked as expected.
 - 201 - Resource created
-    
+
 #### Request errors
-- 400 - Bad Request	The request was unacceptable, often due to missing a required parameter.
-- 401 - Unauthorized	No valid API key provided.
-- 402 - Request Failed	The parameters were valid but the request failed.
-- 403 - Forbidden	The API key doesn't have permissions to perform the request.
-- 404 - Not Found	The requested resource doesn't exist.
-- 409 - Conflict	The request conflicts with another request (perhaps due to using the same idempotent key).
-- 429 - Too Many Requests	Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+
+- 400 - Bad Request The request was unacceptable, often due to missing a required parameter.
+- 401 - Unauthorized No valid API key provided.
+- 402 - Request Failed The parameters were valid but the request failed.
+- 403 - Forbidden The API key doesn't have permissions to perform the request.
+- 404 - Not Found The requested resource doesn't exist.
+- 409 - Conflict The request conflicts with another request (perhaps due to using the same idempotent key).
+- 429 - Too Many Requests Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
   
 #### Server errors
-- 500, 502, 503, 504 - Server Errors	Something went wrong on the server's end. (These are rare.)
+
+- 500, 502, 503, 504 - Server Errors Something went wrong on the server's end. (These are rare.)
 
 ---
 
@@ -626,7 +630,7 @@ transporter
 
 ---
 
-Official doc: **https://express-validator.github.io/docs/**
+Official doc: **<https://express-validator.github.io/docs/>**
 
 Install **express-validator**:  
 `npm i --save express-validator`
@@ -764,3 +768,18 @@ Transfer Data instead of User Interfaces. They don't render views, only data.
 Upload the .zip folder containing the entire app.  
 Set the environment variables in the Software section.  
 Set up the ip address of AWS in the Mongo cluster.
+
+## Password Hashing
+
+**Password hashing** is the process of **transforming a string** into another much more complicated string using a tool.  
+Given the **same input** the **output** will always be the **same**.  
+
+### Rainbow Table Attack
+
+Since the hash of a string is always the same, a malicious person can try to hack into the database by providing the hashed version of very common passwords. And if there is a match then that person can ??? the original string.
+
+```javascript
+import {  }
+
+randomBytes(8) => returns a Buffer (= Array) that will be converted to a string
+```

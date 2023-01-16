@@ -7,7 +7,9 @@
 - Log
 - Changes
 - Add
-- Commit
+- [Origin](#origin)
+- [Commit](#commit)
+- [Reset](#reset)
 - [Stash](#stash)
 - Rebase
 - Hooks
@@ -102,22 +104,23 @@ Will **staged** the modified files
 
 ---
 
+## Origin
+
+Setting up the origin of a branch:  
+
+```bash
+git push -u origin <branch-name>
+# or
+git push --set-upstream origin <branch-name>
+
+```
+---
+
 ## Commit
 
 ---
 
-- Reset
 - Amend
-
-### Reset
-
-Will go back to the desired commit
-`git reset HEAD~` => will undo the last commit  
-`git reset --soft <commitId>` // Will keep the changes  
-`git reset --hard <commitId>` // Will discard the changes
-
-Will undo the last commit  
-`git reset --[hard || soft] HEAD~1`
 
 ### Amend
 
@@ -126,11 +129,19 @@ Will update the last commit and allow for the update of the commit's message
 
 ---
 
-## Stash
+## Reset
+
+Will go back to the desired commit:  
+
+`git reset --[hard || soft] HEAD~1`
+`git reset --soft <commitId>` // Will keep the changes  
+`git reset --hard <commitId>` // Will discard the changes
 
 ---
 
-Git stash saves the uncommited work
+## Stash
+
+Git stash saves the uncommited work:
 
 - push
 - clear
