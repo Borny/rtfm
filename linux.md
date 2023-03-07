@@ -1,8 +1,9 @@
 # Linux
 
-- Basic commands
-- bash_aliases
-- kill WSL2
+- [Basic commands](#basic-commands)
+- [bash_aliases](#bash_aliases)
+- [kill WSL2](#kill-wsl2)
+- [Kill node process](#kill-node-process)
 
 ## Basic commands
 
@@ -38,4 +39,30 @@ Will search for the last command entry of the given input.
 
 ## Kill WSL2
 
-`wsl.exe --shutdown` or `sudo killall -r '.*'`
+List the distros and their state:  
+`wsl -l -v`  
+
+Terminate everything:
+
+`wsl.exe --shutdown`  
+`wsl --shutdown`
+`sudo killall -r '.*'`  
+
+Terminate specific disto:  
+`wsl -t <DistroName>`  
+
+## Restart WSL
+
+`wsl`
+`wsl -d <DistroName>`
+
+## Kill node process
+
+List all node processes:  
+`ps aux | grep node` || `ps -ef | grep node`
+
+Display a process on a specific port:  
+`lsof -i :<portNumber>` e.g. `lsof -i :3001`
+
+Kill the process:  
+`kill -9 <process_id>`

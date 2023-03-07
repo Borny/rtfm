@@ -11,7 +11,7 @@
 - [Commit](#commit)
 - [Reset](#reset)
 - [Stash](#stash)
-- Rebase
+- [Rebase](#rebase)
 - Hooks
 - Github Pages
 - Git clone SSH
@@ -114,6 +114,7 @@ git push -u origin <branch-name>
 git push --set-upstream origin <branch-name>
 
 ```
+
 ---
 
 ## Commit
@@ -186,8 +187,8 @@ Will unstash the desired stash:
 
 ---
 
-- base
-- interactive
+- [base](#base)
+- [interactive](#interactive)
 
 ### Base
 
@@ -208,6 +209,9 @@ Can be used to merge commits into each other.
 `git rebase -i [commitNumber]`
 Use 's' to squash a commit into the previous one.  
 Then use the desired commit message
+
+Merge all commit into one: `git rebase --root -i`
+Drop all unwanted commits and rename the commit left
 
 ---
 
@@ -315,7 +319,7 @@ GitHub Pages allows the deployment of static websites and apps.
 `git subtree push --prefix <nameOfTheSubfolderToDeploy> origin gh-pages`  
 i.e: `git subtree push --prefix build origin gh-pages`
 **or**
-`git push origin `git subtree split --prefix <nameOfTheSubfolderToDeploy> master`:gh-pages --force`
+`git push origin` git subtree split --prefix $nameOfTheSubfolderToDeploy master`:gh-pages --force`
 
 ### Ionic / Angular
 

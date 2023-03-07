@@ -90,6 +90,26 @@ Easily deploy your application in multiple regions around the world with just a 
 - AWS CLI (#<https://aws.amazon.com/cli/>)
 - SDKs (write code that will run commands)
 
+### AWS CLI
+
+- [Install](#install)
+- [Connect](#connect)
+
+#### Install
+
+```bash
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+aws --version
+```
+
+#### Connect
+
+<https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html>
+
+`aws configure`
+
 ---
 
 ## Pricing
@@ -225,7 +245,7 @@ An EC2 instance is always part of a VPC.
 
 ### Subnets
 
-A single **Subnet** always belong to exactly one **Azs**.  
+A single **Subnet** always belong to exactly one **AZs**.  
 A **private** subnet has no direct connectivity with the internet.  
 A **public** subnet has access to an **internet gateway**.
 
@@ -247,7 +267,7 @@ That notation is usefull for computers or EC2 instances to be able to communicat
 
 ### NACLs
 
-**NACLs** conrtol access to an entire subnet, as opposed to security groups that control access to a single instance.  
+**NACLs** control access to an entire subnet, as opposed to security groups that control access to a single instance.  
 
 ### VPCs peering and transit gateways
 
@@ -562,7 +582,7 @@ XRay is an In-app Request Flow Tracing.
 
 ## WAF
 
-Is a firewall that supports HTTP request content-based rules. 
+Is a firewall that supports HTTP request content-based rules.
 
 ---
 
@@ -638,8 +658,6 @@ AWS's Git repository.
 
 ## CodeBuild
 
-
-
 ---
 
 ## CodeGuru & DevOpsGuru
@@ -654,14 +672,11 @@ Provide ML-based improvement suggestions.
 
 ## Acceptable Use Policy
 
-
-
 ---
 
 ## CodeDeploy
 
 ---
-
 
 ## Health Dashboard
 

@@ -8,7 +8,7 @@
 - SSH Server
 - Connect via SSH
 - Debugging and logging
-- Copy
+- [Copy](#copy)
 
 ## About
 

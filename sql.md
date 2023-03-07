@@ -152,7 +152,7 @@ Files are **NOT** stored in a database as they are not primitive types. Instead 
 `CREATE DATABASE <ddName>`
 
 Use `IF NOT EXISTS` to avoid errors:  
-`CREATE DATABASE IF NOT EXISTS <ddName>`
+`CREATE DATABASE IF NOT EXISTS <dbName>`
 
 ### Table
 

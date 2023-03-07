@@ -33,7 +33,7 @@
 - Event Loop
 - Promise
 - Async / await
-- JSON
+- [JSON](#json)
 - Http request
 - Modules
 - File Reader
@@ -1753,7 +1753,7 @@ Transforms a JSON string into an object
 
 ### stringify()
 
-Transforms a vale into a JOSN string
+Transforms a value into a JSON string
 `JSON.stringify({key: value})`
 
 ### xhr.responseType

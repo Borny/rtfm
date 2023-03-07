@@ -1,10 +1,34 @@
-# Raspberry
+# Raspberry Pi
 
-- GPIO
+- [Install](#install)
+- [Connect via SSH](#connect-via-ssh)
+- [GPIO](#gpio---general-purpose-input-output)
 
-## GPIO
+## Install
 
-**General Purpose Input Output**  
+- Download [Raspberry Pi Imager](https://www.raspberrypi.com/software/)
+- Choose an OS
+- Select a storage (micro SD card must be inserted)
+- Write the image on the micro SD
+- Insert the SD card into the Raspberry Pi
+- Power it up and follow the install process
+
+## Connect via SSH
+
+**SSH** is installed by default on the **RPi**.  
+
+- [Connect locally](#connect-locally)
+- [Connect remotely](#connect-remotely)
+
+### Connect locally
+
+- Connect to the same Wifi network and using an SSH client enter the following:  
+`ssh <userName>@raspberrypi` => e.g: `ssh matt@raspebrrypi`  
+- Enter the password when asked
+
+### Connect remotely
+
+## GPIO - General Purpose Input Output  
 
 `import RPi.GPIO as GPIO`
 
