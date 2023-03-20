@@ -22,6 +22,8 @@
 
 ### Connect locally
 
+[SSH key-based authentication link](https://www.geekyhacker.com/2021/02/15/configure-ssh-key-based-authentication-on-raspberry-pi/)
+
 - Connect to the same Wifi network and using an SSH client enter the following:  
 `ssh <userName>@raspberrypi` => e.g: `ssh matt@raspebrrypi`  
 - Enter the password when asked
