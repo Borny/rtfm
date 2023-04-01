@@ -1,20 +1,20 @@
 # Git
 
-- Create branch
-- Delete branch
-- Remove remote
-- Rename branch
-- Log
-- Changes
-- Add
+- [Create branch](#create-branch)
+- [Delete branch](#delete-branch)
+- [Remove remote](#remove-remote)
+- [Rename branch](#rename-branch)
+- [Log](#log)
+- [Changes](#changes)
+- [Add](#add)
 - [Origin](#origin)
 - [Commit](#commit)
 - [Reset](#reset)
 - [Stash](#stash)
 - [Rebase](#rebase)
-- Hooks
-- Github Pages
-- Git clone SSH
+- [Hooks](#hooks)
+- [Github Pages](#github-pages)
+- [Git clone SSH](#git-clone-ssh)
 
 ---
 

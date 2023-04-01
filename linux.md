@@ -3,7 +3,7 @@
 - [Basic commands](#basic-commands)
 - [Permissions](#permissions)
 - [bash_aliases](#bash_aliases)
-- [kill WSL2](#kill-wsl2)
+- [Kill WSL2](#kill-wsl2)
 - [Restart WSL2](#restart-wsl-2)
 - [Kill node process](#kill-node-process)
 
@@ -11,17 +11,16 @@
 
 - [Display files and directory](#display-files-and-directory)
 - cd
-- grep
-- Search command history
-- Count the number of files in directoryls <fileName> | wc -l
-- Count the number of files in directoryls <fileName> | wc -l
+- [grep](#grep)
+- [Search command history](#search-command-history)
+- [Count the number of files in directory](#count-the-number-of-files-in-directory)
 
 ### Display files and directory
 
 `ls` => will list the files and folders in the required directory  
 `ls -a` => will list all files and folders including the hidden ones (starting with **.**, e.g: .bash_alias)
 `ls -l` => will list the files and folders with informations like owners, permissions and size
-`ll` => same as `ls -l` but will also display hidden files 
+`ll` => same as `ls -l` but will also display hidden files
 
 ### cd
 
@@ -76,7 +75,21 @@ Command: **chmod**: `sudo chmod [numericCode] [fileName/folderName]`
 `sudo chmod 777 index.js` => will give read, write and execute access to all users to the _index.js_ file (**/!\ be very careful with this one !**)  
 `sudo chmod 700 src/` => will give read, write and execute access to the owner(user) of the folder _src/_ only
 
-## bash_aliases
+## Bash aliases
+
+Create a _bash_aliases_ file to command shortcuts:  
+`touch ~/.bash_aliases` => to create the file in the user's home directory  
+`sudo nano ~/.bash_aliases` => to update the file  
+
+```bash
+alias <alias_name>="<commandto run>"
+e.g: 
+alias gis="git status" => will run the "git status" command
+alias godev="cd ~/dev" => will navigate to the "dev" directory
+```
+
+Restart the OS or run the following command to enable the commands:  
+`source ~/.bash_aliases`
 
 ## Kill WSL2
 

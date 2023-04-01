@@ -6,7 +6,7 @@
 - Data types
 - Create
 - Delete/Drop
-- Update/Alter
+- [Update/Alter](#updatealter)
 - Check constraint
 - Unique identifier
 - CRUD operations
