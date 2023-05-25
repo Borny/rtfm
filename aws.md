@@ -184,6 +184,15 @@ By default, a newly created user doesn't have any rights.
 
 Those instances are fully configurable: choose **hardware profile**, **operating system** and install any **software**.
 
+EC2 - Amazon Linux  
+
+- Assign Public IPv4
+Check:
+
+- the VPC
+- the Internet Gateway
+- The route tables => needs to have Destination: 0.0.0.0/0 and Target: e.g.igw-084fdae7afdc94157
+
 ### ECS/EKS
 
 **Elastic Container Service** / **Elastic Kubernetes Service**. Those services are an alternative to EC2.  

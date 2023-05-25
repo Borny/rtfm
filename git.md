@@ -144,11 +144,11 @@ Will go back to the desired commit:
 
 Git stash saves the uncommited work:
 
-- push
-- clear
-- list
-- pop
-- apply
+- [push](#push)
+- [clear](#clear)
+- [list](#list)
+- [pop](#pop)
+- [apply](#apply)
 
 ### push
 
@@ -175,11 +175,17 @@ Will display a list of all the stashes:
 
 `git stash list`
 
+### pop
+
+Will unstash the last entry:
+
+`git stash pop`
+
 ### apply
 
 Will unstash the desired stash:  
 
-`git stash apply stash@{[stashNumber]}`
+`git stash apply stash@{<stashNumber>}`
 
 ---
 

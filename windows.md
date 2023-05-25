@@ -1,6 +1,6 @@
 # Windows
 
-- Format USB flash drive
+- [Format USB flash drive](#format-usb-flash-drive)
 
 ## Format USB flash drive
 

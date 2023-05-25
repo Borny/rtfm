@@ -32,7 +32,7 @@
 - RegEx
 - Event Loop
 - Promise
-- Async / await
+- [Async / await](#async--await)
 - [JSON](#json)
 - Http request
 - Modules
@@ -894,9 +894,9 @@ This will insert a script inside the head tag
 
 ---
 
-- trim
-<!-- - toUppercase
-- toLowercase -->
+- [trim](#trim)
+- [toUppercase](#touppercase)
+- [toLowercase](#tolowercase)
 
 ### trim()
 
@@ -905,6 +905,24 @@ Will delete white spaces before and after the string:
 ```javascript
 const text = ' some text here     ';
 text.trim() = 'some text here'
+```
+
+## toUppercase
+
+Will transform a word by turning all the letters to uppercase:
+
+```javascript
+const text = 'some text here';
+text.toUppercase() = 'SOME TEXT HERE'
+```
+
+## toLowercase
+
+Will transform a word by turning all the letters to lowercase:
+
+```javascript
+const text = 'SOME TEXT HERE';
+text.toLowercase() = 'some text here'
 ```
 
 ---
@@ -923,7 +941,7 @@ text.trim() = 'some text here'
 - shift()
 - [index]
 - splice()
-- slice()
+- [slice](#slice)
 - concat()
 - indexOf()
 - find()
@@ -935,7 +953,7 @@ text.trim() = 'some text here'
 - reverse()
 - filter()
 - reduce()
-- split()
+- [split](#split)
 - Spread operator
 - Array destructuring
 - Object to array
@@ -1711,10 +1729,12 @@ async functionRetuningThePromise = () =>{
 
 ### Handling errors
 
+Use **try/catch** to handle errors:
+
 ```javascript
 async functionRetuningThePromise = () =>{
   try{
-    await pr = promiseFunction()
+    await pr = promiseFunction() // if an error occurs here, it will be caught in the catch statement below
   }catch(err){
     console.log(err)
   }

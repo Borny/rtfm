@@ -334,7 +334,6 @@ $convert
 $bucket
 $bucketAuto
 $toDate
-$limit
 $skip
 $limit
 $lookup

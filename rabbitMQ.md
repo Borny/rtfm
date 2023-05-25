@@ -1,15 +1,19 @@
 # Rabbit MQ
 
+## Content
+
 - [RabbitMQ](#rabbitmq)
 - [AMQP](#amqp)
 - [Linux install](#linux-install)
 - [Send message](#send-message)
+- [vhost](#vhost)
 - [Work Queue](#work-queue)
 - [Acknowledgment](#acknowledgment)
 - [Message Durability](#message-durability)
 - [Fair dispatch](#fair-dispatch)
 - [Exchange](#exchange)
-- [Routing](#routing)
+- [Time-To-Live - TTL](#time-to-live---ttl)
+- [History](#history)
 - [Remote procedure call (RPC)](#remote-procedure-call-rpc)
 - [Dead letter exchange](#dead-letter-exchange-dlx)
 - [Alarms](#alarms)
@@ -45,6 +49,7 @@ It is a measure of the system's ability to handle a high volume of messages with
 ### Delete queue
 
 `sudo rabbitmqctl --node <node_name> delete_queue <queue_name>`  
+`sudo rabbitmqctl --vhost <vhost_name> delete_queue <queue_name>` => specify the vhost (if none then the default vhost '/' will be used)  
 `sudo rabbitmqctl --node <node_name> delete_queue <queue_name> --if-empty` => if the queue is empty  
 `sudo rabbitmqctl --node <node_name> delete_queue <queue_name> --if-unused` => if the queue is unused
 
@@ -85,20 +90,20 @@ Producer => BROKER (RabbitMQ) => Consumer
 
 The Producer **publishes** the message to the broker.  
 A **Queue** is a **Buffer** that stores messages.  
-The Consumer **Consumes** the _message_ and **subscribes** to the _BROKER_
+The Consumer **subscribes** to the _BROKER_ and **Consumes** the _message_.
 
 ## Linux install
 
 [Install link](https://www.rabbitmq.com/install-debian.html).
 
 To start/stop/restart the service:  
-`service rabbitmq-server start/stop/restart`
+`sudo service rabbitmq-server start/stop/restart`
 
 To check the status:  
-`service rabbitmq-server status`
+`sudo service rabbitmq-server status`
 
-To open the interface in the browser, first run:  
-`rabbitmq-plugins enable rabbitmq_management`  
+To open the interface in the browser, the management plugin must be enabled with this command:  
+`sudo rabbitmq-plugins enable rabbitmq_management`  
 Then open the browser on:  
 `127.0.0.1:15672`  or `localhost:15672`
 
@@ -120,39 +125,34 @@ Creating a send file:
 ```javascript
 // ./send.js
 
-// Import the amqp library
-const amqp = require('amqplib/callback_api');
+// Import the connect function from the amqp library
+import { connect } from 'amqplib';
 
-// Connect to the RabbitMQ server
-amqp.connect('amqp://localhost', (error0, connection) => {
-  if(error0){
-    throw error0
+async function send() {
+  try {
+
+    const connection = await connect('amqp://localhost/');
+    const channel = await connection.createChannel();
+
+    const queue = 'simpleQueue'
+    const msg = 'Simple send'
+
+    await channel.assertQueue(queue, { durable: true })
+
+    channel.sendToQueue(queue, Buffer.from(msg), { persistent: true })
+
+    console.log('[x] Sent %s', msg)
+
+    setTimeout(() => {
+      connection.close()
+      process.exit(0)
+    }, 500)
+  } catch (error) {
+    console.error(error);
   }
-  
-  // Create a channel
-  connection.createChannel((error1, channel) => {
-    if(error1){
-      throw error1
-    }
-    const queue = 'hello' // Name of the queue
-    const msg = 'Hello World' // Message to send
+}
 
-    // Declaring a queue to send the message to
-    channel.assertQueue(queue, {
-      durable: false
-    })
-
-    // Publishing the message to the queue
-    channel.sendToQueue(queue, Buffer.from(msg))
-
-    console.log('[x] Sent %s', msg);
-  })
-
-  setTimeout(() => {
-    connection.close()
-    process.exit(0)
-  }, 500)
-})
+send()
 ```
 
 Creating a receive file
@@ -193,6 +193,18 @@ amqp.connect('amqp://localhost', (error0, connection) => {
 ```
 
 Run both files: `node send.js` and `node receive.js`.
+
+## vhost
+
+A **vhost** is a **namespace** that **provides a way to isolate resources** such as exchanges, queues, bindings and users. Each virtual host is completely independent of others and has its own set of resources, permissions, and policies.  
+
+When you create a RabbitMQ instance, it comes with a default virtual host called "/" (forward slash). However, you can create additional virtual hosts using the RabbitMQ management UI, command-line tools, or programming APIs.
+
+Virtual hosts can be useful in many scenarios, such as:
+
+- Providing logical isolation between different applications or services that share the same RabbitMQ instance.
+- Limiting access to specific resources to different users or groups.
+- Enforcing different policies or settings on different sets of resources.
 
 ## Work Queue
 
@@ -287,7 +299,7 @@ Open three terminals:
 - shell two : `node worker.js`
 - shell three :  `node new-task.js first message..` then `node new-task.js second message...`
 
-Shell one will receive **first message** and shell 2 will receive **second message**.  
+Shell one will receive the **first message** and shell 2 will receive the **second message**.  
 The messages are distributed evenly accross all instances of consumers: this is called **round-robin**.
 
 ## Acknowledgment
@@ -321,9 +333,11 @@ Run the following command to display unacknowledged messages :
 Use **durable: true** and **persistent:true** to make sure the messages are saved if the RabbitMQ server crashes.
 
 ```javascript
-channel.assertQueue(queue, {
+await channel.assertQueue(queue, {
       durable: true // this parameter needs to be set to true on both the provider and the consumer
     });
+
+await channel.assertExchange(exchange, 'direct', { durable: true })
 ```
 
 ```javascript
@@ -358,7 +372,7 @@ Exchange types:
 
 - [Direct](#direct)
 - [Topic](#topic)
-- [Header](#header)
+- [Headers](#headers)
 - [Fanout](#fanout)
 - [Consistent Hash](#consistent-hash)
 - [Default exchange](#default-exchange)
@@ -369,16 +383,217 @@ Exchange types:
 
 The **direct exchange** will deliver messages to the corresponding queues using a **binding key** and a **routing key**. They need to have the **same keyword**.
 
+Sending with the **direct exchange type**:
+
+```javascript
+import { connect } from 'amqplib'
+
+async function sendDirect() {
+  const connection = await connect('amqp://dev01:dev01@localhost/')
+  const channel = await connection.createChannel()
+
+  const exchange = "ex.direct.one"
+  const args = process.argv.slice(2)
+  const msg = args.slice(1).join(' ') || 'Hello direct exchange'
+
+  const routingKey = args.length > 0 ? args[0] : 'info'
+
+  await channel.assertExchange(exchange, 'direct', { durable: true })
+
+  channel.publish(exchange, routingKey, Buffer.from(msg))
+
+  console.log('[x] Sent %s', msg)
+
+  setTimeout(() => {
+    connection.close()
+    process.exit(0)
+  }, 500);
+}
+
+sendDirect()
+```
+
+Receiving with the direct exchange type:
+
+```javascript
+import { connect } from 'amqplib'
+
+const args = process.argv.slice(2)
+
+if (!args.length) {
+  console.log('Command requires arguments: info/warning/error');
+}
+
+async function receiveDirect() {
+
+  const connection = await connect('amqp://dev01:dev01@localhost/')
+  const channel = await connection.createChannel()
+
+  const exchange = 'ex.direct.one'
+
+  await channel.assertExchange(exchange, 'direct', { durable: true })
+  const queue = await channel.assertQueue('', { exclusive: true })
+
+  await channel.bindQueue('', exchange, args[0])
+
+  await channel.consume(queue.queue, msg => {
+    console.log(`Received message: ${msg.content.toString()}`);
+
+    channel.ack(msg)
+  })
+
+}
+
+receiveDirect()
+```
+
 ### Topic
 
-The **topic exchange** can deliver messages based on multiple criteria. It doesn't use an arbitrary **routing_key** but a **list of words delimited by dots**.
+The **topic exchange** can deliver messages based on **multiple criteria**. It doesn't use an arbitrary **routing_key** but a **list of words delimited by dots**.
 
-### Header
+Sending with the topic exchange type:
+
+\* => can substitute for exactly one word  
+\# => can substitute for zero or more words
+
+```javascript
+import { connect } from 'amqplib'
+
+async function sendTopic() {
+  const connection = await connect('amqp://dev01:dev01@localhost/')
+  const channel = await connection.createChannel()
+
+  const exchange = "ex.topic.one"
+  const args = process.argv.slice(2)
+  console.log({ args });
+
+  const msg = args.slice(1).join(' ') || 'Hello topic exchange'
+  console.log({ msg });
+
+  const routingKey = args.length > 0 ? args[0] : 'sicilia.van'
+
+  await channel.assertExchange(exchange, 'topic', { durable: true })
+
+  channel.publish(exchange, routingKey, Buffer.from(msg))
+
+  console.log('[x] Sent %s', msg)
+
+  setTimeout(() => {
+    connection.close()
+    process.exit(0)
+  }, 500);
+}
+
+sendTopic()
+```
+
+Receiving with the topic exchange type:
+
+```javascript
+import { connect } from 'amqplib'
+
+const args = process.argv.slice(2)
+
+if (!args.length) {
+  console.log('Command requires arguments: info/warning/error');
+}
+
+async function receiveTopic() {
+
+  const connection = await connect('amqp://dev01:dev01@localhost/')
+  const channel = await connection.createChannel()
+
+  const exchange = 'ex.topic.one'
+
+  await channel.assertExchange(exchange, 'topic', { durable: true })
+  const queue = await channel.assertQueue('', { exclusive: true })
+
+  await channel.bindQueue('', exchange, args[0])
+
+  await channel.consume(queue.queue, msg => {
+    console.log(`Received message: ${msg.content.toString()}`);
+
+    channel.ack(msg)
+  })
+
+}
+
+receiveTopic()
+```
+
+### Headers
 
 Headers exchange work like **topics** but use arguments instead of a routing-key.
 
 x-match = any => will bind the queue if one or more argument matches  
 x-match = all => will bind the queue only if all arguments match
+
+```javascript
+import { connect } from 'amqplib'
+
+const headers = {
+  vehicle: 'van',
+  destination: 'sicilia',
+}
+
+async function sendHeaders() {
+  const connection = await connect('amqp://dev01:dev01@localhost/')
+  const channel = await connection.createChannel()
+
+  const exchange = "ex.headers.one"
+  const msg = process.argv.slice(2) || 'Hello headers exchange'
+
+  console.log({ msg });
+
+  await channel.assertExchange(exchange, 'headers', { durable: true })
+
+  channel.publish(exchange, '', Buffer.from('some nic'), { headers })
+
+  console.log('[x] Sent %s', msg)
+
+  setTimeout(() => {
+    connection.close()
+    process.exit(0)
+  }, 500);
+}
+
+sendHeaders()
+```
+
+Receive headers:
+
+```javascript
+import { connect } from 'amqplib'
+
+// const args = process.argv.slice(2)
+
+const headers = {
+  'x-match': 'any/all', // value can be any or all
+  vehicle: 'van',
+  destination: 'sicilia',
+}
+
+async function receiveHeaders() {
+
+  const connection = await connect('amqp://dev01:dev01@localhost/')
+  const channel = await connection.createChannel()
+
+  const exchange = 'ex.headers.one'
+
+  await channel.assertExchange(exchange, 'headers', { durable: true })
+  const queue = await channel.assertQueue('', { exclusive: true })
+
+  await channel.bindQueue('', exchange, '', headers)
+
+  await channel.consume(queue.queue, msg => {
+    console.log(`Received message: ${msg.content.toString()}`);
+
+    channel.ack(msg)
+  })
+}
+
+receiveHeaders()
+```
 
 ### Fanout
 
@@ -391,8 +606,8 @@ List exhanges:
 
 The consistent-hash exchange type will distribute messages.  
 
-This exchange is **not installed by default**.  
-Install the plugin:  
+This exchange is **not enabled by default**.  
+To enable it:  
 `sudo rabbitmq-plugins enable rabbitmq_consistent_hash_exchange`
 
 ### Default exchange
@@ -486,158 +701,183 @@ amqp.connect('amqp://localhost', (error0, connection) => {
     })
   })
 })
-
 ```
 
-## Routing
+## Time-To-Live - TTL
 
-Sending with the **direct exchange type**:
+A **TTL** can be set for messages or queues so that they are deleted after a given amount of time.  
+
+- [TTL - messages](#ttl---messages)
+- [TTL - queues](#ttl---queues)
+
+### TTL - messages
+
+TTL can be set by using the **expiration** key when publishing a message:  
 
 ```javascript
-const amqp = require('amqplib/callback_api')
+  const expiration = 10000; // in milliseconds
 
-amqp.connect('amqp://localhost', (error0, connection) => {
-  if(error0)throw error0
+  channel.publish(exchange, '', Buffer.from(message), 
+    { 
+      expiration // the message will be deleted after the given time
+    }
+  )
+```
 
-  connection.createChannel((error1,channel ) => {
-    if(error1)throw error1
+### TTL - queues
 
-    const exchange = 'direct_logs'
-    const args = process.argv.slice(2)
-    const msg = args.slice(1).join(' ') || 'Hello World!'
-    const severity = args.length > 0 ? args[0] : 'info'
+TTl for queues can be set while asserting the queue by using the **expires** key:  
 
-    channel.assertExchange(exchange, 'direct', {durable: false})
+```javascript
+  const expires = 10000; // in milliseconds
 
-    channel.publish(exchange, severity, Buffer.from(msg))
+  await channel.assertQueue(queue, 
+    {
+      expires // the queue will be deleted after the given time
+    }
+  );
+```
 
-    console.log('[x] Sent %s', msg);
-  })
+## History
+
+By default RabbitMQ doesn't keep track of messages but it can be done using the **x-recent-history** plugin and creating a exchange of that type.  
+
+Enable the plugin: `rabbitmq-plugins enable rabbitmq_recent_history_exchange`
+
+By default the recent-history exchange keeps the last 20 messages that are published. Then any queue that is newly bound to that exchange will receive those messages.  
+The number of messages stored can be set up using the **x-recent-history-length** options in the arguments object.
+
+```javascript
+// history-send.js
+import amqp from 'amqplib';
+
+async function sendHistory(messageCount) {
+  let count = 1
+  const connection = await amqp.connect('amqp://admin:admin@localhost/');
+  const channel = await connection.createChannel();
+
+  const exchange = 'ex.history'
+  const queue = 'q.history'
+  const message = 'Hello, History'
+
+  const queueOptions = {
+    durable: true,
+  }
+  const exchangeOptions = {
+    durable: true,
+    arguments: {
+      'x-recent-history-length': 5, // will keep the last 5 messages to be published
+    }
+  }
+
+  await channel.assertExchange(exchange, 'x-recent-history', exchangeOptions)
+  await channel.assertQueue(queue, queueOptions);
+  await channel.bindQueue(queue, exchange)
+
+  while (count <= messageCount) {
+    channel.publish(exchange, '', Buffer.from(`${message}${count}`))
+    count++
+    console.log('Sending message')
+  }
+
+  count = 1
 
   setTimeout(() => {
-    connection.close()
+    channel.close();
+    connection.close();
     process.exit(0)
   }, 500);
-})
-```
-
-Receiving with the direct exchange type:
-
-```javascript
-const amqp = require('amqplib/callback_api')
-
-const args = process.argv.slice(2)
-
-if (args.length === 0) {
-  console.log('Usage: receive-logs-direct.js [info] [warning] [error]');
-  process.exit(1)
 }
 
-amqp.connect('amqp://localhost', (error0, connection) => {
-  if (error0) throw error0
-
-  connection.createChannel((error1, channel) => {
-    if (error1) throw error1
-
-    const exchange = 'direct_logs'
-
-    channel.assertExchange(exchange, 'direct', { durable: false })
-
-    channel.assertQueue('', { exclusive: true }, (error2, q) => {
-      if (error2) throw error2
-      console.log(' [*] Waiting for messages in %s. To exit press CTRL+C', q.queue)
-
-      args.forEach(severity => {
-        channel.bindQueue(q.queue, exchange, severity)
-      })
-
-      channel.consume(q.queue, (msg) => {
-
-        console.log("[x] %s: '%s", msg.fields.routingKey, msg.content.toString());
-      }, { noAck: true })
-    })
-  })
-})
-```
-
-## Topics
-
-Sending with the topic exchange type:
-
-\* => can substitute for exactly one word
-\# => can substitute for zero or more words
-
-```javascript
-const amqp = require('amqplib/callback_api')
-
-amqp.connect('amqp://localhost', (error0, connection) => {
-  if(error0)throw error0
-
-  connection.createChannel((error1,channel ) => {
-    if(error1)throw error1
-
-    const exchange = 'topic_logs'
-    const args = process.argv.slice(2)
-    const key = args.length > 0 ? args[0] : 'anonymous.info'
-    const msg = args.slice(1).join(' ') || 'Hello World!'
-
-    channel.assertExchange(exchange, 'topic', {durable: false})
-
-    channel.publish(exchange, key, Buffer.from(msg))
-
-    console.log('[x] Sent %s', msg);
-  })
-
-  setTimeout(() => {
-    connection.close()
-    process.exit(0)
-  }, 500);
-})
-```
-
-Receiving with the topic exchange type:
-
-```javascript
-const amqp = require('amqplib/callback_api')
-
-const args = process.argv.slice(2)
-
-if (args.length === 0) {
-  console.log('Usage: receive-logs-direct.js <facility>.<severity>');
-  process.exit(1)
-}
-
-amqp.connect('amqp://localhost', (error0, connection) => {
-  if (error0) throw error0
-
-  connection.createChannel((error1, channel) => {
-    if (error1) throw error1
-
-    const exchange = 'topic_logs'
-
-    channel.assertExchange(exchange, 'topic', { durable: false })
-
-    channel.assertQueue('', { exclusive: true }, (error2, q) => {
-      if (error2) throw error2
-
-      console.log(' [*] Waiting for messages in %s. To exit press CTRL+C', q.queue)
-
-      args.forEach(key => {
-        channel.bindQueue(q.queue, exchange, key)
-      })
-
-      channel.consume(q.queue, (msg) => {
-
-        console.log("[x] %s: '%s", msg.fields.routingKey, msg.content.toString());
-      }, { noAck: true })
-    })
-  })
-})
+sendHistory(process.argv[2]);
 ```
 
 ## Remote procedure call (RPC)
 
 ## Dead letter exchange (DLX)
+
+A **Dead Letter Exchange** or **DLX** is an exchange type to which messages are routed if they **cannot be delivered** to their intended destination due to errors such as invalid routing keys or expired TTLs (time-to-live).
+
+```javascript
+// dlx-send.js
+import { connect } from 'amqplib'
+
+async function dlxSend() {
+  try {
+    const connection = await connect('amqp://admin:admin@localhost/')
+    const channel = await connection.createChannel()
+
+    const exchangeDlx = 'ex.dlx'
+    const exchangeBup = 'ex.bup'
+    const queueDlx = 'q.dlx'
+    const qBackup = 'q.backup'
+    const routingKey = 'Routing key'
+    const dlxKey = 'Dead letter exchange routing key'
+
+    await channel.assertExchange(exchangeDlx, 'direct', { durable: true })
+    await channel.assertExchange(exchangeBup, 'direct', { durable: true })
+
+    await channel.assertQueue(queueDlx, {
+      deadLetterExchange: exchangeBup,
+      deadLetterRoutingKey: dlxKey, 
+      durable: false
+    })
+
+    await channel.assertQueue(qBackup, { durable: true })
+
+    await channel.bindQueue(queueDlx, exchangeDlx, routingKey)
+    await channel.bindQueue(qBackup, exchangeBup, dlxKey)
+
+    const msg = 'Dead letter exchange is awesome!'
+
+    channel.publish(exchangeDlx, routingKey, Buffer.from(msg))
+
+    setTimeout(() => {
+      connection.close()
+      process.exit(0)
+    }, 500);
+
+  } catch (error) {
+    console.log({ error });
+  }
+}
+
+dlxSend()
+```
+
+Receive:
+
+```javascript
+// dlx-reveive.js
+import { connect } from 'amqplib'
+
+async function dlx() {
+  try {
+    console.log('log');
+    const connection = await connect('amqp://dev:dev@localhost/dev')
+    const channel = await connection.createChannel()
+
+    const queueDlx = 'q.dlx'
+
+    await channel.consume(queueDlx, (msg) => {
+      console.log(`Rejecting message: ${msg.content.toString()}`);
+
+      channel.reject(msg, false);
+      // channel.ack(msg)
+    })
+
+    setTimeout(() => {
+      connection.close()
+      process.exit(0)
+    }, 500);
+
+  } catch (error) {
+    console.log({ error });
+  }
+}
+
+dlx()
+```
 
 ## Policies
 
@@ -657,9 +897,14 @@ amqp.connect('amqp://localhost', (error0, connection) => {
 
 A **RabbitMQ node** refers to a single instance of RabbitMQ running on a server or virtual machine. When multiple RabbitMQ nodes are connected together, they form a **RabbitMQ cluster**.  
 A **cluster** is a **group of servers**.  
+RabbitMQ nodes are identified by **node names**. A node name consists of two parts: a **prefix** (usually _rabbit_) and a **host**. e.g. rabbit@local
 
 **Scale out** => **increasing** the number of servers  
 **Scale in** => **decreasing** the number of servers
+
+=> **Need to run the instances with the same erlang cookie**
+=> **It is recommanded to use an odd number of nodes**  
+Create a new instance:  
 
 ## Alarms
 
@@ -686,3 +931,23 @@ disk_free_limit.relative = <value between 0 and 10>
 
 Or directly via the command line:  
 `sudo rabbitmqctl set_disk_free_limit <value: 1MB / 5GB / 1000 / ...>`
+
+## Security
+
+- [Authentication](#authentication)
+- [Authorization](#authorization)
+
+### Authentication
+
+Users can login using a username and a password.
+
+### Authorization
+
+Users can have **Configure**, **Write** and **Read** rights.  
+The authorizations are set up using Regex:  
+
+| Group | Name |
+| - | - |
+| Configure |  |
+| Write | ^ex\.exchangeName$ |
+| Read | ^q\.queueName\.news[1-2]{1}$ |

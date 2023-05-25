@@ -1,7 +1,7 @@
 # SQL
 
 - SQL command / statement
-- MySQL
+- [MySQL](#mysql)
 - PostgreSQL
 - Data types
 - Create
@@ -43,7 +43,7 @@ It should end with a semi-colon.
 - Install Windows
 - MySQL Service
 - MySQL Shell
-- MySQL on Ubuntu
+- [Install Ubuntu](#install-ubuntu)
 
 ### Install Windows
 
@@ -69,7 +69,7 @@ shell.connect({host: 'localhost', user: 'root', port: 3305}) // the port option 
 Then specify the language used by typing: `\sql`.  
 Go back to using the default mode by typing: `\js`.  
 
-### MySQL on Ubuntu
+### Install Ubuntu
 
 [MySQL Ubuntu](https://doc.ubuntu-fr.org/mysql)  
 
@@ -82,10 +82,48 @@ mysql --version
 ```
 
 Run the following command to **start** the server:  
-`sudo /etc/init.d/mysql start`  
+`sudo /etc/init.d/mysql start` or `sudo service mysql start`
 
-Secure installation:
-`sudo mysql_secure_installation`  
+Restart the server:  
+`sudo service mysql restart`
+
+Stop the server:  
+`sudo service mysql stop`
+
+Secure installation:  
+`sudo mysql_secure_installation`
+
+https://medium.com/@alef.duarte/cant-connect-to-local-mysql-server-through-socket-var-run-mysqld-mysqld-sock-155d580f3a06
+
+
+https://www.nixcraft.com/t/mysql-failed-error-set-password-has-no-significance-for-user-root-localhost-as-the-authentication-method-used-doesnt-store-authentication-data-in-the-mysql-server-please-consider-using-alter-user/4233
+
+Terminate the mysql_secure_installation:  
+`sudo killall -9 mysql_secure_installation`
+
+Create user:  
+`create user userName@localhost identified by '<some password here>';`
+
+List users:  
+`SELECT user FROM mysql. user`
+
+Delete user:  
+`DROP USER '<userNameToDelete>'@'host';`
+
+#### Uninstall Ubuntu
+
+Stop the server: `sudo service mysql stop`  
+Uninstall MySQL: `sudo apt-get purge mysql-server mysql-client mysql-common mysql-server-core-* mysql-client-core-*`  
+Remove MySQL data: `sudo rm -rf /etc/mysql /var/lib/mysql`  
+(Optional) Remove unnecessary packages: `sudo apt autoremove`  
+(Optional) Remove apt cache: `sudo apt autoclean`
+
+
+
+
+#### Issue with login
+
+[Stackoverflow link](https://stackoverflow.com/questions/72103302/mysql-installation-on-ubuntu-20-04-error-when-using-mysql-secure-installation)
 
 ---
 
@@ -559,6 +597,12 @@ e.g:
 CREATE TABLE users (
   address_id INT REFERENCES addresses (id) ON DELETE RESTRICT
 ) 
+```
+
+### Drop foreign key
+
+```sql
+ALTER TABLE <tableName> DROP FOREIGN KEY `<foreignKeyName>`;
 ```
 
 ---

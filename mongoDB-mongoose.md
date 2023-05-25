@@ -40,7 +40,6 @@ Database that stores data as **Documents** in **Collections** (as opposed to **R
 **Database** => **Collections** => **Documents**  
 MongoDB is **schemaless**, documents can have different structures.
 
-
 ## Set up
 
 ---

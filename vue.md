@@ -6,8 +6,8 @@
 - Binding
 - Event Binding
 - Two-Way Binding
-- Computed Properties
-- Watchers
+- [Computed Properties](#computed-properties)
+- [Watchers](#watchers)
 - Dynamic styling
 - Conditional rendering
 - Lists
@@ -707,8 +707,8 @@ const router = createRouter({
 
 ## Composition API
 
-The standard way of using Vuejs is called the Options API.
-The Composition API replaces the Options API and makes it easier to manage the data in a component.
+The standard way of using Vuejs is called the **Options API**.
+The **Composition API** replaces the **Options API** and makes it easier to manage the data in a component.
 
 - setup
 - ref
@@ -719,20 +719,6 @@ The Composition API replaces the Options API and makes it easier to manage the d
 ### setup()
 
 The **setup(**) method replaces the "options" **data(), methods, computed, watch**:
-
-```javascript
-<script>
-setup(){
-  const someConst = ref('someValue')
-  function someFunction(){}
-  return{
-    someConst,
-    someFunction
-  }
-}
-
-</script>
-```
 
 ### ref
 
