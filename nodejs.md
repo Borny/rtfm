@@ -11,7 +11,7 @@
 - Auto restart of the server: nodemon
 - Request
 - CORS: Cross-Origin Ressource Sharing
-- ExpressJs
+- [ExpressJs](#expressjs)
 - Response methods
 - Middleware
 - Router
@@ -779,7 +779,7 @@ Given the **same input** the **output** will always be the **same**.
 Since the hash of a string is always the same, a malicious person can try to hack into the database by providing the hashed version of very common passwords. And if there is a match then that person can ??? the original string.
 
 ```javascript
-import {  }
+import { randomBytes } from 'cryto' // crypto is a NodeJS module
 
 randomBytes(8) => returns a Buffer (= Array) that will be converted to a string
 ```

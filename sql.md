@@ -24,6 +24,7 @@
 - Conditional Expressions
 - Transactions
 - Indexes
+- [MySQL & NodeJS](#mysql--nodejs)
 
 ---
 
@@ -927,3 +928,8 @@ CREATE UNIQUE INDEX <index_name> ON <table_name> (<column_name>)
 ```sql
 DROP INDEX <index_name>
 ```
+
+## MySQL & NodeJS
+
+install the following packages in a NodeJS app:  
+`npm i mysql knex`

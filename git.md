@@ -44,6 +44,14 @@ git branch -d <localBranchName>
 git push origin --delete <remoteBranchName>
 ```
 
+### Remove remote references
+
+Will remove the references of the remote branches. e.g. _remotes/origin/name-of-branch_
+
+```bash
+git remote prune origin
+```
+
 ---
 
 ## Remove remote
