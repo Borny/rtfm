@@ -16,21 +16,13 @@
 - [Github Pages](#github-pages)
 - [Git clone SSH](#git-clone-ssh)
 
----
-
 ## Create branch
-
----
 
 ```bash
 git checkout -b <branchName>
 ```
 
----
-
 ## Delete branch
-
----
 
 ### Delete branch locally
 
@@ -52,8 +44,6 @@ Will remove the references of the remote branches. e.g. _remotes/origin/name-of-
 git remote prune origin
 ```
 
----
-
 ## Remove remote
 
 ```bash
@@ -62,19 +52,13 @@ git remove remote <nameOfTheRemoteToRemove>
 
 ## Rename branch
 
----
-
 If on another branch  
 `git branch -m <oldName> <newName>`
 
 Current branch  
 `git branch -m <newName>`
 
----
-
 ## Log
-
----
 
 - log
 - reflog
@@ -94,11 +78,7 @@ Logs everything that happened (commit, merge, pull, ...)
 See changes in the log history:  
 `git log -p -[commitNumber]`
 
----
-
 ## Add
-
----
 
 Will **staged** the modified files
 
@@ -109,8 +89,6 @@ Will **staged** the modified files
 `git add .` => will add all files: new and updated ones  
 `git add -p` => will list all the changes in the updated files and allow the selection of which changes will be staged for commit. It will not take into account the new files  
 `git reset --mixed` => will unstaged the files
-
----
 
 ## Origin
 
@@ -123,11 +101,7 @@ git push --set-upstream origin <branch-name>
 
 ```
 
----
-
 ## Commit
-
----
 
 - Amend
 
@@ -136,8 +110,6 @@ git push --set-upstream origin <branch-name>
 Will update the last commit and allow for the update of the commit's message
 `git commit --amend`
 
----
-
 ## Reset
 
 Will go back to the desired commit:  
@@ -145,8 +117,6 @@ Will go back to the desired commit:
 `git reset --[hard || soft] HEAD~1`
 `git reset --soft <commitId>` // Will keep the changes  
 `git reset --hard <commitId>` // Will discard the changes
-
----
 
 ## Stash
 
@@ -195,11 +165,7 @@ Will unstash the desired stash:
 
 `git stash apply stash@{<stashNumber>}`
 
----
-
 ## Rebase
-
----
 
 - [base](#base)
 - [interactive](#interactive)
@@ -227,11 +193,7 @@ Then use the desired commit message
 Merge all commit into one: `git rebase --root -i`
 Drop all unwanted commits and rename the commit left
 
----
-
 ## Hooks
-
----
 
 ### Deploy on production server
 
@@ -317,23 +279,22 @@ do
 done
 ```
 
----
-
 ## Github Pages
-
----
 
 GitHub Pages allows the deployment of static websites and apps.
 
-- VanillaJS
+- [VanillaJS/Vue.js](#vanillajsvuejs)
 - Ionic - Angular
 
-### VanillaJS
+### VanillaJS/Vuejs
 
-`git subtree push --prefix <nameOfTheSubfolderToDeploy> origin gh-pages`  
-i.e: `git subtree push --prefix build origin gh-pages`
-**or**
-`git push origin` git subtree split --prefix $nameOfTheSubfolderToDeploy master`:gh-pages --force`
+`git subtree push --prefix <nameOfTheSubfolderToDeploy> origin gh-pages`
+
+```bash
+git subtree push --prefix src/pwa origin gh-pages
+# or to force push
+git push origin git subtree split --prefix <nameOfTheSubfolderToDeploy> main`:gh-pages --force
+```
 
 ### Ionic / Angular
 

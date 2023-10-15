@@ -3,7 +3,7 @@
 - About
 - Install
 - Images
-- Containers
+- [Containers](#containers)
 - Dockerfile
 - Docker CLI
 - Volumes
@@ -16,7 +16,7 @@
 ## About
 
 **Docker** makes it possible to use any code/app in any environment by using images/containers that hold all the code.
-
+ù
 ## Install
 
 ## Images
@@ -51,7 +51,7 @@ CMD ["node", "app.js"] => will run this command
 ## Docker CLI
 
 - build
-- run
+- [run](#run)
 - ps
 - images
 - stop

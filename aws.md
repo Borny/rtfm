@@ -248,7 +248,7 @@ The **security group** is a firewall attached to an EC2 instance, controlling ne
 
 ### About VPCs
 
-**Virtual Private Clouds**  contain **subnets** who in turn contain services like EC2.  
+**Virtual Private Clouds** contain **subnets** who in turn contain services like EC2.  
 An EC2 instance is always part of a VPC.  
 **VPCs** help in managing netork traffic between certain AWS services and the internet.
 

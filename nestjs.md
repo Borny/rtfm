@@ -14,6 +14,7 @@
 - [Error response](#error-responses)
 - [Unit Testing](#unit-testing)
 - [e2e Testing](#e2e-testing)
+- [App configuration](#app-configuration)
 
 ## Manual set up
 
@@ -373,6 +374,7 @@ if(!emails.length) {
 
 - [Unit Test Description](#unit-test-description)
 - [Speed up the tests](#speed-up-the-tests)
+- [Flow](#flow)
 
 ### Unit Test Description
 
@@ -399,6 +401,30 @@ Import a test helper file in the providers array:
     "test:e2e": "cross-env NODE_ENV=test jest --config ./test/jest-e2e.json --maxWorkers=1"
   },
 }
+```
+
+### Flow
+
+- Provider: it is a function or file that can be injected into other classes
+
+Here are some **jest methods**:
+
+- spyOn => will watch a function. Can be used to check if the function was run
+-  => 
+
+### Template
+
+```typescript
+it('<DESCRIPTION>', async () => {
+  // insert code here
+})
+
+// Example
+it('Here is the description of what the test is testing', async () => {
+  const spy = jest.spyOn(service, 'someFunctionName')
+  await service.someFunctionName;
+  expect(spy).toHaveBeenCalled()
+})
 ```
 
 ## e2e Testing

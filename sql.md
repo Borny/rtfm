@@ -606,6 +606,16 @@ CREATE TABLE users (
 ALTER TABLE <tableName> DROP FOREIGN KEY `<foreignKeyName>`;
 ```
 
+e.g:
+
+```sql
+ALTER TABLE ct.meter
+DROP FOREIGN KEY meter_device_type_id_foreign;
+
+ALTER TABLE ct.meter
+DROP COLUMN device_type_id;
+```
+
 ---
 
 ## Relations

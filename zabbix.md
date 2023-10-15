@@ -7,13 +7,13 @@
 
 ## About
 
-Zabbix: monitoring des servers
+Zabbix: server monitoring
 
 ## Install
 
 [Link => Zabbix download page](https://www.zabbix.com/download?zabbix=6.4&os_distribution=ubuntu&os_version=20.04&components=server_frontend_agent&db=mysql&ws=apache)
 
-- Install Zabbix repository:
+- Install Zabbix repository (for Ubuntu 20.04):
 
 ```bash
 wget https://repo.zabbix.com/zabbix/6.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.4-1+ubuntu20.04_all.deb
@@ -26,7 +26,7 @@ sudo apt update
 - check status  
 `sudo service zabbix-server status`  
 `sudo service zabbix-agent status`  
-- Create initial database
+- Create initial database. For that make sure MySQL is  running. Refer to the **sql.md** documentation.
 
 ## Uninstall
 
@@ -37,6 +37,16 @@ sudo apt update
 `sudo service zabbix-server start`  
 `sudo service zabbix-agent start`  
 `sudo service apache2 start`
+or
+`sudo service apache2 start`
+
+### Zabbix server
+
+The **zabbix server** will collect the data from the **zabbix agent**.
+
+### Zabbix agent
+
+The **zabbix agent** will send the data from the **zabbix server**.
 
 Monitors:
 
