@@ -15,6 +15,7 @@
 - [Hooks](#hooks)
 - [Github Pages](#github-pages)
 - [Git clone SSH](#git-clone-ssh)
+- [Display branch name](#display-branch-name)
 
 ## Create branch
 
@@ -114,7 +115,7 @@ Will update the last commit and allow for the update of the commit's message
 
 Will go back to the desired commit:  
 
-`git reset --[hard || soft] HEAD~1`
+`git reset --[hard || soft] HEAD~1` // Goes back to the previous commit  
 `git reset --soft <commitId>` // Will keep the changes  
 `git reset --hard <commitId>` // Will discard the changes
 
@@ -316,3 +317,32 @@ Git clone using SSH requires the client's key to be stored in Github.
 - Enter a name for the key
 - Copy the key from the `.ssh/id_rsa.pub` (on WSL2 `~/.ssh/id_rsa.pub`) file on the client's machine
 - git clone [URL to clone]
+
+## Display branch name
+
+Display the **branch name** in the Bash prompt.
+
+Open the _.bashrc_ file in editing mmode:  
+
+`nano ~/.bashrc`
+
+Add these lines to the file:
+
+```bash
+# Show git branch name
+force_color_prompt=yes
+color_prompt=yes
+parse_git_branch() {
+ git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+if [ "$color_prompt" = yes ]; then
+ PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;31m\]$(parse_git_branch)\[\033[00m\]\$ '
+else
+ PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w$(parse_git_branch)\$ '
+fi
+unset color_prompt force_color_prompt
+```
+
+Run the file:
+
+`source ~/.bashrc`

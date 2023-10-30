@@ -5,7 +5,7 @@
 - Caching
 - IndexedDB
 - Background Sync
-- Push Notifications
+- [Push Notifications](#push-notifications)
 
 Progressive Web App is a term.  
 It uses **Service Workers** and has an **Application Manifest**.  
@@ -647,11 +647,7 @@ form.addEventListener('submit', function (event) {
 });
 ```
 
----
-
 ## Push Notifications
-
----
 
 Displaying a pop up on the user's screen.
 
@@ -659,7 +655,7 @@ Displaying a pop up on the user's screen.
 
 ### Enable notification
 
-First we ask the user to enable notification, otherwise nothing will work afterwards
+First we ask the user to enable notification, otherwise nothing will work afterwards.
 
 In any JS file:
 
@@ -859,7 +855,7 @@ self.addEventListener('push', event => {
 
 ### On the backend side
 
-#### Generating a VAPID key 
+#### Generating a VAPID key
 
 `npm i --save web-push`
 

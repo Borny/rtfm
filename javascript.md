@@ -17,7 +17,7 @@
 - Functions
 - Loops
 - if statement
-- Operators tricks: !! && || ??
+- [Operators tricks !! && || ??](#operators-tricks)
 - DOM
 - Arrays
 - Sets
@@ -646,13 +646,13 @@ Avoid using the **if** statement by using the question mark operator to check fo
 
 ---
 
-## Operators tricks: !! && || ??
+## Operators tricks
 
 ---
 
 ### double bang
 
-The double exclamation marks/!! will coerce a value into a real boolean.  
+The double exclamation marks:!! will coerce a value into a real boolean.  
 `const name = 'table'` => name is truthy.  
 `!!name` => name is true.
 
