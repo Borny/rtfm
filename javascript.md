@@ -442,7 +442,7 @@ The strict mode `'use strict'` is used to avoid errors in a file. It mainly conc
 - pure function
 - factory function
 - closure
-- recursion
+- [recursion](#recursion)
 
 ### Overview
 
@@ -541,7 +541,7 @@ Functions can refer to "external" variables (i.e. in a different lexical environ
 
 ### Recursion
 
-A function calls itself
+A recursion is a function that **calls itself** until a **base case** or **base condition** is **true**.
 
 ---
 
@@ -951,7 +951,8 @@ text.toLowercase() = 'some text here'
 - pop()
 - shift()
 - [index]
-- splice()
+- [splice()](#splice)
+- [toSpliced()](#toSpliced)
 - [slice](#slice)
 - concat()
 - indexOf()
@@ -962,6 +963,8 @@ text.toLowercase() = 'some text here'
 - map()
 - sort()
 - reverse()
+- [toSorted](#tosorted)
+- [toReverse()](#toreverse)
 - filter()
 - reduce()
 - [split](#split)
@@ -1007,7 +1010,12 @@ Will remove the first element of an array. Will **return** the removed element:
 
 ### [index]
 
-Will insert an element at the desired index, but will replace any existing value at that same index
+Will insert an element at the desired index, but will replace any existing value at that same index:
+
+```javascript
+const array = [1, 2, 3, 4];
+array[0] = 5; // array = [5,2,3,4]
+```
 
 ### splice()
 
@@ -1021,6 +1029,10 @@ The second parameter tells how many elements should be deleted:
 Will **return** the removed element(s)  
 If using negative indexes, it will remove the element from the end of the array
 
+### toSpliced()
+
+Copying version of the [splice()](#splice) method.
+
 ### slice()
 
 **Returns** a brand new array.  
@@ -1031,9 +1043,13 @@ Returns a chunk of an array with parameters:
 
 ### concat()
 
-Will return a new array by adding the values from an array to the end of an existing array:  
-`const array1 = [1,2,3,4]`
-`const array2 = array1.concat([5,6,7,8])`
+Will return a new array by adding the values from an array to the end of an existing array:
+
+```javascript
+const array1 = [1, 2, 3, 4];
+const array2 = array1.concat([5, 6, 7, 8]);
+// array2 = [1,2,3,4,5,6,7,8]
+```
 
 ### indexOf()
 
@@ -1093,10 +1109,20 @@ const sortedPrices = prices.sort((a, b) => {
 });
 ```
 
+### toSorted()
+
+Same as **sort()** but will return a new array  
+`arr.toSorted()`
+
 ### reverse()
 
-Will reverse the element in the array
+Will reverse the element in the array  
 `arr.reverse()`
+
+### toReverse()
+
+Will reverse the element in the array and return a new array
+`arr.toReverse()`
 
 ### filter()
 
@@ -1182,6 +1208,7 @@ Can be used to add info to an object without changing the original declaration
 - Spread Operator
 - Object assign()
 - Object destructuring
+- [groupBy()](#groupby)
 - Checking property existence
 - this
 
@@ -1244,6 +1271,29 @@ Assign a new name to the key:
 Assign the rest of the key:value pairs to a variable by using the **rest** parameter :
 `const person1 = {key1: 'value', key2: 'value' }`
 `const {key1 : new Name, ...otherKeys} = person1`
+
+### groupBy()
+
+Will group elements of an iterable according to a condition:
+
+```javascript
+const persons = [
+  { name: 'Peter', age: '15' },
+  { name: 'Steve', age: '99' },
+  { name: 'MJ', age: '16' },
+  { name: 'Bruce', age: '45' },
+];
+
+function filter({ age }) {
+  if (age >= 18) {
+    return 'adults';
+  } else {
+    return 'teens';
+  }
+}
+
+const organized = Object.groupBy(persons, filter);
+```
 
 ### Checking property existence
 
