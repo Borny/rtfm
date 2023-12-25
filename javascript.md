@@ -169,15 +169,15 @@ Consoles are used to print variables values, messages, function results... in th
 
 `console.[method]`
 
-- log
-- table
-- error
-- warn
-- clear
-- time, timeEnd
-- count
-- group, groupEnd
-- styling the logs
+- [log](#log)
+- [table](#table)
+- [error](#error)
+- [warn](#warn)
+- [clear](#clear)
+- [time, timeEnd](#time-timeend)
+- [count](#count)
+- [group](#group-groupend)
+- [styling the logs](#styling-the-logs)
 
 ### log
 
@@ -217,6 +217,17 @@ console.timeEnd('timer')
 ```
 
 => will display the time it took for the code to execute in seconds
+
+### count
+
+Will count the number of times a value is logged, they should use the same label:
+
+```javascript
+const fruits = ['apple', 'banana', 'apple', 'orange', 'banana', 'apple'];
+fruits.forEach((fruit) => {
+  console.count(fruit);
+});
+```
 
 ### group, groupEnd
 
