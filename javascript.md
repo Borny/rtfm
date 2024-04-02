@@ -1,71 +1,62 @@
 # JS
 
-- Expression vs Statement
-- Quotes
-- Data Types
-- Importing scripts in HTML
-- Errors
-- Consoles
-- Heap / Stack
-- Primitive vs Reference values
-- Operator
-- Spread
-- Rest
-- && ||
-- Decimal Base Exponents
-- Variables
-- Functions
-- Loops
-- if statement
+- [Expression vs Statement](#expression-vs-statement)
+- [Quotes](#quotes)
+- [Data Types](#data-types)
+- [Importing scripts in HTML](#importing-scripts-in-html)
+- [Errors](#errors)
+- [Consoles](#consoles)
+- [Heap / Stack](#heap--stack)
+- [Primitive vs Reference values](#primitive-vs-reference-values)
+- [Operators](#operators)
+- [Spread](#spread)
+- [Rest](#rest)
+- [&& ||](#&&-||)
+- [Decimal Base Exponents](#decimal-base-exponents)
+- [Variables](#variables)
+- [Functions](#functions)
+- [Loops](#loops)
+- [if statement](#if-statement)
 - [Operators tricks !! && || ??](#operators-tricks)
-- DOM
-- Arrays
-- Sets
-- Maps
-- Objects
-- Classes
-- Events
-- setTimeout()
-- setInterval()
-- location
-- history
-- RegEx
-- Event Loop
-- Promise
+- [DOM](#dom)
+- [Arrays](#arrays)
+- [Maps](#maps)
+- [Sets](#sets)
+- [Custom Hash Table](#custom-hash-table)
+- [Objects](#objects)
+- [Classes](#classes)
+- [Events](#events)
+- [setTimeout()](#settimeout)
+- [setInterval()](#setinterval)
+- [location](#location)
+- [history](#history)
+- [RegExp](#regexp)
+- [Event Loop](#event-loop)
+- [Promise](#promise)
 - [Async / await](#async--await)
 - [JSON](#json)
-- Http request
-- Modules
-- File Reader
-- Hoisting
+- [Http request](#http-request)
+- [Modules](#modules)
+- [File Reader](#file-reader)
+- [Hoisting](#hoisting)
+- [Time and Space Complexity](#time-and-space-complexity)
 
----
 
 ## Expression vs Statement
-
----
 
 **Expression** is a piece of code that can be stored in a variable:
 `const whateverName = value` => expression  
 **Statement** cannot be stored, it cannot be placed after the equal/= sign
 `if(condition){expression}` => statement
 
----
-
 ## Quotes
-
----
 
 HTML file : **double quote** ""  
 JS file : **single quote** ''  
-Template literal: back ticks => ``, multiple lines and variables allowed `\${variable}` // variables/expressions can be injected inside the curly brackets
+Template literal: back ticks => ``, multiple lines and variables allowed `${variable}` // variables/expressions can be injected inside the curly brackets  
 Line break : **\n**
 
----
-
 ## Data Types
-
----
 
 - **Numbers**: integer, float, negative
 - **Strings**: '', "", ``
@@ -102,11 +93,7 @@ Will convert a number to a string with a defined number of decimal. Will also ro
 `const number = 2.49857`  
 `number.toFixed(3) // '2.499'`
 
----
-
 ## Importing scripts in HTML
-
----
 
 - defer
 - async
@@ -124,11 +111,7 @@ This attribute will tell the browser to load the script as soon as possible but 
 This attribute will do the same as **defer** but will execute the script as soon as it is loaded
 `<script src='index.js' async></script>`
 
----
-
 ## Errors
-
----
 
 ### throw
 
@@ -159,11 +142,7 @@ try {
 }
 ```
 
----
-
 ## Consoles
-
----
 
 Consoles are used to print variables values, messages, function results... in the browser console or the terminal
 
@@ -255,32 +234,20 @@ console.log(`%c${styledLog}`, styles);
 
 => will display the message with some styling
 
----
-
 ## Heap / Stack
-
----
 
 The **Heap** is the memory allocated by the browser to our code. **Long living memory**  
 The **Stack** is the execution order of all the functions of the code.
 **Short living memory**  
 Each function will be executed one by one, hence will be placed on top of the stack. Once a function is done executing, it will be removed from the stack. The entire code can be imagined as wrapped in an **anonymous** function, this one will be at the base of the stack.
 
----
-
 ## Primitive vs Reference values
-
----
 
 **Primitive** values: string, booleans, number, undefined, null, symbol
 
 **Reference** values: the address to the reference...
 
----
-
 ## Operators
-
----
 
 `let variable1 = 10`  
 `let variable2 = 5`
@@ -328,11 +295,7 @@ the empty string `“”` (equivalent to `` or ‘’)
 
 Every other values
 
----
-
 ## Spread
-
----
 
 Will make a copy of an array(like the slice() method) or an object.  
 `const array = [1,2,3]`  
@@ -340,11 +303,7 @@ Will make a copy of an array(like the slice() method) or an object.
 `const person = {name: 'Max', age: 45}`  
 `copiedPerson = {...copiedPerson}` => new object
 
----
-
 ## Rest
-
----
 
 Merges arguments into an array.
 
@@ -356,11 +315,7 @@ const toArray = (...arguments) => {
 toArray(1, 2, 3, 4); // output [1,2,3,4]
 ```
 
----
-
 ## && ||
-
----
 
 ### && Operator
 
@@ -374,11 +329,7 @@ toArray(1, 2, 3, 4); // output [1,2,3,4]
 `console.log(undefined || false || On)` // On as all the values are falthy  
 `console.log(NaN || 66 || '')` // 66 as it is the first truthy value
 
----
-
 ## Decimal Base Exponents
-
----
 
 Shorthand syntax for numbers:
 `1e0` = 1  
@@ -386,11 +337,7 @@ Shorthand syntax for numbers:
 `1e3` = 1000  
 etc...
 
----
-
 ## Variables
-
----
 
 - Global scope
 - Local scope
@@ -423,26 +370,24 @@ A variable can be redeclared (same name) inside a function, loop, if... Javascri
 
 The strict mode `'use strict'` is used to avoid errors in a file. It mainly concerns the ES5 syntax. Use it at the beginning of a file or function to enable it. The browser will then know it will not allow certain syntax errors like forgetting to use the _var_ keyword: varName = 'value' => the var keyword is missing
 
----
-
 ## Functions
 
----
-
-- Overview
-- Method
-- Naming
-- Function expression
-- Function declaration / function statement
-- Anonymous function
-- Arrow function
-- Bind
-- Default parameter
-- Return keyword
-- pure function
-- factory function
-- closure
-- [recursion](#recursion)
+- [Overview](#overview)
+- [Method](#method)
+- [Naming](#naming)
+- [Function expression](#function-expression)
+- [Function declaration / function statement](#function-declaration--function-statement)
+- [Anonymous function](#anonymous-function)
+- [Arrow function](#arrow-function)
+- [Bind](#bind)
+- [Default parameter](#default-parameter)
+- [Rest operator](#rest-operator)
+- [Callback functions](#callback-functions)
+- [Return keyword](#return-keyword)
+- [Pure function](#pure-function)
+- [Factory function](#factory-function)
+- [Closure](#closure)
+- [Recursion](#recursion)
 
 ### Overview
 
@@ -541,13 +486,26 @@ Functions can refer to "external" variables (i.e. in a different lexical environ
 
 ### Recursion
 
-A recursion is a function that **calls itself** until a **base case** or **base condition** is **true**.
+A recursion is a function that **calls itself** until a **base case** or **base condition** is **true**:
 
----
+```javascript
+function sumUpTo(n) {
+  // Base case - when n is 1, we return 1
+  if (n === 0) {
+    return 0;
+  }
+  if (n === 1) {
+    return 1;
+  }
+
+  // Recursive case - when n is greater than 1, we return the sum of n and sumUpTo(n - 1)
+  return n + sumUpTo(n - 1);
+}
+
+sumUpTo(5); // 15
+```
 
 ## Loops
-
----
 
 - for
 - for of
@@ -628,11 +586,7 @@ outerLoop: for (let i = 0; i < 2; i++) {
 }
 ```
 
----
-
 ## if statement
-
----
 
 If statements can run a certain code if a condition is met. Only one block can run in an if statement. None will run except the **else** block if the conditions aren't met.
 
@@ -655,13 +609,9 @@ If the value given as a condition isn't a boolean, the if statement will **coerc
 Avoid using the **if** statement by using the question mark operator to check for undefined or null:  
 `console.log(user?.hobbies?.summer)` // will check if the user exists, then if the hobbies property exists. If not it will not return anything but also not throw an error.
 
----
-
 ## Operators tricks
 
----
-
-### double bang
+### Double bang (!!) operator
 
 The double exclamation marks:!! will coerce a value into a real boolean.  
 `const name = 'table'` => name is truthy.  
@@ -669,33 +619,17 @@ The double exclamation marks:!! will coerce a value into a real boolean.
 
 ### Setting a default value to a variable using ||
 
-`const name = someInput || defaultValue` => if someInput is undefined then the defaultValue will be assigned.
+`const name = someInput || defaultValue` => if **someInput** is undefined, null or falsy then the **defaultValue** will be assigned.
 
 ### Set a value with &&
 
-`const name = condition && valueToAssign` => if condition is true then the valueToAssign will be assigned.
+`const name = condition && valueToAssign` => if **condition** is true then the **valueToAssign** will be assigned.
 
 ### Set a value with ??
 
-Will check for nullish values:  
-Instead of using **if**, use the double question mark operator(??) to assign a value:
-
-```javascript
-const darkModePreference1 = true;
-const darkModePreference2 = false;
-const darkModePreference3 = undefined;
-const darkModePreference4 = null;
-
-const getUserDarkModePreference = (darkModePreference) => {
-  return darkModePreference ?? true;
-};
-```
-
----
+`const name = someInput ?? defaultValue` => if **someInput** is either **null** or **undefined** only then the **defaultValue** will be assigned.
 
 ## DOM
-
----
 
 - window
 - document
@@ -899,8 +833,6 @@ Script tags can be added like any other tag.
 `document.head.append('script')`  
 This will insert a script inside the head tag
 
----
-
 ## Strings
 
 ---
@@ -935,12 +867,7 @@ Will transform a word by turning all the letters to lowercase:
 const text = 'SOME TEXT HERE';
 text.toLowercase() = 'some text here'
 ```
-
----
-
 ## Arrays
-
----
 
 - Square brakets notation
 - Array()
@@ -1176,31 +1103,239 @@ Object.values(objectName); // ['value1','value2']
 Object.entries(objectName); // [['key1','value1'], ['key2','value2']]
 ```
 
----
+## Maps
+
+- [Creating a map](#creating-a-map)
+- [Methods](#methods)
+- [Iteration](#iteration)
+
+A **map** is a collection of **key:value** pairs.
+
+### Creating a map
+
+```javascript
+const mapName = new Map();
+```
+
+### Methods
+
+- [set()](#set)
+- [get()](#get)
+- [has()](#has) 
+- [delete()](#delete)
+- [clear()](#clear)
+- [size](#size)
+
+#### set()
+
+Will add a new key:value pair to the map.  
+`mapName.set(key, value)`  
+If the key already exists, it will override the value.
+
+#### get()
+
+Will return the value of a key.  
+`mapName.get(key)`  
+If the key doesn't exist, it will return **undefined**
+
+#### has()
+
+Will return a boolean depending if the key exists or not.  
+`mapName.has(key)`  
+If the key doesn't exist, it will return **false**
+
+#### delete()
+
+Will delete a key:value pair.  
+`mapName.delete(key)`  
+If the key doesn't exist, it will return **false**
+
+#### clear()
+
+Will delete all the key:value pairs.  
+`mapName.clear()`  
+
+#### size
+
+Will return the number of key:value pairs.  
+`mapName.size`
+
+### Iteration
+
+- [keys()](#keys)
+- [values()](#values)
+- [entries()](#entries)
+
+#### keys()
+
+Will return an iterable with all the keys.  
+`mapName.keys()`
+
+#### values()
+
+Will return an iterable with all the values.  
+`mapName.values()`
+
+#### entries()
+
+Will return an iterable with all the key:value pairs.  
+`mapName.entries()`
 
 ## Sets
 
----
+Useful for storing unique values like **ids**
 
-Useful for storing unique values like 'ids'.
-`cont ids = new Set([1,3,4,88])`
-`ids.has('88')` // returns true
-`ids.add(999)` // will add 999 to the end of the array
-`ids.delete(4)` // will delete 4 from the array
+```javascript
+cont ids = new Set([1,3,4,88,3, 'John'])
+console.log(ids) // Set(4) {1, 3, 4, 88, "John"}
 
----
+ids.has(88) // returns true  
+ids.add(999) // will add 999 to the end of the array  
+ids.delete(4) // will delete 4 from the array  
+ids.clear() // will delete all the values from the Set
+ids.size // 4
+ids.values() // will return an iterable with all the values: SetIterator {1, 3, 88, "John"}
+```
 
-## Maps
+## Custom Hash Table
 
----
+```javascript
+class HashTable {
+  constructor(limit = 14) {
+    // Initialize the storage and limit variables
+    this.storage = [];
+    this.limit = limit;
+  }
 
-Can be used to add info to an object without changing the original declaration
+  // Hash function
+  _hash(key, max) {
+    // Initialize the hash variable to 0
+    let hash = 0;
+    // Iterate through the key
+    for (let i = 0; i < key.length; i++) {
+      // Add the character code at each iteration to the hash variable
+      hash += key.charCodeAt(i);
+    }
+    // Return the hash modulo the max
+    return hash % max;
+  }
 
----
+  // Insert a key-value pair into the hash table
+  set(key, value) {
+    // Hash the key
+    const index = this._hash(key, this.limit);
+    // If the index is empty, insert the key-value pair
+    if (this.storage[index] === undefined) {
+      // create a bucket
+      this.storage[index] = [[key, value]];
+    } else {
+      //  If the index is not empty, iterate through the bucket (collision handling)
+      let inserted = false;
+
+      for (let i = 0; i < this.storage[index].length; i++) {
+        // If the key exists, update the value
+        if (this.storage[index][i][0] === key) {
+          this.storage[index][i][1] = value;
+          inserted = true;
+        }
+      }
+      // If the key does not exist, insert the key-value pair
+      if (inserted === false) {
+        this.storage[index].push([key, value]);
+      }
+    }
+  }
+
+  // Get a value from the hash table
+  get(key) {
+    // Hash the key
+    const index = this._hash(key, this.limit);
+    // If the index is empty, return undefined
+    if (this.storage[index] === undefined) {
+      return undefined;
+    } else {
+      // If the index is not empty, iterate through the bucket
+      for (let i = 0; i < this.storage[index].length; i++) {
+        // If the key exists, return the value
+        if (this.storage[index][i][0] === key) {
+          return this.storage[index][i][1];
+        }
+      }
+    }
+  }
+
+  // Remove a key-value pair from the hash table
+  remove(key) {
+    // Hash the key
+    const index = this._hash(key, this.limit);
+    // Check if the bucket exists
+    if (this.storage[index]) {
+      // If the key matches the key at the index and there is only one item in the bucket, delete the bucket
+      if (
+        this.storage[index].length === 1 &&
+        this.storage[index][0][0] === key
+      ) {
+        delete this.storage[index];
+      } else {
+        // If the index is not empty, iterate through the bucket
+        for (let i = 0; i < this.storage[index].length; i++) {
+          // If the key exists, delete the key-value pair
+          if (this.storage[index][i][0] === key) {
+            delete this.storage[index][i];
+          }
+        }
+      }
+    }
+  }
+
+
+
+  // Check if a key exists in the hash table
+  has(key) {
+    // Hash the key to find the index
+    const index = this._hash(key, this.limit);
+    
+    // Check if the bucket at the index exists
+    if (this.storage[index]) {
+      // Iterate through the bucket's key-value pairs
+      for (let i = 0; i < this.storage[index].length; i++) {
+        // Compare the current key with the target key
+        if (this.storage[index][i][0] === key) {
+          // If the key is found, return true
+          return true;
+        }
+      }
+    }
+    
+    // If the key is not found, return false
+    return false;
+  }
+
+
+  // Print all keys/values in the table
+   printTable() {
+    for (let i = 0; i < this.storage.length; i++) {
+      if (this.storage[i] !== undefined) {
+        console.log(`Bucket ${i}: ${JSON.stringify(this.storage[i])}`);
+      } else {
+        console.log(`Bucket ${i} Empty`);
+      }
+    }
+  }
+
+  // Clear all key/values
+  clear() {
+    this.storage = [];
+  }
+
+  
+}
+
+module.exports = HashTable;
+
+```
 
 ## Objects
-
----
 
 - Add
 - Update
@@ -1350,12 +1485,7 @@ const object = {
 
 object.setKey; // 'value'
 ```
-
----
-
 ## Classes
-
----
 
 - Overview
 - Creating a class
@@ -1471,11 +1601,7 @@ Will list all the properties of all the properties of an object
 
 Will set the properties of a property in an object
 
----
-
 ## Events
-
----
 
 - events list
 - event object
@@ -1567,11 +1693,7 @@ On a function declaration, **this** will refer to the element that has the liste
 
 ### drag and drop
 
----
-
 ## setTimeout()
-
----
 
 Will fire up a function after a desired time
 `setTimeout(someFunction, timeInMilliseconds)`
@@ -1580,11 +1702,7 @@ The setTimeout returns an _id_ when called. That id can be used to target that s
 `const setTimeoutId = setTimeout(someFunction, time)`
 `clearTimeout(setTimeoutId)`
 
----
-
 ## setInterval()
-
----
 
 Will fire up a function at a predefined interval:
 `setInterval(someFunction, timeInMillisecond)`
@@ -1592,11 +1710,7 @@ The setInterval returns an _id_ when called. That id can be used to target that 
 `const setIntervalId = setInterval(someFunction, time)`
 `clearInterval(setIntervalId)` // clearTimeout would also work...
 
----
-
 ## location
-
----
 
 Allows the user to navigate  
 `location.href = 'someUrl'`  
@@ -1604,11 +1718,7 @@ Allows the user to navigate
 `location.origin` // will return the url with the protocol used  
 `location.pathname` // will return the entire url
 
----
-
 ## history
-
----
 
 Gives access to the history of the browser:  
 `history.back()`  
@@ -1616,19 +1726,11 @@ Gives access to the history of the browser:
 `history.length()`  
 `history.go(number)`
 
----
-
 ## navigator
-
----
 
 `navigator.geolocation.getCurrentPosition(data => functionToRunWithTheDataReturned)`
 
----
-
 ## date
-
----
 
 The Date object will return the current date.
 
@@ -1641,41 +1743,25 @@ The Date object will return the current date.
 `new Date().getTime()` // will return the current time in milliseconds (i.e: 1625736763145)
 `new Date().getFullYear()` // will return the current year
 
----
-
 ## error
-
----
 
 `new Error('message')`
 will also show where the error comes from
 
 **object.constructor.methods/property**
 
----
-
 ## RegEx
-
----
 
 Regular Expression. Can be used to check the validity of an input value.  
 Checking for email syntax:  
 `/^\S+@\S+\.\S+$/` // will check for any characters, the _@_ symbol, any character, the _dot_ symbol and any character after that.
 
----
-
 ## Event Loop
-
----
 
 The Event Loop is not part of the Javascript Engine(e.g: V8, Spidermonkey), but is part of the host environment(browser...).
 The Event Loop will run and check to see if the call stack is empty and will then take some code from the message queue and place it in the call stack.
 
----
-
 ## Promise
-
----
 
 - Overview
 - Resolving - then()
@@ -1771,11 +1857,7 @@ Promise.allResolved([promise1(), promise2()]).then((dataOfAllThePromises) => {
 });
 ```
 
----
-
 ## Async / await
-
----
 
 Transforms the promise. It protects us from the **callback hell** where too many promises are nested into each other.
 It also makes the code more readable and makes it look like synchronous code as the lines after an await labeled function won't be ran until the promise as returned a value.
@@ -1802,11 +1884,7 @@ async functionRetuningThePromise = () =>{
 }
 ```
 
----
-
 ## JSON
-
----
 
 - parse()
 - stringify()
@@ -1842,11 +1920,7 @@ Transforms a value into a JSON string
 Will transform the xhr response into the desired type:
 `xhr.responseType = 'json'` // will transform the response if the type is JSON
 
----
-
 ## Http request
-
----
 
 ### XMLHttpRequest object
 
@@ -1911,11 +1985,7 @@ fetch('postURL', {
   .catch((postError) => console.log(postError));
 ```
 
----
-
 ## Modules
-
----
 
 - HTML markup
 - export
@@ -1973,11 +2043,7 @@ import('./path.js')
 It is available in the browser and server side JS.  
 It holds the Window object on the browser side.
 
----
-
 ## File Reader
-
----
 
 Reads a file from the `input="file"` input.
 
@@ -1994,3 +2060,81 @@ reader.readAsDataURL([fileToRead]);
 ## Hoisting
 
 When parsing the file, the browser (or the Javascript task runner) will place all the functions at the top of the file. This is called **hoisting** and makes it possible to call a function **before** declaring it.
+
+## Time Complexity
+
+How long it takes to run a function.
+
+### Constant Time 0(1)
+
+No matter how many elements are in the array, the function will always take the same amount of time to run.
+
+```javascript
+const array = [1, 2, 3, 4, 5];
+function logFirstElement(array) {
+  console.log(array[0]);
+}
+```
+
+### Linear Time 0(n)
+
+The time it takes to run the function will increase proportionally to the number of elements in the array.
+
+```javascript
+const array = [1, 2, 3, 4, 5];
+function logAllElements(array) {
+  for (let i = 0; i < array.length; i++) {
+    console.log(array[i]);
+  }
+}
+```
+
+### Quadratic Time 0(n^2)
+
+The time it takes to run the function will increase proportionally to the number of elements in the array squared.
+
+```javascript
+const array = [1, 2, 3, 4, 5];
+function logAllPairs(array) {
+  for (let i = 0; i < array.length; i++) {
+    for (let j = 0; j < array.length; j++) {
+      console.log(array[i], array[j]);
+    }
+  }
+}
+```
+
+### Logarithmic Time 0(log n)
+
+The time it takes to run the function will increase proportionally to the number of elements in the array but not linearly.
+
+```javascript
+const array = [1, 2, 3, 4, 5];
+
+function binarySearch(array, key) {
+  let low = 0;
+  let high = array.length - 1;
+  let mid;
+  let element;
+
+  while (low <= high) {
+    mid = Math.floor((low + high) / 2, 10);
+    element = array[mid];
+    if (element < key) {
+      low = mid + 1;
+    } else if (element > key) {
+      high = mid - 1;
+    } else {
+      return mid;
+    }
+  }
+  return -1;
+}
+
+binarySearch(array, 3);
+
+```
+
+## Space Complexity
+
+How much memory it takes to run a function.

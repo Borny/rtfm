@@ -27,7 +27,7 @@ Commands
 
 Working with database, collections and documents:  
 `show dbs`: will output all the available databases  
-`db`: will output the used database  
+`db`: will output the database used  
 `use [databaseName]`: will make the specified database available and will create it once we insert data  
 `show collections`: will output the available collections  
 `db.collectionName.stats()`: will output the stats of the collection

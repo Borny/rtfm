@@ -1,25 +1,25 @@
 # VueJS
 
-- Set up
-- Life Cycles
-- Interpolation
-- Binding
-- Event Binding
-- Two-Way Binding
+- [Set up](#set-up)
+- [Life Cycles](#life-cycles)
+- [Interpolation](#interpolation)
+- [Binding](#binding)
+- [Event Binding](#event-binding)
+- [Two-Way Binding](#two-way-binding)
 - [Computed Properties](#computed-properties)
 - [Watchers](#watchers)
-- Dynamic styling
-- Conditional rendering
-- Lists
-- Vue files
-- Components
-- Asynchronous Components
+- [Dynamic styling](#dynamic-styling)
+- [Conditional rendering](#conditional-rendering)
+- [Lists](#lists)
+- [Vue files](#vue-files)
+- [Components](#components)
+- [Asynchronous Components](#asynchronous-components)
 - [Composition API](#composition-api)
-- Scoped styles
-- Forms
-- Routing
+- [Scoped styles](#scoped-styles)
+- [Forms](#forms)
+- [Routing](#routing)
 - [Animations](#animations)
-- Vuex
+- [Vuex](#vuex)
 
 ## Set up
 
@@ -588,7 +588,7 @@ export default{
 
 Child component:
 
-The object **$emit** will be used to emit some values. It accpets as many arguments as we wish, but the first one will be the name of the event that will be used in the template of the parent component (@nameOfTheEvent="..."). The other arguments will be the data passed in the event.
+The object **$emit** will be used to emit some values. It accepts as many arguments as we wish, but the first one will be the name of the event that will be used in the template of the parent component (@nameOfTheEvent="..."). The other arguments will be the data passed in the event.
 The propery **emit** will list all the events emitted by the child component. It is not required but will help in the development process as it can show warnings in the console just like the **props** property does.
 
 ```html
@@ -1201,22 +1201,22 @@ export default({
 
 ## Routing
 
-- Install
-- Creating the routes
-- Loading the views
-- Navigating (template)
-- Navigating (programmatically)
-- Styling the active route
-- Route Params (URL)
-- Route Params (Props)
-- Redirecting
-- Page Not Found
-- Nested Routes
-- Named Routes
-- Query Params
-- Named Router Views
-- Scroll Behavior
-- Navigation Guards
+- [Install](#install)
+- [Creating the routes](#creating-the-routes)
+- [Loading the views](#loading-the-views)
+- [Navigating (template)](#navigating-template)
+- [Navigating (programmatically)](#navigating-programmatically)
+- [Styling the active route](#styling-the-active-route)
+- [Route Params (URL)](#route-params-url)
+- [Route Params (Props)](#route-params-props)
+- [Redirecting](#redirecting)
+- [Page Not Found](#page-not-found)
+- [Nested Routes](#nested-routes)
+- [Named Routes](#named-routes)
+- [Query Params](#query-params)
+- [Named Router Views](#named-router-views)
+- [Scroll Behavior](#scroll-behavior)
+- [Navigation Guards](#navigation-guards)
 
 ### Install
 

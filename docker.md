@@ -1,8 +1,7 @@
 # Docker
 
-- About
-- Install
-- Images
+- [About](#about)
+- [Images](#images)
 - [Containers](#containers)
 - Dockerfile
 - Docker CLI
@@ -16,12 +15,12 @@
 ## About
 
 **Docker** makes it possible to use any code/app in any environment by using images/containers that hold all the code.
-ù
+
 ## Install
 
 ## Images
 
-An **Image** is like a package that holds the **code** aswell as the **environment** to run that code. They are like blueprints.
+An **Image** is like a package that holds the **code** as well as the **environment** to run that code. They are like blueprints.
 
 ## Containers
 
@@ -50,21 +49,21 @@ CMD ["node", "app.js"] => will run this command
 
 ## Docker CLI
 
-- build
+- [build](#build)
 - [run](#run)
-- ps
-- images
-- stop
-- start
-- attach
-- detach
-- logs
-- interact
-- rm
-- rmi
-- prune
-- inspect
-- cp
+- [ps](#ps)
+- [images](#images)
+- [stop](#stop)
+- [start](#start)
+- [attach](#attach)
+- [detach](#detach)
+- [logs](#logs)
+- [interact](#interact)
+- [rm](#rm)
+- [rmi](#rmi)
+- [prune](#prune)
+- [inspect](#inspect)
+- [cp](#cp)
 
 ### build
 
