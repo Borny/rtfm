@@ -9,7 +9,7 @@
 - [Update/Alter](#updatealter)
 - Check constraint
 - Unique identifier
-- CRUD operations
+- [CRUD operations](#crud-operations)
 - Views
 - JOIN
 - Foreign Key

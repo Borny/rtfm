@@ -10,7 +10,7 @@
 ## Basic commands
 
 - [Display files and directory](#display-files-and-directory)
-- cd
+- [cd](#cd)
 - [grep](#grep)
 - [Search command history](#search-command-history)
 - [Count the number of files in directory](#count-the-number-of-files-in-directory)
