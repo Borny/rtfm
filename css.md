@@ -28,6 +28,7 @@ Example:
 ```css
 p { color: red; text-align: center; } 
 /* p is the selector and the curly braces is the declaration block */
+/* color is the property and red is the value*/
 ```
 
 ## Selectors
@@ -112,7 +113,6 @@ There are four types of combinators in CSS:
    Example: `h1 ~ p` selects all `<p>` elements that are siblings of an `<h1>` element.
 
 For more information, refer to the CSS documentation on combinators.
- */
 
 ## Box sizing
 

@@ -1,0 +1,28 @@
+{
+    "offset": -99998991,
+    "balance": 36385,
+    "cycleCount": 2,
+    "currentIndex": 23094,
+    "cycleConsumption": 62816,
+    "fixedFeesDetails": [
+        {
+            "label": "Subscription fee",
+            "amount": "NaN",
+            "percentage": "NaN",
+            "billing_plan_option_id": 2231
+        }
+    ],
+    "endOfCycleCharges": 0,
+    "currentRegisterIndex": -99975897,
+    "waterChargeSplitInfo": [
+        {
+            "label": "others",
+            "amount": 62816
+        }
+    ],
+    "cyclePaidSubscription": 0,
+    "previousRegisterIndex": 114772,
+    "totalInvoicedInTheCycle": 62816,
+    "waterInvoicedInTheCycle": 62816,
+    "debtReimbursedInTheCycle": 0
+}

@@ -1,10 +1,13 @@
 # Adobe Premiere Pro
 
-- [About](#about)
-- [Project Panel](#project-panel)
-- [Source Monitor](#source-monitor)
-- [Program Monitor](#program-monitor)
-- [Timeline Panel](#timeline-panel)
+- [Adobe Premiere Pro](#adobe-premiere-pro)
+  - [About](#about)
+  - [Keywords](#keywords)
+  - [Project Panel](#project-panel)
+  - [Source Monitor](#source-monitor)
+  - [Program Monitor](#program-monitor)
+  - [Timeline Panel](#timeline-panel)
+  - [Creating a sequence](#creating-a-sequence)
 
 ## About
 
@@ -34,3 +37,9 @@ The **Timeline Panel** is where sequences are built by editing clips, apllying s
 The horizontal blocks are called **tracks**.  
 Videos can be played at the same time but the video placed on the upper video track will hide the videos below.  
 Soundtrack will play together mixing the different sounds.
+
+## Creating a sequence
+
+- Drag and drop the clips from the `Project/Source Panels` to the Timeline Panel
+- Select multiple videos in the `Project Panel` and click the `Automate to Sequence` button to create a sequence with all the selected clips
+- 
