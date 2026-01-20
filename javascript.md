@@ -11,17 +11,19 @@
 - [Operators](#operators)
 - [Spread](#spread)
 - [Rest](#rest)
-- [&& ||](#&&-||)
+- [&& / ||](#&&-||)
 - [Decimal Base Exponents](#decimal-base-exponents)
 - [Variables](#variables)
 - [Functions](#functions)
 - [Loops](#loops)
 - [if statement](#if-statement)
 - [Operators tricks !! && || ??](#operators-tricks)
-- [DOM](#dom)
+- [DOM (Document Object Model)](#dom-document-object-model)
 - [Arrays](#arrays)
-- [Maps](#maps)
-- [Sets](#sets)
+- [Map](#map)
+- [Set](#set)
+- [WeakSet](#weakset)
+- [WeakMap](#weakmap)
 - [Custom Hash Table](#custom-hash-table)
 - [Objects](#objects)
 - [Classes](#classes)
@@ -41,19 +43,18 @@
 - [Hoisting](#hoisting)
 - [Time and Space Complexity](#time-and-space-complexity)
 
-
 ## Expression vs Statement
 
 **Expression** is a piece of code that can be stored in a variable:
 `const whateverName = value` => expression  
-**Statement** cannot be stored, it cannot be placed after the equal/= sign
+**Statement** cannot be stored, it cannot be placed after the equal(=) sign
 `if(condition){expression}` => statement
 
 ## Quotes
 
 HTML file : **double quote** ""  
 JS file : **single quote** ''  
-Template literal: back ticks => ``, multiple lines and variables allowed `${variable}` // variables/expressions can be injected inside the curly brackets  
+Template literal: **back ticks** ``, multiple lines and variables allowed `${variable}` // variables/expressions can be injected inside the curly brackets  
 Line break : **\n**
 
 ## Data Types
@@ -80,8 +81,8 @@ Find the type of a variable, value:
 `typeof 'anyString'` => **string**  
 `typeof []` => **object**  
 `typeof {name: 'peter', aka: 'spiderman'}` => **object**  
-`typeof true` => **boolean**
-`typeof []` => **object**
+`typeof true` => **boolean**  
+`typeof undefined` => **undefined**
 
 ### isNaN()
 
@@ -101,22 +102,27 @@ Will convert a number to a string with a defined number of decimal. Will also ro
 Import the script in the head tag:
 `<script src='index.js'></script>`
 
+By default the browser will parse the HTML file and load the js file when it finds the script tag. But it will wait for the parsing to be done before execute the .js file.  
+A good practice is to load the .js file as soon as possible and still wait for the HTML to be parsed to execute the .js file.
+
 ### Defer
 
 This attribute will tell the browser to load the script as soon as possible but will let the HTML parser to continue at the same time and will wait before the HTML is loaded before executing the script
-`<script src='index.js' defer></script>`
+`<script src='index.js' defer></script>`  
+The script tag can here be used in the head tag and be loaded early.
 
 ### Async
 
-This attribute will do the same as **defer** but will execute the script as soon as it is loaded
-`<script src='index.js' async></script>`
+This attribute will do the same as **defer** but will execute the script as soon as it is loaded:  
+`<script src='index.js' async></script>`  
+This method is best for loading a .js file that doesn't rely on the HTML.
 
 ## Errors
 
 ### throw
 
 ```javascript
-throw { message: 'message to print' };
+throw { message: "message to print" };
 ```
 
 ### try - catch
@@ -130,9 +136,9 @@ try {
   // code that should run no matter what (rarely used)
 }
 
-const name = 'Spike';
+const name = "Spike";
 try {
-  if (name === 'Jet') {
+  if (name === "Jet") {
   }
   // code to test (e.g: http request)
 } catch (error) {
@@ -202,7 +208,7 @@ console.timeEnd('timer')
 Will count the number of times a value is logged, they should use the same label:
 
 ```javascript
-const fruits = ['apple', 'banana', 'apple', 'orange', 'banana', 'apple'];
+const fruits = ["apple", "banana", "apple", "orange", "banana", "apple"];
 fruits.forEach((fruit) => {
   console.count(fruit);
 });
@@ -213,22 +219,22 @@ fruits.forEach((fruit) => {
 Will display the content in a separate block and which will be indented, they should use the same label:
 
 ```javascript
-console.group('group1');
-console.warn('warning');
-console.error('error');
-console.log('I belong to a group');
-console.groupEnd('group1');
-console.log('I dont belong to any group');
+console.group("group1");
+console.warn("warning");
+console.error("error");
+console.log("I belong to a group");
+console.groupEnd("group1");
+console.log("I dont belong to any group");
 ```
 
-### styling the logs
+### Styling the logs
 
 Use CSS and the **%c** parameter to style the logs:
 
 ```javascript
-const spacing = '10px';
+const spacing = "10px";
 const styles = `padding: ${spacing}; background-color: white; color: red; font-style: italic; border: 1px solid black; font-size: 2em;`;
-const styledLog = 'I am a styled log';
+const styledLog = "I am a styled log";
 console.log(`%c${styledLog}`, styles);
 ```
 
@@ -236,9 +242,8 @@ console.log(`%c${styledLog}`, styles);
 
 ## Heap / Stack
 
-The **Heap** is the memory allocated by the browser to our code. **Long living memory**  
-The **Stack** is the execution order of all the functions of the code.
-**Short living memory**  
+The **Heap** is the memory allocated by the browser to our code or **Long living memory**.  
+The **Stack** is the execution order of all the functions of the code or **Short living memory**.  
 Each function will be executed one by one, hence will be placed on top of the stack. Once a function is done executing, it will be removed from the stack. The entire code can be imagined as wrapped in an **anonymous** function, this one will be at the base of the stack.
 
 ## Primitive vs Reference values
@@ -289,7 +294,7 @@ the keyword `undefined`
 the keyword `null`  
 the number `NaN`  
 the boolean `false`  
-the empty string `“”` (equivalent to `` or ‘’)
+the empty string `“”` (equivalent to ``or`‘’`)
 
 ### Truthy values
 
@@ -315,17 +320,17 @@ const toArray = (...arguments) => {
 toArray(1, 2, 3, 4); // output [1,2,3,4]
 ```
 
-## && ||
+## && / ||
 
 ### && Operator
 
-&& will check if all values are truthy. It will return the first falsy value or the last value if there is no falsy value:  
+**&&** will check if all values are truthy. It will return the first falsy value or the last value if there is no falsy value:  
 `console.log(1 && false && {})` // false as it is the first falsy value  
 `console.log([] && 'true' && 1)` // 1 as there are no falsy value
 
 ### || Operator
 
-|| will check if at least one the values are truthy. It will return the first truthy value or the last one if they are all falthy:  
+**||** will check if at least one the values are truthy. It will return the first truthy value or the last one if they are all falthy:  
 `console.log(undefined || false || On)` // On as all the values are falthy  
 `console.log(NaN || 66 || '')` // 66 as it is the first truthy value
 
@@ -339,10 +344,10 @@ etc...
 
 ## Variables
 
-- Global scope
-- Local scope
-- Shadowing
-- Strict mode
+- [Global scope](#global-scope)
+- [Local scope](#local-scope)
+- [Shadowing](#shadowing)
+- [Strict mode](#strict-mode)
 
 **let** => variable, can be reassigned  
 **const** => constant, cannot be reassigned
@@ -394,7 +399,7 @@ The strict mode `'use strict'` is used to avoid errors in a file. It mainly conc
 The file will be read from top to bottom before being executed, it will then run the desired functions. So a **function** can be declared at the bottom of a file and be called before its declaration (only in the case of a **function declaration**).
 But it is a good practice to declare the function before calling it, it makes the code easier to read.
 The function body (inside the curly braces) takes **expressions**  
-alert(result);
+alert(result);  
 No need for ';' after a **statement** or **function**
 
 Adding parenthese right after the function name will result in the function being executed right away, when the function is read.
@@ -405,7 +410,7 @@ A **method** is a function attached to an object.
 
 ### Naming
 
-`functionNameHandler(){}`  
+`functionNameHandler() {}`  
 The word _Handler_ can be used to name any function that is associated with an event (handler)
 
 ### Function expression
@@ -435,7 +440,8 @@ No need for the _function_ keyword anymore.
 
 Used to **prepare** a function. It allows to **pass arguments** to a function **without executing** it straight away, _to be called functions_, function that you don't call yourself but are called by another function/event (callback) :
 As a callback :  
-`function1(callBackFunction.bind(this, bindParam))`  
+`function1(callBackFunction.bind(this, bindParam))`
+
 Declaring the **function1**
 
 ```javascript
@@ -460,12 +466,29 @@ A function can take default parameter in case an argument is not provided and th
 ### Rest operator
 
 Using the three dot notation (...), it will concatenate arguments into a single array:
-`const functionName = (...argumentName) => {}`
-`functionName(1,2,3,4,5)` // argumentName = [1,2,3,4,5]
+
+```javascript
+const functionName = (...argumentName) => {
+  // argumentName will be converted to an array: [1,2,3,4,5]
+};
+functionName(1, 2, 3, 4, 5);
+```
+
+There can be only one rest parameter and it has to be the last one:
+
+```javascript
+const functionName = (param1, param2, ...argumentName) => {
+  // param1 = 1
+  // param2 = 2
+  // argumentName = [3,4,5]
+};
+functionName(1, 2, 3, 4, 5);
+```
 
 ### Callback functions
 
-A **callback** is a function that is used as an argument by another function. It is not directly called by the developper, it is a _to be called function_. e.g: `btn.addEventListener('click', callBackFunction)`
+A **callback** is a function that is used as an argument by another function. It is not directly called by the developper, it is a _to be called function_. e.g: `btn.addEventListener('click', callBackFunction)`  
+=> **callBackFunction = parameter of a function**
 
 ### Return keyword
 
@@ -507,13 +530,13 @@ sumUpTo(5); // 15
 
 ## Loops
 
-- for
-- for of
-- for in
-- while
-- do while
-- break/continue
-- labeled statement
+- [for](#for)
+- [for of](#for-of)
+- [for in](#for-in)
+- [while](#while)
+- [do while](#do-while)
+- [break/continue](#breakcontinue)
+- [labeled statement](#labeled-statement)
 
 ### for
 
@@ -609,6 +632,25 @@ If the value given as a condition isn't a boolean, the if statement will **coerc
 Avoid using the **if** statement by using the question mark operator to check for undefined or null:  
 `console.log(user?.hobbies?.summer)` // will check if the user exists, then if the hobbies property exists. If not it will not return anything but also not throw an error.
 
+## switch-case statement
+
+The **switch-case** statement can be used as a replacement for the **if** statement.
+
+```javascript
+let hero = 'peter';
+let aka;
+
+switch (heroName)
+ case 'peter':
+  aka = 'Spidey';
+  break;
+ case 'bruce':
+  aka = 'Hulk';
+  break;
+default:
+  aka: 'Stan Lee';
+```
+
 ## Operators tricks
 
 ### Double bang (!!) operator
@@ -629,31 +671,32 @@ The double exclamation marks:!! will coerce a value into a real boolean.
 
 `const name = someInput ?? defaultValue` => if **someInput** is either **null** or **undefined** only then the **defaultValue** will be assigned.
 
-## DOM
+## DOM (Document Object Model)
 
-- window
-- document
-- DOM
-- Nodes
-- Elements
-- Attributes
-- Properties
-- Querying the DOM
-- Traversing the DOM
-- Styling
-- Create element
-- Clone element
-- importNode()
-- Remove element
-- data-\*
-- position
-- element height
-- element width
-- scroll
-- scrollIntoView()
-- scroll animation
-- template tag
-- Add script tag
+- [window](#window)
+- [document](#document)
+- [DOM](#dom)
+- [Nodes](#nodes)
+- [Elements](#elements)
+- [Attributes](#attributes)
+- [Properties](#properties)
+- [Querying the DOM](#querying-the-dom)
+- [Traversing the DOM](#traversing-the-dom)
+- [Styling](#styling)
+- [Create element](#create-element)
+- [Replace element](#replace-element)
+- [Clone element](#clone-element)
+- [importNode()](#importnode)
+- [Remove element](#remove-element)
+- [data-\*](#data-*)
+- [position](#position)
+- [element height](#element-height)
+- [element width](#element-width)
+- [scroll](#scroll)
+- [scrollIntoView()](#scrollintoview)
+- [scroll animation](#scroll-animation)
+- [template tag](#template-tag)
+- [Add script tag](#add-script-tag)
 
 ### window
 
@@ -665,7 +708,7 @@ document object. Part of the **window** object
 
 ### DOM
 
-**Document Object Model**
+**Document Object Model**  
 Javascript is a **hosted language**, the browser exposes this DOM API to be used by Javascript.  
 The browser _reflects_ the HTML code and each tag becomes an **element node** or **element**. Each text also becomes a node or **text node**
 
@@ -717,21 +760,21 @@ Siblings: any element that is on the same level
 
 ### Styling
 
-- style attribute
-- className
-- classList
+- [style attribute](#style-attribute)
+- [className](#classname)
+- [classList](#classlist)
 
-### Style attribute
+#### Style attribute
 
 Adds the **style** attribute to an element, then add a CSS like property.  
 `element.style.backgroundColor = '#ccc'`
 
-### className
+#### className
 
 Adds a class name.  
 `element.className = 'className'`
 
-### classList
+#### classList
 
 Property that has methods that make it easier to manage classes.  
 `element.classList.add = 'className'` : will add a class  
@@ -745,7 +788,7 @@ Property that has methods that make it easier to manage classes.
 - **appendChild()**: will add an element inside the targeted(parent) element.`element.appendChild(childName)`
 - **append()**: will add elements or text. `element.append(element,'some text'...)`
 - **textContent**: will add text to the element. `element.textContent = 'text to display'`
-- **inserAdjacentElement()**: will add an element to the desired position. `element.inserAdjacentElement('position', objectElement)` | afterbegin,afterend, beforebegin, beforeend
+- **insertAdjacentElement()**: will add an element to the desired position. `element.inserAdjacentElement('position', objectElement)` | afterbegin,afterend, beforebegin, beforeend
 
 ### Replace element
 
@@ -818,9 +861,9 @@ Will create a **template** tag that can hold some HTML code that won't be displa
 Accessing the template in the JS file:
 
 ```javascript
-const templateElement = document.getElementById('some-id');
+const templateElement = document.getElementById("some-id");
 const templateBody = document.importNode(templateElement.content, true);
-templateBody.textContent = 'some text';
+templateBody.textContent = "some text";
 templateElement.append(templateBody);
 ```
 
@@ -843,7 +886,7 @@ This will insert a script inside the head tag
 
 ### trim()
 
-Will delete white spaces before and after the string:
+Will delete white spaces before and after the string. It is often used to get the value of an input:
 
 ```javascript
 const text = ' some text here     ';
@@ -867,37 +910,39 @@ Will transform a word by turning all the letters to lowercase:
 const text = 'SOME TEXT HERE';
 text.toLowercase() = 'some text here'
 ```
+
 ## Arrays
 
-- Square brakets notation
-- Array()
-- Array.of()
-- Array.from()
-- push()
-- unshift()
-- pop()
-- shift()
-- [index]
+- [ Square brackets notation](#square-brackets-notation)
+- [Array()](#array)
+- [Array.of()](#arrayof)
+- [Array.from()](#arrayfrom)
+- [push()](#push)
+- [unshift()](#unshift)
+- [pop()](#pop)
+- [shift()](#shift)
+- [index](#index)
 - [splice()](#splice)
 - [toSpliced()](#toSpliced)
 - [slice](#slice)
-- concat()
-- indexOf()
-- find()
-- findIndex()
-- includes()
-- forEach()
-- map()
-- sort()
-- reverse()
+- [concat()](#concat)
+- [indexOf()](#indexof)
+- [lastIndexOf()](#lastindexof)
+- [find()](#find)
+- [findIndex()](#findindex)
+- [includes()](#includes)
+- [forEach()](#foreach)
+- [map()](#map)
+- [sort()](#sort)
 - [toSorted](#tosorted)
 - [toReverse()](#toreverse)
-- filter()
-- reduce()
-- [split](#split)
-- Spread operator
-- Array destructuring
-- Object to array
+- [filter()](#filter)
+- [reduce()](#reduce)
+- [split()](#split)
+- [join()](#join)
+- [Spread operator](#spread-operator)
+- [Array destructuring](#array-destructuring)
+- [Object to array](#object-to-array)
 
 ### Square brackets notation
 
@@ -951,7 +996,7 @@ The first parameter is the index the method should work on.
 The second parameter tells how many elements should be deleted:  
 `array.splice(0,0)` : won't do anything  
 `array.splice(0,1)` : will delete the element at index 0  
-`array.splice(-1,0)` : will remove the last element  
+`array.splice(-1,1)` : will remove the last element  
 `array.splice(0,1,5)` : will replace the element at index 0 with the number 5
 Will **return** the removed element(s)  
 If using negative indexes, it will remove the element from the end of the array
@@ -984,7 +1029,8 @@ Will look for a certain element in an array.
 Will return the index of the element if it exists, otherwise will return **-1** if it doesn't find anything.  
 `const indexOfElementToFind = array.indexOf(element)`  
 If specifying an index, it will start looking from that index  
-`const indexOfElementToFind = array.indexOf(element, 3)`, will start to look from index 3
+`const indexOfElementToFind = array.indexOf(element, 3)`, will start to look from index 3.
+=> Only works on primitive values (string, number, boolean)
 
 ### lastIndexOf()
 
@@ -992,10 +1038,11 @@ Will look for the last occurence of a certain element in an array.
 Will return the index of the element if it exists, otherwise
 will return **-1** if it doesn't find anything.
 `const elementToFind = array.lastIndexOf(element)`
+=> Only works on primitive values (string, number, boolean)
 
 ### find()
 
-Will return an element if it exists in an array
+Will return an element if it exists in an array.
 Can take as parameters every items in the array, the index of each element and the entire array.
 `const returnElement = arr.find(item => item === elementToFind)`
 `array.find((item, index, entireArray) => {})`
@@ -1092,18 +1139,18 @@ Will split up the values of an array into variables
 `const [lastName, firstName, ...otherInfo] = arr // lastName, firstName, [15, 'NY City']`  
 The const can have any name we want.
 
-### Converting an object to an array
+### Object to array
 
-Will output an array with values depending on the method used:
+Converting an object to an array can be done with 3 methods:
 
 ```javascript
-const objectName = { key1: 'value1', key2: 'value2' };
+const objectName = { key1: "value1", key2: "value2" };
 Object.key(objectName); // ['key1','key2']
 Object.values(objectName); // ['value1','value2']
 Object.entries(objectName); // [['key1','value1'], ['key2','value2']]
 ```
 
-## Maps
+## Map
 
 - [Creating a map](#creating-a-map)
 - [Methods](#methods)
@@ -1121,7 +1168,7 @@ const mapName = new Map();
 
 - [set()](#set)
 - [get()](#get)
-- [has()](#has) 
+- [has()](#has)
 - [delete()](#delete)
 - [clear()](#clear)
 - [size](#size)
@@ -1153,7 +1200,7 @@ If the key doesn't exist, it will return **false**
 #### clear()
 
 Will delete all the key:value pairs.  
-`mapName.clear()`  
+`mapName.clear()`
 
 #### size
 
@@ -1181,7 +1228,7 @@ Will return an iterable with all the values.
 Will return an iterable with all the key:value pairs.  
 `mapName.entries()`
 
-## Sets
+## Set
 
 Useful for storing unique values like **ids**
 
@@ -1189,13 +1236,21 @@ Useful for storing unique values like **ids**
 cont ids = new Set([1,3,4,88,3, 'John'])
 console.log(ids) // Set(4) {1, 3, 4, 88, "John"}
 
-ids.has(88) // returns true  
-ids.add(999) // will add 999 to the end of the array  
-ids.delete(4) // will delete 4 from the array  
+ids.has(88) // returns true
+ids.add(999) // will add 999 to the end of the array
+ids.delete(4) // will delete 4 from the array
 ids.clear() // will delete all the values from the Set
 ids.size // 4
 ids.values() // will return an iterable with all the values: SetIterator {1, 3, 88, "John"}
 ```
+
+## WeakMap
+
+A **WeakMap** is a collection of key:value pairs where the keys are objects and the values can be of any type. The key objects in a WeakMap are held weakly, meaning that if there are no other references to the key object, it can be garbage collected, even if it is still present in the WeakMap. This makes WeakMaps useful for cases where you want to associate data with an object without preventing that object from being garbage collected.
+
+## WeakSet
+
+A **WeakSet** is a collection of unique objects where the objects are held weakly. Similar to WeakMap, if there are no other references to an object in a WeakSet, it can be garbage collected. This makes WeakSets useful for cases where you want to keep track of objects without preventing them from being garbage collected.
 
 ## Custom Hash Table
 
@@ -1288,13 +1343,11 @@ class HashTable {
     }
   }
 
-
-
   // Check if a key exists in the hash table
   has(key) {
     // Hash the key to find the index
     const index = this._hash(key, this.limit);
-    
+
     // Check if the bucket at the index exists
     if (this.storage[index]) {
       // Iterate through the bucket's key-value pairs
@@ -1306,14 +1359,13 @@ class HashTable {
         }
       }
     }
-    
+
     // If the key is not found, return false
     return false;
   }
 
-
   // Print all keys/values in the table
-   printTable() {
+  printTable() {
     for (let i = 0; i < this.storage.length; i++) {
       if (this.storage[i] !== undefined) {
         console.log(`Bucket ${i}: ${JSON.stringify(this.storage[i])}`);
@@ -1327,12 +1379,9 @@ class HashTable {
   clear() {
     this.storage = [];
   }
-
-  
 }
 
 module.exports = HashTable;
-
 ```
 
 ## Objects
@@ -1413,17 +1462,17 @@ Will group elements of an iterable according to a condition:
 
 ```javascript
 const persons = [
-  { name: 'Peter', age: '15' },
-  { name: 'Steve', age: '99' },
-  { name: 'MJ', age: '16' },
-  { name: 'Bruce', age: '45' },
+  { name: "Peter", age: "15" },
+  { name: "Steve", age: "99" },
+  { name: "MJ", age: "16" },
+  { name: "Bruce", age: "45" },
 ];
 
 function filter({ age }) {
   if (age >= 18) {
-    return 'adults';
+    return "adults";
   } else {
-    return 'teens';
+    return "teens";
   }
 }
 
@@ -1485,6 +1534,7 @@ const object = {
 
 object.setKey; // 'value'
 ```
+
 ## Classes
 
 - Overview
@@ -1511,7 +1561,7 @@ They don't replace Objects, but Objects are built based on Classes
 ```javascript
 class ClassName {
   // has to be kebab case
-  field1 = 'Default value'; // fields can have default values
+  field1 = "Default value"; // fields can have default values
   field2;
   field3;
 }
@@ -1526,7 +1576,7 @@ Used to build the object with the Class by passing parameters to define the fiel
 ```javascript
 class ClassName {
   // the fields can be declared directly in the constructor() method
-  field1 = 'Default value'; // optional
+  field1 = "Default value"; // optional
   field2; // optional
   field3; // optional
 
@@ -1546,7 +1596,7 @@ Extending Classes allows some Classes to **extend** another Class which becomes 
 
 ```javascript
 class ParentClass {
-  field1 = 'Default value';
+  field1 = "Default value";
   method1() {
     console.log(this.field1);
   }
@@ -1570,7 +1620,7 @@ A static property allows the class to be called as such, without having to defin
 ```javascript
 class App {
   static init() {
-    console.log('initializing...');
+    console.log("initializing...");
   }
 }
 
@@ -1781,7 +1831,7 @@ The **then** will be used to run some code if the promise is **resolved**.
 
 ```javascript
 const somePromise = new Promise((resolve, reject) => {
-  console.log('whatever...');
+  console.log("whatever...");
 });
 
 somePromise().then(someFunction());
@@ -1971,14 +2021,14 @@ fetch('URL')
 Sending JSON data:
 
 ```javascript
-fetch('postURL', {
-  method: 'POST',
+fetch("postURL", {
+  method: "POST",
   headers: {
-    'Content-Type': 'application/json', // type of data we're sending
-    Accept: 'application/json', // type of data we expect to get back
+    "Content-Type": "application/json", // type of data we're sending
+    Accept: "application/json", // type of data we expect to get back
   },
   body: JSON.stringify({
-    data: 'DATA TO SEND',
+    data: "DATA TO SEND",
   }),
 })
   .then((postResponse) => console.log(postResponse))
@@ -2028,7 +2078,7 @@ The **export** keyword makes the class/variable/function available to the rest o
 ### dynamic imports
 
 ```javascript
-import('./path.js')
+import("./path.js")
   .then((module) => {
     // code to run...
   })
@@ -2132,7 +2182,6 @@ function binarySearch(array, key) {
 }
 
 binarySearch(array, 3);
-
 ```
 
 ## Space Complexity
